@@ -17,6 +17,18 @@ class UserProfileAdmin(UserAdmin):
     UserAdmin.fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
+            ("Personal Informations"),
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "designation_category",
+                    "company_category",
+                )
+            },
+        ),
+        (
             ("Permissions"),
             {"fields": ("is_active", "is_superuser", "groups", "user_permissions")},
         ),
