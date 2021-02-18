@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "gpg_backend"
+version = "2.0.0"
+description = "backend for the GPG system"
+authors = ["Xednom <monde.lacanlalay@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.1.6"
+django-environ = "^0.4.5"
+django-split-settings = "^1.0.1"
+django-cors-headers = "^3.7.0"
+djangorestframework = "^3.12.2"
+Markdown = "^3.3.3"
+django-filter = "^2.4.0"
+djoser = "^2.1.0"
+djangorestframework-simplejwt = "^4.6.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
