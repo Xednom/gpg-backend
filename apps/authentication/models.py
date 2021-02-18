@@ -25,9 +25,14 @@ class User(AbstractUser):
     designation_category = models.CharField(choices=DesignationCategory.choices, blank=True, max_length=30)
     company_category = models.CharField(choices=CompanyCategory.choices, blank=True, max_length=40)
 
+    @property
+    def user_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class Client(TimeStamped):
     user = models.ForeignKey(User, related_name="clients", on_delete=models.CASCADE)
+    client_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_code = models.CharField(max_length=250,blank=True)
     affiliate_partner_name = models.CharField(max_length=250, blank=True)
     pin = models.CharField(max_length=5)
@@ -36,6 +41,10 @@ class Client(TimeStamped):
 
     def __str__(self):
         return f"{self.user} - {self.affiliate_partner_name}"
+    
+    @property
+    def client_name(self):
+        return f"{user.first_name} {user.last_name}"
 
 
 class InternalFiles(TimeStamped):
