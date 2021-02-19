@@ -24,6 +24,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=254)
     designation_category = models.CharField(choices=DesignationCategory.choices, blank=True, max_length=30)
     company_category = models.CharField(choices=CompanyCategory.choices, blank=True, max_length=40)
+    REQUIRED_FIELDS = ["first_name", "last_name", "email"]
 
     @property
     def user_full_name(self):

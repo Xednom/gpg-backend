@@ -50,7 +50,3 @@ SIMPLE_JWT = {
 }
 
 REST_USE_JWT = True
-
-SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_EMAIL_REQUIRED = False
-SOCIALACCOUNT_ADAPTER = "fairsale.authentication.adapter.FairSaleSocialAccountAdapter"

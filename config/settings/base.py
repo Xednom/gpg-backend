@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "pglqvn6-q^wyund(p%-%h_yo!)prj)ins^p%ciei(=f&hr0!*w"
+SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -45,14 +45,20 @@ LOCAL_APPS = [
     "apps.gpg",
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "corsheaders",
+    "djoser",
+    "rest_framework",
+    "django_filters",
+]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -133,3 +139,18 @@ STATIC_URL = "/static/"
 AUTH_USER_MODEL = "authentication.User"
 
 SITE_ID = 1
+
+DJOSER = {
+    "SEND_CONFIRMATION_EMAIL": True,
+    "ACTIVATION_URL": "auth/users/activation/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": True,
+    "HIDE_USERS": True,
+}
+
+# Email sender credentials
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "xednom@gmail.com"
+EMAIL_HOST_PASSWORD = "ezrizpxmjcpoqndm"
+EMAIL_USE_TLS = True
