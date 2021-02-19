@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from apps.core.models import TimeStamped
 from apps.authentication.models import Client
+
+User = get_user_model()
 
 
 class Status(models.TextChoices):
@@ -30,7 +33,9 @@ class LeadStatus(models.TextChoices):
 
 
 class PropertyDetails(TimeStamped):
-    client = models.ForeignKey(Client, related_name="client_properties", on_delete=models.CASCADE)
+    client = models.ForeignKey(
+        Client, related_name="client_properties", on_delete=models.CASCADE
+    )
     apn = models.CharField(max_length=250)
     county = models.CharField(max_length=250)
     state = models.CharField(max_length=250)
@@ -42,19 +47,23 @@ class PropertyDetails(TimeStamped):
 
 
 class PropertyPrice(TimeStamped):
-    client = models.ForeignKey(Client, related_name="property_prices", on_delete=models.CASCADE)
+    client = models.ForeignKey(
+        Client, related_name="property_prices", on_delete=models.CASCADE
+    )
     asking_price = models.DecimalField(max_digits=11, decimal_places=2)
     cash_terms = models.DecimalField(max_digits=11, decimal_places=2)
     finance_terms = models.TextField()
     other_terms = models.TextField()
     notes = models.TextField()
-    
+
     def __str_(self):
         return f"Property Price of {client.client_name} with price {self.askin_price}"
 
 
 class ListingAdDetails(TimeStamped):
-    category = models.CharField(choices=ListingAdCategory.choices, max_length=30, blank=True)
+    category = models.CharField(
+        choices=ListingAdCategory.choices, max_length=30, blank=True
+    )
     ad_details = models.TextField()
     notes_client_side = models.TextField()
     notes_va_side = models.TextField()
@@ -65,13 +74,15 @@ class ListingAdDetails(TimeStamped):
 
 
 class ApprovedOfferNotes(TimeStamped):
-    client = models.ForeignKey(Client, related_name="approved_offer_notes", on_delete=models.CASCADE)
+    client = models.ForeignKey(
+        Client, related_name="approved_offer_notes", on_delete=models.CASCADE
+    )
     asking_price = models.DecimalField(max_digits=11, decimal_places=2)
     cash_terms = models.DecimalField(max_digits=11, decimal_places=2)
     finance_terms = models.TextField()
     other_terms = models.TextField()
     notes = models.TextField()
-    
+
     def __str_(self):
         return f"Approved offer notes of {client.client_name} with price {self.askin_price}"
 
@@ -83,7 +94,9 @@ class LeadManagement(TimeStamped):
     phone = models.CharField(max_length=30)
     email = models.EmailField()
     lead_source = models.CharField(max_length=250)
-    lead_status = models.CharField(choices=LeadStatus.choices, max_length=50, blank=True)
+    lead_status = models.CharField(
+        choices=LeadStatus.choices, max_length=50, blank=True
+    )
     date_of_callback = models.DateField()
     time = models.TimeField()
     call_center_rep_notes = models.TextField()
@@ -92,3 +105,11 @@ class LeadManagement(TimeStamped):
 
     def __str__(self):
         return f"Lead added by {self.lead_added_by}"
+
+
+class Comment(TimeStamped):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    comment = models.TextField()
+
+    class Meta:
+        ordering = ["-created_at"]
