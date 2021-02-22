@@ -108,7 +108,7 @@ class Staff(TimeStamped):
     bank_account_number = models.CharField(max_length=250, blank=True)
 
     def __str__(self):
-        return f"{user.user_full_name} - Staff"
+        return f"{self.user.user_full_name} - staff"
 
 class InternalFiles(TimeStamped):
     client = models.ForeignKey(
