@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from apps.gpg.models import JobOrderGeneral
+
+
+class JobOrderGeneralAdmin(admin.ModelAdmin):
+    model = JobOrderGeneral
+
+
+admin.site.register(JobOrderGeneral, JobOrderGeneralAdmin)
