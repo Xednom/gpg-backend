@@ -145,6 +145,10 @@ DJOSER = {
     "ACTIVATION_URL": "auth/users/activation/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "HIDE_USERS": True,
+    "SERIALIZERS": {
+        "user_create": "apps.authentication.serializers.UserRegistrationSerializer",
+        "user": "apps.authentication.serializers.UserListSerializer"
+    }
 }
 
 # Email sender credentials
