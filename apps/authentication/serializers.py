@@ -3,6 +3,33 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Client, Staff, InternalFiles, InternalFilesStaff
 
+from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
+from djoser.serializers import UserSerializer as BaseUserListSerializer
+
+
+class UserRegistrationSerializer(BaseUserRegistrationSerializer):
+    class Meta(BaseUserRegistrationSerializer.Meta):
+        fields = (
+            "username",
+            "password",
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "designation_category",
+            "company_category"
+        )
+
+
+class UserListSerializer(BaseUserListSerializer):
+    class Meta(BaseUserListSerializer.Meta):
+        fields = BaseUserListSerializer.Meta.fields + (
+            "email",
+            "phone",
+            "designation_category",
+            "company_category"
+        )
+
 
 class ClientSerializer(serializers.ModelSerializer):
     client_files = serializers.PrimaryKeyRelatedField(
