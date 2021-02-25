@@ -73,8 +73,8 @@ class Client(TimeStamped):
         if created:
             if (
                 instance.designation_category == "new_client"
-                or "current_client"
-                or "affiliate_partner"
+                or instance.designation_category == "current_client"
+                or instance.designation_category == "affiliate_partner"
             ):
                 Client.objects.create(user=instance)
 
