@@ -42,7 +42,7 @@ class UserProfileAdmin(UserAdmin):
         ),
         (
             ("Permissions"),
-            {"fields": ("is_active", "is_superuser", "groups", "user_permissions")},
+            {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")},
         ),
         (("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
@@ -57,6 +57,7 @@ class ClientProfileAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "user",
+                    "client_code",
                     "affiliate_partner_code",
                     "affiliate_partner_name",
                     "pin",

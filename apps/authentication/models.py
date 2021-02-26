@@ -36,14 +36,12 @@ class StaffCategory(models.TextChoices):
 
 class User(AbstractUser):
     phone = models.CharField(blank=True, max_length=50)
-    email = models.EmailField(max_length=254)
     designation_category = models.CharField(
         choices=DesignationCategory.choices, blank=True, max_length=30
     )
     company_category = models.CharField(
         choices=CompanyCategory.choices, blank=True, max_length=40
     )
-    REQUIRED_FIELDS = ["first_name", "last_name", "email"]
 
     @property
     def user_full_name(self):
@@ -134,8 +132,8 @@ class InternalFiles(TimeStamped):
     client = models.ForeignKey(
         Client, related_name="client_files", on_delete=models.CASCADE
     )
-    file_name = models.CharField(max_length=250)
-    url = models.URLField()
+    file_name = models.CharField(max_length=250, blank=True)
+    url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True)
 
     def __str__(self):

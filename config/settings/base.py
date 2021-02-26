@@ -142,12 +142,17 @@ SITE_ID = 1
 
 DJOSER = {
     "SEND_CONFIRMATION_EMAIL": True,
+    "PASSWORD_RESET_CONFIRM_URL": "users/reset_password_confirm/{uid}/{token}",
     "ACTIVATION_URL": "auth/users/activation/{uid}/{token}",
-    "SEND_ACTIVATION_EMAIL": True,
+    # TODO: set SEND_ACTIVATION_EMAIL to true when the new fix has arrived
+    # currently when updating a user the system sends an activation link to
+    # the registered email
+    # "SEND_ACTIVATION_EMAIL": True,
     "HIDE_USERS": True,
     "SERIALIZERS": {
         "user_create": "apps.authentication.serializers.UserRegistrationSerializer",
-        "user": "apps.authentication.serializers.UserListSerializer"
+        "user": "apps.authentication.serializers.UserListSerializer",
+        "current_user": "apps.authentication.serializers.CurrentUserSerializer"
     }
 }
 
