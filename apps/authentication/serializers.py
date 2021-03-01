@@ -33,11 +33,14 @@ class UserListSerializer(BaseUserListSerializer):
 
 
 class ClientInternalFileSerializer(serializers.ModelSerializer):
+    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), allow_null=True, required=False)
+
     class Meta:
         model = InternalFiles
         fields = ("id", "client", "file_name", "url", "description")
 
     def update(self, instance, validated_data):
+        instance.client = validated_data.get("client", instance.client)
         instance.file_name = validated_data.get("file_name", instance.file_name)
         instance.url = validated_data.get("url", instance.url)
         instance.description = validated_data.get("description", instance.description)
@@ -46,11 +49,13 @@ class ClientInternalFileSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(WritableNestedModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
     client_files = ClientInternalFileSerializer(many=True, allow_null=True, required=False)
     class Meta:
         model = Client
         fields = (
             "id",
+            "user",
             "client_code",
             "affiliate_partner_code",
             "affiliate_partner_name",
@@ -72,6 +77,8 @@ class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
         fields = (
+            "id",
+            "user",
             "date_of_birth",
             "blood_type",
             "position",
@@ -105,8 +112,6 @@ class StaffSerializer(serializers.ModelSerializer):
 
 
 class CurrentUserSerializer(BaseUserListSerializer, WritableNestedModelSerializer):
-    client = ClientSerializer()
-    staff = StaffSerializer(allow_null=True, required=False)
 
     class Meta(BaseUserListSerializer.Meta):
         fields = BaseUserListSerializer.Meta.fields + (
@@ -115,41 +120,4 @@ class CurrentUserSerializer(BaseUserListSerializer, WritableNestedModelSerialize
             "last_name",
             "designation_category",
             "company_category",
-            "client",
-            "staff"
         )
-
-    def update(self, instance, validated_data):
-        client_data = validated_data.pop("client")
-        # client_data_files = validated_data.pop("client.client_files", [])
-        client = instance.client
-        # client_files = instance.client.client_files
-
-        # user account info
-        instance.first_name = validated_data.get("first_name", instance.first_name)
-        instance.last_name = validated_data.get("last_name", instance.last_name)
-        instance.phone = validated_data.get("phone", instance.phone)
-        instance.email = validated_data.get("email", instance.email)
-        instance.designation_category = validated_data.get(
-            "designation_category", instance.designation_category
-        )
-        instance.company_category = validated_data.get(
-            "company_category", instance.company_category
-        )
-        instance.save()
-
-        # client info
-        client.client_code = client_data.get("client_code", client.client_code)
-        client.affiliate_partner_code = client_data.get(
-            "affiliate_partner_code", client.affiliate_partner_code
-        )
-        client.affiliate_partner_name = client_data.get(
-            "affiliate_partner_name", client.affiliate_partner_name
-        )
-        client.pin = client_data.get("pin", client.pin)
-        client.lead_information = client_data.get(
-            "lead_information", client.lead_information
-        )
-        client.customer_id = client_data.get("customer_id", client.customer_id)
-        # client.client_files = client_data.get("client_files", client.client_files)
-        return instance
