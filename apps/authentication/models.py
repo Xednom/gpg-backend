@@ -142,6 +142,33 @@ class Staff(TimeStamped):
     def __str__(self):
         return f"{self.user.user_full_name} - staff"
 
+    def create_company_id(self):
+        code = self.user.company_category
+        company_code = ""
+        for i in code.upper().split():
+            company_code += i[0]
+        company_code = company_code + "000" + str(self.id)
+        return company_code
+    
+    def create_staff_id(self):
+        initial_name = self.user.user_full_name
+        code = self.user.company_category
+        staff_code = ""
+        staff_initials = ""
+
+        for i in initial_name.upper().split():
+            staff_initials += i[0]
+
+        for i in code.upper().split():
+            staff_code += i[0]
+        staff_code = staff_initials + staff_code + "000" + str(self.id)
+        return staff_code
+    
+    def save(self, *args, **kwargs):
+        self.staff_id = self.create_staff_id()
+        self.company_id = self.create_company_id()
+        super().save(*args, **kwargs)
+
     @receiver(post_save, sender=User)
     def create_staff_user(sender, instance, created, **kwargs):
         if created:
