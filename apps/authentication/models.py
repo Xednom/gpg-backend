@@ -61,6 +61,27 @@ class Client(TimeStamped):
 
     def __str__(self):
         return f"{self.user} - {self.affiliate_partner_name}"
+    
+    def create_affiliate_partner_code(self):
+        code = self.affiliate_partner_name
+        partner_code = ""
+        for i in code.upper().split():
+            partner_code += i[0]
+        partner_code = partner_code + "000" + str(self.id)
+        return partner_code
+    
+    def create_customer_id(self):
+        code = self.user.company_category
+        customer_code = ""
+        for i in code.upper().split():
+            customer_code += i[0]
+        customer_code = customer_code + "000" + str(self.id)
+        return customer_code
+    
+    def save(self, *args, **kwargs):
+        self.affiliate_partner_code = self.create_affiliate_partner_code()
+        self.customer_id = self.create_customer_id()
+        super().save(*args, **kwargs)
 
     @property
     def client_name(self):
