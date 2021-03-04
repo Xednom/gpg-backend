@@ -61,23 +61,42 @@ class Client(TimeStamped):
 
     def __str__(self):
         return f"{self.user} - {self.affiliate_partner_name}"
-    
+
     def create_affiliate_partner_code(self):
         code = self.affiliate_partner_name
         partner_code = ""
         for i in code.upper().split():
             partner_code += i[0]
-        partner_code = partner_code + "000" + str(self.id)
+        last_in = Client.objects.all().order_by("id").last()
+        if not last_in:
+            seq = 0
+            customer_id = partner_code + "000" % (last_in.id)
+            partner_code = partner_code + "000" + customer_id
+            return partner_code
+        in_id = last_in.id
+        in_int = int(in_id)
+
+        partner_code = partner_code + "000" + str((int(in_int) + 1))
         return partner_code
-    
+
     def create_customer_id(self):
         code = self.user.company_category
         customer_code = ""
         for i in code.upper().split():
             customer_code += i[0]
-        customer_code = customer_code + "000" + str(self.id)
+        last_in = Client.objects.all().order_by("id").last()
+        print(last_in.id)
+        if not last_in:
+            seq = 0
+            customer_id = customer_code + "000" % (last_in.id)
+            customer_code = +"000" + customer_id
+            return customer_code
+        in_id = last_in.id
+        in_int = int(in_id)
+
+        customer_code = customer_code + "000" + str((int(in_int) + 1))
         return customer_code
-    
+
     def save(self, *args, **kwargs):
         self.affiliate_partner_code = self.create_affiliate_partner_code()
         self.customer_id = self.create_customer_id()
@@ -147,9 +166,18 @@ class Staff(TimeStamped):
         company_code = ""
         for i in code.upper().split():
             company_code += i[0]
-        company_code = company_code + "000" + str(self.id)
+        last_in = Staff.objects.all().order_by("id").last()
+        if not last_in:
+            seq = 0
+            staff_id = company_code + "000" % (int(seq) + 1)
+            company_code = +"000" + staff_id
+            return company_code
+        in_id = last_in.id
+        in_int = int(in_id)
+
+        company_code = company_code + "000" + str((int(in_int) + 1))
         return company_code
-    
+
     def create_staff_id(self):
         initial_name = self.user.user_full_name
         code = self.user.company_category
@@ -161,9 +189,18 @@ class Staff(TimeStamped):
 
         for i in code.upper().split():
             staff_code += i[0]
-        staff_code = staff_initials + staff_code + "000" + str(self.id)
+        last_in = Staff.objects.all().order_by("id").last()
+        if not last_in:
+            seq = 0
+            staff_id = staff_code + "000" % (int(seq) + 1)
+            staff_code = +"000" + staff_id
+            return staff_code
+        in_id = last_in.id
+        in_int = int(in_id)
+
+        staff_code = staff_initials + staff_code + "000" + str((int(in_int) + 1))
         return staff_code
-    
+
     def save(self, *args, **kwargs):
         self.staff_id = self.create_staff_id()
         self.company_id = self.create_company_id()
