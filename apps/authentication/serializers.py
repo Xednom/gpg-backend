@@ -86,6 +86,8 @@ class ClientSerializer(WritableNestedModelSerializer):
 class StaffSerializer(WritableNestedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all(), required=False, allow_null=True)
     staff_files = StaffInternalFileSerializer(many=True, allow_null=True, required=False)
+    start_date_hired = serializers.DateField(format="%Y-%m-%d",input_formats=['%Y-%m-%d',])
+    date_hired_in_contract = serializers.DateField(format="%Y-%m-%d",input_formats=['%Y-%m-%d',])
 
     class Meta:
         model = Staff
