@@ -239,4 +239,4 @@ class InternalFilesStaff(TimeStamped):
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.client} - {self.file_name}"
+        return f"{self.staff} - {self.file_name}"

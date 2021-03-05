@@ -52,7 +52,7 @@ class StaffInternalFileSerializer(serializers.ModelSerializer):
     staff = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all(), allow_null=True, required=False)
 
     class Meta:
-        model = InternalFiles
+        model = InternalFilesStaff
         fields = ("id", "staff", "file_name", "url", "description")
 
     def update(self, instance, validated_data):
