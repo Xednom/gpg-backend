@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions
 
-from .models import Staff, Client, InternalFiles
-from .serializers import StaffSerializer, ClientSerializer, ClientInternalFileSerializer
+from .models import Staff, Client, InternalFiles, InternalFilesStaff
+from .serializers import StaffSerializer, ClientSerializer, ClientInternalFileSerializer, StaffInternalFileSerializer
 
 User = get_user_model()
 
@@ -52,4 +52,20 @@ class ClientFilesViewSet(viewsets.ModelViewSet):
 
         if current_user:
             qs = InternalFiles.objects.filter(client__user=current_user)
+            return qs
+
+
+class StaffFilesViewSet(viewsets.ModelViewSet):
+    serializer_class = StaffInternalFileSerializer
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    queryset = InternalFilesStaff.objects.all()
+
+    def get_queryset(self):
+        current_user = self.request.user
+        client = InternalFilesStaff.objects.all()
+
+        if current_user:
+            qs = InternalFilesStaff.objects.filter(staff__user=current_user)
             return qs

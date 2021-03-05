@@ -48,6 +48,22 @@ class ClientInternalFileSerializer(serializers.ModelSerializer):
         return instance
 
 
+class StaffInternalFileSerializer(serializers.ModelSerializer):
+    staff = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all(), allow_null=True, required=False)
+
+    class Meta:
+        model = InternalFiles
+        fields = ("id", "staff", "file_name", "url", "description")
+
+    def update(self, instance, validated_data):
+        instance.staff = validated_data.get("staff", instance.staff)
+        instance.file_name = validated_data.get("file_name", instance.file_name)
+        instance.url = validated_data.get("url", instance.url)
+        instance.description = validated_data.get("description", instance.description)
+        instance.save()
+        return instance
+
+
 class ClientSerializer(WritableNestedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
     client_files = ClientInternalFileSerializer(many=True, allow_null=True, required=False)
@@ -67,12 +83,9 @@ class ClientSerializer(WritableNestedModelSerializer):
         # lookup_field = "user"
 
 
-class StaffSerializer(serializers.ModelSerializer):
-    staff_files = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=InternalFilesStaff.objects.all(),
-        required=False,
-    )
+class StaffSerializer(WritableNestedModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all(), required=False, allow_null=True)
+    staff_files = StaffInternalFileSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
         model = Staff

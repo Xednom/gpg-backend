@@ -68,10 +68,12 @@ class Client(TimeStamped):
         for i in code.upper().split():
             partner_code += i[0]
         last_in = Client.objects.all().order_by("id").last()
+
         if not last_in:
+            for i in code.upper().split():
+                partner_code += i[0]
             seq = 0
-            customer_id = partner_code + "000" % (last_in.id)
-            partner_code = partner_code + "000" + customer_id
+            partner_code = partner_code + "000" + str((int(seq) + 1))
             return partner_code
         in_id = last_in.id
         in_int = int(in_id)
@@ -85,11 +87,11 @@ class Client(TimeStamped):
         for i in code.upper().split():
             customer_code += i[0]
         last_in = Client.objects.all().order_by("id").last()
-        print(last_in.id)
         if not last_in:
+            for i in code.upper().split():
+                customer_code += i[0]
             seq = 0
-            customer_id = customer_code + "000" % (last_in.id)
-            customer_code = +"000" + customer_id
+            customer_code = customer_code + "000" + str((int(seq) + 1))
             return customer_code
         in_id = last_in.id
         in_int = int(in_id)
@@ -169,8 +171,7 @@ class Staff(TimeStamped):
         last_in = Staff.objects.all().order_by("id").last()
         if not last_in:
             seq = 0
-            staff_id = company_code + "000" % (int(seq) + 1)
-            company_code = +"000" + staff_id
+            company_code = company_code + "000" + str((int(seq) + 1))
             return company_code
         in_id = last_in.id
         in_int = int(in_id)
@@ -191,9 +192,9 @@ class Staff(TimeStamped):
             staff_code += i[0]
         last_in = Staff.objects.all().order_by("id").last()
         if not last_in:
+
             seq = 0
-            staff_id = staff_code + "000" % (int(seq) + 1)
-            staff_code = +"000" + staff_id
+            staff_code = staff_initials + staff_code + "000" + str((int(seq) + 1))
             return staff_code
         in_id = last_in.id
         in_int = int(in_id)
@@ -233,3 +234,9 @@ class InternalFilesStaff(TimeStamped):
         blank=True,
         null=True,
     )
+    file_name = models.CharField(max_length=250, blank=True)
+    url = models.URLField(blank=True, null=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.client} - {self.file_name}"
