@@ -240,7 +240,7 @@ class InternalFiles(TimeStamped):
         Client, related_name="client_files", on_delete=models.CASCADE
     )
     file_name = models.CharField(max_length=250, blank=True)
-    url = models.URLField(blank=True, null=True)
+    url = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -256,7 +256,7 @@ class InternalFilesStaff(TimeStamped):
         null=True,
     )
     file_name = models.CharField(max_length=250, blank=True)
-    url = models.URLField(blank=True, null=True)
+    url = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
