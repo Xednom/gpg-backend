@@ -75,10 +75,15 @@ class Client(TimeStamped):
             seq = 0
             partner_code = partner_code + "000" + str((int(seq) + 1))
             return partner_code
+        
+        if self.id:
+            partner_code = partner_code + "000" + str(self.id)
+            return partner_code
+
         in_id = last_in.id
         in_int = int(in_id)
 
-        partner_code = partner_code + "000" + str((int(in_int) + 1))
+        partner_code = partner_code + "000" + str(int(in_int) + 1)
         return partner_code
 
     def create_customer_id(self):
@@ -93,10 +98,15 @@ class Client(TimeStamped):
             seq = 0
             customer_code = customer_code + "000" + str((int(seq) + 1))
             return customer_code
+        
+        if self.id:
+            customer_code = customer_code + "000" + str(self.id)
+            return customer_code
+
         in_id = last_in.id
         in_int = int(in_id)
 
-        customer_code = customer_code + "000" + str((int(in_int) + 1))
+        customer_code = customer_code + "000" + str(int(in_int) + 1)
         return customer_code
 
     def save(self, *args, **kwargs):
@@ -173,10 +183,15 @@ class Staff(TimeStamped):
             seq = 0
             company_code = company_code + "000" + str((int(seq) + 1))
             return company_code
+        
+        if self.id:
+            company_code = company_code + "000" + str(self.id)
+            return company_code
+        
         in_id = last_in.id
         in_int = int(in_id)
+        company_code = company_code + "000" + str(int(in_int) + 1)
 
-        company_code = company_code + "000" + str((int(in_int) + 1))
         return company_code
 
     def create_staff_id(self):
@@ -190,16 +205,22 @@ class Staff(TimeStamped):
 
         for i in code.upper().split():
             staff_code += i[0]
+
         last_in = Staff.objects.all().order_by("id").last()
         if not last_in:
 
             seq = 0
             staff_code = staff_initials + staff_code + "000" + str((int(seq) + 1))
             return staff_code
+
+        if self.id:
+            staff_code = staff_initials + staff_code + "000" + str(self.id)
+            return staff_code
+        
         in_id = last_in.id
         in_int = int(in_id)
-
-        staff_code = staff_initials + staff_code + "000" + str((int(in_int) + 1))
+        staff_code = staff_initials + staff_code + "000" + str(int(in_int) + 1)
+        
         return staff_code
 
     def save(self, *args, **kwargs):
