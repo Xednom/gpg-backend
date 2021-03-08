@@ -11,11 +11,11 @@ User = get_user_model()
 class JobOrderGeneralViewSet(viewsets.ModelViewSet):
     serializer_class = JobOrderGeneralSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "ticket_number"
 
     def get_queryset(self):
         job_order = JobOrderGeneral.objects.all()
         current_user = self.request.user
-        print(current_user)
         clients = User.objects.filter(username=current_user)
         staffs = User.objects.filter(username=current_user)
         client = clients.all()

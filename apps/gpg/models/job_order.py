@@ -52,20 +52,43 @@ class JobOrderGeneral(TimeStamped):
     va_assigned = models.ForeignKey(
         Staff, related_name="vas_job_orders", on_delete=models.CASCADE
     )
+    ticket_number = models.CharField(max_length=100, blank=True)
     request_date = models.DateField()
     due_date = models.DateField()
     job_title = models.CharField(max_length=250)
     job_description = models.TextField()
-    client_notes = models.TextField()
-    va_notes = models.TextField()
+    client_notes = models.TextField(blank=True)
+    va_notes = models.TextField(blank=True)
     status = models.CharField(
         max_length=100,
         choices=JobOrderStatus.choices,
         default=JobOrderStatus.na,
         blank=True,
     )
-    date_completed = models.DateField()
-    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2)
+    date_completed = models.DateField(blank=True, null=True)
+    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    def create_ticket_number(self):
+        ticket_code = ""
+        last_in = JobOrderGeneral.objects.all().order_by("id").last()
+
+        if not last_in:
+            seq = 0
+            ticket_number = "000" + str((int(seq) + 1))
+            return ticket_number
+        
+        if self.id:
+            ticket_number = "JO000" + str(self.id)
+            return ticket_number
+        
+        in_id = last_in.id
+        in_int = int(in_id)
+        ticket_code = "000" + str(int(in_int) + 1)
+        return ticket_code
+    
+    def save(self, *args, **kwargs):
+        self.ticket_number = self.create_ticket_number()
+        super(JobOrderGeneral, self).save(*args, **kwargs)
 
 
 # TODO: confirmation for these models
