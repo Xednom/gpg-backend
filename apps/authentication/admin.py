@@ -50,7 +50,7 @@ class UserProfileAdmin(UserAdmin):
 
 class ClientProfileAdmin(admin.ModelAdmin):
     model = Client
-    list_display = ("user", "affiliate_partner_code", "customer_id")
+    list_display = ("user", "client_code", "affiliate_partner_code", "customer_id")
     fieldsets = (
         (
             "Personal Information",

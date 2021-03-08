@@ -61,6 +61,31 @@ class Client(TimeStamped):
 
     def __str__(self):
         return f"{self.user} - {self.affiliate_partner_name}"
+    
+    def create_client_code(self):
+        initial_name = self.user.first_name + self.user.last_name
+        client_code = ""
+
+        for i in initial_name.upper().split():
+            client_code += i[0]
+        
+        last_in = Client.objects.all().order_by("id").last()
+
+        if not last_in:
+            seq = 0
+            client_code = client_code + "000" + str(int(seq) + 1)
+            return client_code
+        
+        if self.id:
+            client_code = client_code + "000" + str(self.id)
+            return client_code
+        
+        in_id = last_in.id
+        in_int = int(in_id)
+
+        client_code = client_code + "000" + str(int(in_int) + 1)
+        return client_code
+
 
     def create_affiliate_partner_code(self):
         code = self.affiliate_partner_name
@@ -110,13 +135,14 @@ class Client(TimeStamped):
         return customer_code
 
     def save(self, *args, **kwargs):
+        self.client_code = self.create_client_code()
         self.affiliate_partner_code = self.create_affiliate_partner_code()
         self.customer_id = self.create_customer_id()
         super().save(*args, **kwargs)
 
     @property
     def client_name(self):
-        return f"{user.first_name} {user.last_name}"
+        return f"{self.user.user_full_name}"
 
     @receiver(post_save, sender=User)
     def create_client_user(sender, instance, created, **kwargs):
@@ -172,6 +198,10 @@ class Staff(TimeStamped):
 
     def __str__(self):
         return f"{self.user.user_full_name} - staff"
+    
+    @property
+    def staff_name(self):
+        return f"{self.user.user_full_name}"
 
     def create_company_id(self):
         code = self.user.company_category
