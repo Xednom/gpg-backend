@@ -47,10 +47,12 @@ class JobOrderStatus(models.TextChoices):
 
 class JobOrderGeneral(TimeStamped):
     client = models.ForeignKey(
-        Client, related_name="clients_job_orders", on_delete=models.CASCADE
+        Client, related_name="clients_job_orders", on_delete=models.CASCADE,
+        blank=True, null=True
     )
     va_assigned = models.ForeignKey(
-        Staff, related_name="vas_job_orders", on_delete=models.CASCADE
+        Staff, related_name="vas_job_orders", on_delete=models.CASCADE,
+        blank=True, null=True
     )
     ticket_number = models.CharField(max_length=100, blank=True)
     request_date = models.DateField()

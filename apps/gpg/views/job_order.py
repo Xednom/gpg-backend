@@ -16,16 +16,14 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         job_order = JobOrderGeneral.objects.all()
         current_user = self.request.user
+        print(current_user)
         clients = User.objects.filter(username=current_user)
         staffs = User.objects.filter(username=current_user)
         client = clients.all()
         staff = staffs.all()
 
-        if staff:
-            queryset = job_order.filter(client__user__in=client)
-            return queryset
-        elif client:
-            queryset = job_order.filter(va_assigned__user__in=staff)
+        if current_user:
+            queryset = job_order.filter(client__user__in=client) or job_order.filter(va_assigned__user__in=staff)
             return queryset
         elif current_user.is_superuser:
             queryset = JobOrderGeneral.objects.all()
