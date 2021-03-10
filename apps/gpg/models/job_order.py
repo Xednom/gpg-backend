@@ -70,6 +70,9 @@ class JobOrderGeneral(TimeStamped):
     date_completed = models.DateField(blank=True, null=True)
     total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
+    class Meta:
+        ordering = ["-request_date"]
+
     def create_ticket_number(self):
         ticket_code = ""
         last_in = JobOrderGeneral.objects.all().order_by("id").last()
