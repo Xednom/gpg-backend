@@ -1,12 +1,29 @@
 from rest_framework import serializers
 
 from apps.authentication.models import Staff, Client
-from apps.gpg.models import JobOrderGeneral
+from apps.gpg.models import JobOrderGeneral, Comment
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    commenter = serializers.SerializerMethodField()
+    class Meta:
+        model = Comment
+        fields = (
+            "job_order",
+            "user",
+            "comment",
+            "commenter",
+        )
+    
+    def get_commenter(self, instance):
+        if instance.user.designation_category == "staff":
+            return "Virtual Assistant"
+        else:
+            return "Client"
 
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
-    # va_assigned = serializers.SlugRelatedField(slug_field="staff_name", queryset=Staff.objects.all(), allow_null=True, required=False)
-    # client = serializers.SlugRelatedField(slug_field="client_name", queryset=Client.objects.all(), allow_null=True, required=False)
+    job_order_comments = CommentSerializer(many=True, required=False, allow_null=True)
     client_code = serializers.SerializerMethodField()
     client_name = serializers.SerializerMethodField()
     staff_name = serializers.SerializerMethodField()
@@ -28,7 +45,8 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "va_notes",
             "status",
             "date_completed",
-            "total_time_consumed"
+            "total_time_consumed",
+            "job_order_comments",
         )
     
     def get_client_code(self, instance):
