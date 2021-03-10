@@ -79,7 +79,7 @@ class JobOrderGeneral(TimeStamped):
 
         if not last_in:
             seq = 0
-            ticket_number = "000" + str((int(seq) + 1))
+            ticket_number = "JO000" + str((int(seq) + 1))
             return ticket_number
         
         if self.id:
@@ -88,7 +88,7 @@ class JobOrderGeneral(TimeStamped):
         
         in_id = last_in.id
         in_int = int(in_id)
-        ticket_code = "000" + str(int(in_int) + 1)
+        ticket_code = "JO000" + str(int(in_int) + 1)
         return ticket_code
     
     def save(self, *args, **kwargs):
