@@ -16,6 +16,7 @@ django-filter = "^2.4.0"
 djoser = {git = "https://github.com/sunscrapers/djoser", rev = "b648b07dc2da7dab4c00c1c39af3d6ec53f58eb6"}
 djangorestframework-simplejwt = "^4.6.0"
 drf-writable-nested = "^0.6.2"
+django-anymail = {extras = ["mailgun"], version = "^8.2"}
 
 [tool.poetry.dev-dependencies]
 
