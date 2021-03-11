@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     "djoser",
     "rest_framework",
     "django_filters",
+    "anymail"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -83,6 +84,8 @@ TEMPLATES = [
         },
     },
 ]
+
+print(os.path.join(BASE_DIR/'templates'))
 
 WSGI_APPLICATION = "config.wsgi.application"
 
@@ -157,8 +160,12 @@ DJOSER = {
 }
 
 # Email sender credentials
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
+ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+# SERVER_EMAIL = "xednom@gmail.com"
+
+EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "xednom@gmail.com"
 EMAIL_HOST_PASSWORD = "ezrizpxmjcpoqndm"
