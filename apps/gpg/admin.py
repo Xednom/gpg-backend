@@ -4,7 +4,7 @@ from apps.gpg.models import (
     JobOrderGeneral,
     JobOrderCategory,
     Comment,
-    CommentByPropertDetail,
+    CommentByApn,
     PropertyDetail,
     PropertyPrice,
     ListingAdDetail,
