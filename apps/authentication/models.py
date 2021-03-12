@@ -258,12 +258,6 @@ class Staff(TimeStamped):
         self.company_id = self.create_company_id()
         super().save(*args, **kwargs)
 
-    @receiver(post_save, sender=User)
-    def create_staff_user(sender, instance, created, **kwargs):
-        if created:
-            if instance.designation_category == "staff":
-                Staff.objects.create(user=instance)
-
 
 class InternalFiles(TimeStamped):
     client = models.ForeignKey(
