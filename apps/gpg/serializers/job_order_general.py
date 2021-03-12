@@ -27,7 +27,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     client_code = serializers.SerializerMethodField()
     client_name = serializers.SerializerMethodField()
     staff_name = serializers.SerializerMethodField()
-    status_name = serializers.SerializerMethodField()
+    status_ = serializers.SerializerMethodField()
     class Meta:
         model = JobOrderGeneral
         fields = (
@@ -45,7 +45,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "client_notes",
             "va_notes",
             "status",
-            "status_name",
+            "status_",
             "date_completed",
             "total_time_consumed",
             "job_order_comments",
@@ -69,7 +69,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
         else:
             return instance.client.client_name
     
-    def get_status_name(self, instance):
+    def get_status_(self, instance):
         if instance.status == "na": 
             return "N/A"
         elif instance.status == "request_for_job_order":
