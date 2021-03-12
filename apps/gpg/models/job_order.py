@@ -34,7 +34,7 @@ class LeadStatus(models.TextChoices):
 
 class JobOrderStatus(models.TextChoices):
     na = "na", ("N/A")
-    request_for_job_order = "request_for_job_order", ("Request for job order")
+    job_order_request = "job_order_request", ("Job order request")
     va_processing = "va_processing", ("VA Processing")
     management_processing = "management_processing", ("Management Processing")
     verified_job_order = "verified_job_order", ("Verified Job Order")
@@ -45,14 +45,25 @@ class JobOrderStatus(models.TextChoices):
     complete = "complete", ("Complete")
 
 
+class PropertyPriceStatus(models.TextChoices):
+    change = "change", ("Change")
+    active = "active", ("Active")
+
+
 class JobOrderGeneral(TimeStamped):
     client = models.ForeignKey(
-        Client, related_name="clients_job_orders", on_delete=models.CASCADE,
-        blank=True, null=True
+        Client,
+        related_name="clients_job_orders",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     va_assigned = models.ForeignKey(
-        Staff, related_name="vas_job_orders", on_delete=models.CASCADE,
-        blank=True, null=True
+        Staff,
+        related_name="vas_job_orders",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     ticket_number = models.CharField(max_length=100, blank=True)
     request_date = models.DateField()
@@ -68,10 +79,12 @@ class JobOrderGeneral(TimeStamped):
         blank=True,
     )
     date_completed = models.DateField(blank=True, null=True)
-    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    total_time_consumed = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
 
     class Meta:
-        ordering = ["-request_date"]
+        ordering = ["-ticket_number"]
 
     def create_ticket_number(self):
         ticket_code = ""
@@ -81,101 +94,172 @@ class JobOrderGeneral(TimeStamped):
             seq = 0
             ticket_number = "JO000" + str((int(seq) + 1))
             return ticket_number
-        
+
         if self.id:
             ticket_number = "JO000" + str(self.id)
             return ticket_number
-        
+
         in_id = last_in.id
         in_int = int(in_id)
         ticket_code = "JO000" + str(int(in_int) + 1)
         return ticket_code
-    
+
     def save(self, *args, **kwargs):
         self.ticket_number = self.create_ticket_number()
         super(JobOrderGeneral, self).save(*args, **kwargs)
 
 
-# TODO: confirmation for these models
-# class PropertyDetails(TimeStamped):
-#     client = models.ForeignKey(
-#         Client, related_name="client_properties", on_delete=models.CASCADE
-#     )
-#     apn = models.CharField(max_length=250)
-#     county = models.CharField(max_length=250)
-#     state = models.CharField(max_length=250)
-#     status = models.CharField(choices=Status.choices, blank=True, max_length=25)
-#     size = models.DecimalField(max_digits=10, decimal_places=2)
+class PropertyDetail(TimeStamped):
+    ticket_number = models.CharField(max_length=150, blank=True)
+    client = models.ForeignKey(
+        Client, related_name="client_properties", on_delete=models.CASCADE
+    )
+    apn = models.CharField(max_length=250)
+    county = models.CharField(max_length=250)
+    state = models.CharField(max_length=250)
+    status = models.CharField(choices=Status.choices, blank=True, max_length=25)
+    size = models.DecimalField(max_digits=10, decimal_places=2)
 
-#     def __str__(self):
-#         return f"Property Details of {client.client_name}"
+    def __str__(self):
+        return f"Property Details of {self.client.client_name}"
+    
+    def create_ticket_number(self):
+        ticket_code = ""
+        last_in = PropertyDetail.objects.all().order_by("id").last()
 
+        if not last_in:
+            seq = 0
+            ticket_number = "PD000" + str((int(seq) + 1))
+            return ticket_number
 
-# class PropertyPrice(TimeStamped):
-#     client = models.ForeignKey(
-#         Client, related_name="property_prices", on_delete=models.CASCADE
-#     )
-#     asking_price = models.DecimalField(max_digits=11, decimal_places=2)
-#     cash_terms = models.DecimalField(max_digits=11, decimal_places=2)
-#     finance_terms = models.TextField()
-#     other_terms = models.TextField()
-#     notes = models.TextField()
+        if self.id:
+            ticket_number = "PD000" + str(self.id)
+            return ticket_number
 
-#     def __str_(self):
-#         return f"Property Price of {client.client_name} with price {self.askin_price}"
+        in_id = last_in.id
+        in_int = int(in_id)
+        ticket_code = "PD000" + str(int(in_int) + 1)
+        return ticket_code
 
-
-# class ListingAdDetails(TimeStamped):
-#     category = models.CharField(
-#         choices=ListingAdCategory.choices, max_length=30, blank=True
-#     )
-#     ad_details = models.TextField()
-#     notes_client_side = models.TextField()
-#     notes_va_side = models.TextField()
-#     notes_management_side = models.TextField()
-
-#     def __str__(self):
-#         return f"Listing Ad details of {client.client_name}"
+    def save(self, *args, **kwargs):
+        self.ticket_number = self.create_ticket_number()
+        super(PropertyDetail, self).save(*args, **kwargs)
 
 
-# class ApprovedOfferNotes(TimeStamped):
-#     client = models.ForeignKey(
-#         Client, related_name="approved_offer_notes", on_delete=models.CASCADE
-#     )
-#     asking_price = models.DecimalField(max_digits=11, decimal_places=2)
-#     cash_terms = models.DecimalField(max_digits=11, decimal_places=2)
-#     finance_terms = models.TextField()
-#     other_terms = models.TextField()
-#     notes = models.TextField()
+class PropertyPrice(TimeStamped):
+    property_details = models.ForeignKey(
+        PropertyDetail, related_name="property_prices", on_delete=models.CASCADE
+    )
+    asking_price = models.DecimalField(max_digits=11, decimal_places=2)
+    cash_terms = models.DecimalField(max_digits=11, decimal_places=2)
+    finance_terms = models.TextField()
+    other_terms = models.TextField()
+    notes = models.TextField()
+    status = models.CharField(
+        max_length=30,
+        choices=PropertyPriceStatus.choices,
+        default=PropertyPriceStatus.active,
+        blank=True,
+    )
 
-#     def __str_(self):
-#         return f"Approved offer notes of {client.client_name} with price {self.askin_price}"
+    def __str_(self):
+        return f"{client.client_name} with asking price {self.asking_price}"
 
 
-# class LeadManagement(TimeStamped):
-#     date_lead_added = models.DateField()
-#     first_name = models.CharField(max_length=250)
-#     last_name = models.CharField(max_length=250)
-#     phone = models.CharField(max_length=30)
-#     email = models.EmailField()
-#     lead_source = models.CharField(max_length=250)
-#     lead_status = models.CharField(
-#         choices=LeadStatus.choices, max_length=50, blank=True
-#     )
-#     date_of_callback = models.DateField()
-#     time = models.TimeField()
-#     call_center_rep_notes = models.TextField()
-#     call_center_reps_id = models.CharField(max_length=100)
-#     lead_added_by = models.CharField(max_length=250)
+class ListingAdDetail(TimeStamped):
+    property_details = models.ForeignKey(
+        PropertyDetail, related_name="listing_ads", on_delete=models.CASCADE
+    )
+    category = models.CharField(
+        choices=ListingAdCategory.choices, max_length=30, blank=True
+    )
+    ad_details = models.TextField()
+    notes_client_side = models.TextField()
+    notes_va_side = models.TextField()
+    notes_management_side = models.TextField()
 
-#     def __str__(self):
-#         return f"Lead added by {self.lead_added_by}"
+    def __str__(self):
+        return f"{self.property_details} with {self.ad_details}"
+
+
+class CategoryType(TimeStamped):
+    category = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"{self.category}"
+
+
+class JobOrderCategory(TimeStamped):
+    ticket_number = models.CharField(max_length=100, blank=True)
+    category = models.ForeignKey(
+        CategoryType, related_name="job_order_categories", on_delete=models.CASCADE
+    )
+    status = models.CharField(
+        max_length=100,
+        choices=JobOrderStatus.choices,
+        default=JobOrderStatus.na,
+        blank=True,
+    )
+    due_date = models.DateField()
+    date_completed = models.DateField(blank=True, null=True)
+    job_description = models.TextField()
+    completed_url_work = models.URLField(blank=True)
+    va_assigned = models.ForeignKey(
+        Staff,
+        related_name="vas_job_orders_by_categories",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    notes_va = models.TextField(blank=True)
+    notes_management = models.TextField(blank=True)
+    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"Job order by {self.category}"
+    
+    def create_ticket_number(self):
+        ticket_code = ""
+        last_in = JobOrderCategory.objects.all().order_by("id").last()
+
+        if not last_in:
+            seq = 0
+            ticket_number = "JOC000" + str((int(seq) + 1))
+            return ticket_number
+
+        if self.id:
+            ticket_number = "JOC000" + str(self.id)
+            return ticket_number
+
+        in_id = last_in.id
+        in_int = int(in_id)
+        ticket_code = "JOC000" + str(int(in_int) + 1)
+        return ticket_code
+
+    def save(self, *args, **kwargs):
+        self.ticket_number = self.create_ticket_number()
+        super(JobOrderCategory, self).save(*args, **kwargs)
 
 
 class Comment(TimeStamped):
     job_order = models.ForeignKey(
         JobOrderGeneral,
         related_name="job_order_comments",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    comment = models.TextField()
+
+    class Meta:
+        ordering = ["created_at"]
+
+
+class CommentByPropertDetail(TimeStamped):
+    property_details = models.ForeignKey(
+        PropertyDetail,
+        related_name="property_detail_comments",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
