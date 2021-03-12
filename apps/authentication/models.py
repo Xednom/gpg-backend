@@ -144,16 +144,6 @@ class Client(TimeStamped):
     def client_name(self):
         return f"{self.user.user_full_name}"
 
-    @receiver(post_save, sender=User)
-    def create_client_user(sender, instance, created, **kwargs):
-        if created:
-            if (
-                instance.designation_category == "new_client"
-                or instance.designation_category == "current_client"
-                or instance.designation_category == "affiliate_partner"
-            ):
-                Client.objects.create(user=instance)
-
 
 class Staff(TimeStamped):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
