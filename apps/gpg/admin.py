@@ -6,8 +6,6 @@ from apps.gpg.models import (
     Comment,
     CommentByApn,
     PropertyDetail,
-    PropertyPrice,
-    ListingAdDetail,
     CategoryType
 )
 
@@ -24,7 +22,7 @@ class CategoryTypeAdmin(admin.ModelAdmin):
 
 class PropertyDetailsAdmin(admin.ModelAdmin):
     model = PropertyDetail
-    list_display = ("ticket_number", "client", "apn", "county", "state", "status")
+    list_display = ("ticket_number", "client", "apn", "county", "state", "property_status")
     fieldsets = (
         (
             "Property Information",
@@ -32,47 +30,32 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
                 "fields": (
                     "ticket_number",
                     "client",
+                    "staff",
                     "apn",
                     "county",
                     "state",
-                    "status",
+                    "property_status",
                     "size",
                 )
             },
         ),
-    )
-
-
-class PropertyPriceAdmin(admin.ModelAdmin):
-    model = PropertyPrice
-    list_display = ("property_details", "cash_terms", "status")
-    fieldsets = (
         (
             "Property price Information",
             {
                 "fields": (
-                    "property_details",
                     "asking_price",
                     "cash_terms",
                     "finance_terms",
                     "other_terms",
                     "notes",
-                    "status",
+                    "price_status",
                 )
             },
         ),
-    )
-
-
-class ListingAdDetailAdmin(admin.ModelAdmin):
-    model = ListingAdDetail
-    list_display = ("category", "ad_details")
-    fieldsets = (
         (
-            "Property price Information",
+            "Listing Ad Detail",
             {
                 "fields": (
-                    "property_details",
                     "category",
                     "ad_details",
                     "notes_client_side",
@@ -102,7 +85,8 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
     model = JobOrderCategory
     list_display = (
         "ticket_number",
-        "va_assigned",
+        "client",
+        "staff",
         "due_date",
         "date_completed",
         "status",
@@ -113,13 +97,14 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "ticket_number",
+                    "client",
                     "category",
                     "status",
                     "due_date",
                     "date_completed",
                     "total_time_consumed",
                     "completed_url_work",
-                    "va_assigned",
+                    "staff",
                     "job_description",
                 )
             },
@@ -139,6 +124,4 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
 admin.site.register(JobOrderGeneral, JobOrderGeneralAdmin)
 admin.site.register(JobOrderCategory, JobOrderByCategoryAdmin)
 admin.site.register(PropertyDetail, PropertyDetailsAdmin)
-admin.site.register(PropertyPrice, PropertyPriceAdmin)
-admin.site.register(ListingAdDetail, ListingAdDetailAdmin)
 admin.site.register(CategoryType, CategoryTypeAdmin)

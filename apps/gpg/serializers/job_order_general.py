@@ -4,6 +4,9 @@ from apps.authentication.models import Staff, Client
 from apps.gpg.models import JobOrderGeneral, Comment
 
 
+__all__ = ("CommentSerializer", "JobOrderGeneralSerializer")
+
+
 class CommentSerializer(serializers.ModelSerializer):
     commenter = serializers.SerializerMethodField()
     class Meta:
@@ -72,7 +75,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     def get_status_(self, instance):
         if instance.status == "na": 
             return "N/A"
-        elif instance.status == "request_for_job_order":
+        elif instance.status == "job_order_request":
             return "Request for job order"
         elif instance.status == "va_processing":
             return "VA Processing"

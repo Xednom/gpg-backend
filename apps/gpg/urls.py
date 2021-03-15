@@ -17,6 +17,12 @@ router.register(r"staff-files", StaffFilesViewSet, basename="staff-files-list")
 router.register(
     r"job-order", views.JobOrderGeneralViewSet, basename="job-order-general"
 )
+router.register(
+    r"job-order-by-category", views.JobOrderGeneralViewSet, basename="job-order-general"
+)
+router.register(
+    r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
+)
 
 
 app_name = "gpg"

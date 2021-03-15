@@ -17,7 +17,6 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         job_order = JobOrderGeneral.objects.all()
         current_user = self.request.user
-        print(current_user)
         clients = User.objects.filter(username=current_user)
         staffs = User.objects.filter(username=current_user)
         client = clients.all()
