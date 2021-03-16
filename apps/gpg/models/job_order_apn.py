@@ -47,9 +47,9 @@ class PropertyDetail(TimeStamped):
     apn = models.CharField(max_length=250)
     county = models.CharField(max_length=250)
     state = models.CharField(max_length=250)
-    size = models.DecimalField(max_digits=10, decimal_places=2)
-    asking_price = models.DecimalField(max_digits=11, decimal_places=2)
-    cash_terms = models.DecimalField(max_digits=11, decimal_places=2)
+    size = models.CharField(max_length=250)
+    asking_price = models.CharField(max_length=250)
+    cash_terms = models.TextField()
     finance_terms = models.TextField()
     other_terms = models.TextField()
     notes = models.TextField()
@@ -59,7 +59,7 @@ class PropertyDetail(TimeStamped):
     notes_management_side = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Property Details of {self.client.client_name}"
+        return f"Property Details of {self.client}"
 
     def create_ticket_number(self):
         ticket_code = ""
