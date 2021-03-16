@@ -24,6 +24,7 @@ __all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet")
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "ticket_number"
 
     def get_queryset(self):
         job_order = PropertyDetail.objects.all()
