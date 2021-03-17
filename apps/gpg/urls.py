@@ -18,7 +18,7 @@ router.register(
     r"job-order", views.JobOrderGeneralViewSet, basename="job-order-general"
 )
 router.register(
-    r"job-order-by-category", views.JobOrderGeneralViewSet, basename="job-order-general"
+    r"job-order-by-category", views.JobOrderByCategoryViewSet, basename="job-order-category"
 )
 router.register(
     r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
@@ -28,5 +28,6 @@ router.register(
 app_name = "gpg"
 urlpatterns = [
     path("", include(router.urls)),
-    path("job-order/<int:id>/comment/", views.CreateJobOrderComment.as_view(), name="job-order-comment")
+    path("job-order/<int:id>/comment/", views.CreateJobOrderComment.as_view(), name="job-order-comment"),
+    path("job-order-category/<int:id>/comment/", views.CreateJobOrderByApnComment.as_view(), name="job-order-apn-comment")
 ]

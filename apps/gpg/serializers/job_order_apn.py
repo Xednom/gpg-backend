@@ -12,6 +12,7 @@ __all__ = (
     "PropertyDetailSerializer",
     "CategoryTypeSerializer",
     "JobOrderCategorySerializer",
+    "ApnCommentSerializer"
 )
 
 
@@ -109,6 +110,8 @@ class ApnCommentSerializer(serializers.ModelSerializer):
 
 
 class JobOrderCategorySerializer(serializers.ModelSerializer):
+    job_order_category_comments = ApnCommentSerializer(many=True, required=False, allow_null=True)
+
     class Meta:
         model = JobOrderCategory
         fields = (
@@ -124,4 +127,5 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "notes_va",
             "notes_management",
             "total_time_consumed",
+            "job_order_category_comments"
         )

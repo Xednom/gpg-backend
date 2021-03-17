@@ -12,13 +12,14 @@ from apps.gpg.serializers import (
     PropertyDetailSerializer,
     CategoryTypeSerializer,
     JobOrderCategorySerializer,
-    CommentByApnSerializer
+    CommentByApnSerializer,
+    ApnCommentSerializer
 )
 
 User = get_user_model()
 
 
-__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet")
+__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet", "CreateJobOrderByApnComment")
 
 
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
@@ -49,7 +50,7 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=current_user)
 
         if current_user:
-            queryset = job_order.filter(client__user__in=user) or job_order.filter(va_assigned__user__in=user)
+            queryset = job_order.filter(client__user__in=user) or job_order.filter(staff__user__in=user)
             return queryset
         elif current_user.is_superuser:
             queryset = JobOrderCategory.objects.all()
@@ -57,7 +58,7 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
 
 
 class CreateJobOrderByApnComment(generics.CreateAPIView):
-    serializer_class = CommentByApnSerializer
+    serializer_class = ApnCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = CommentByApn.objects.all()
 
@@ -66,4 +67,4 @@ class CreateJobOrderByApnComment(generics.CreateAPIView):
         job_order_id = self.kwargs.get("id")
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
 
-        serializer.save(user=user, job_order=job_order)
+        serializer.save(user=user, job_order_category=job_order)

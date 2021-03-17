@@ -149,7 +149,7 @@ class JobOrderCategory(TimeStamped):
 class CommentByApn(TimeStamped):
     job_order_category = models.ForeignKey(
         JobOrderCategory,
-        related_name="property_detail_comments",
+        related_name="job_order_category_comments",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
