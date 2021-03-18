@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, generics
+from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Staff, Client, User
 from apps.gpg.models import (
@@ -19,7 +20,7 @@ from apps.gpg.serializers import (
 User = get_user_model()
 
 
-__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet", "CreateJobOrderByApnComment")
+__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet", "CreateJobOrderByApnComment", "ApnCategoryViewSet")
 
 
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
@@ -43,6 +44,7 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
 class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = JobOrderCategorySerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "ticket_number"
 
     def get_queryset(self):
         job_order = JobOrderCategory.objects.all()
@@ -55,6 +57,12 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         elif current_user.is_superuser:
             queryset = JobOrderCategory.objects.all()
             return queryset
+
+
+class ApnCategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategoryTypeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = CategoryType.objects.all()
 
 
 class CreateJobOrderByApnComment(generics.CreateAPIView):

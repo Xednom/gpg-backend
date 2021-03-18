@@ -86,8 +86,9 @@ class PropertyDetailSerializer(serializers.ModelSerializer):
 
 
 class CategoryTypeSerializer(serializers.ModelSerializer):
-    model = CategoryType
-    fields = ("category",)
+    class Meta:
+        model = CategoryType
+        fields = ("category",)
 
 
 class ApnCommentSerializer(serializers.ModelSerializer):
@@ -96,7 +97,7 @@ class ApnCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentByApn
         fields = (
-            "propert_details",
+            "job_order_category",
             "user",
             "comment",
             "commenter"
@@ -111,14 +112,20 @@ class ApnCommentSerializer(serializers.ModelSerializer):
 
 class JobOrderCategorySerializer(serializers.ModelSerializer):
     job_order_category_comments = ApnCommentSerializer(many=True, required=False, allow_null=True)
+    category = serializers.SlugRelatedField(slug_field="category", queryset=CategoryType.objects.all())
+    category_ = serializers.SerializerMethodField()
+    client_code = serializers.SerializerMethodField()
 
     class Meta:
         model = JobOrderCategory
         fields = (
+            "id",
             "ticket_number",
             "client",
+            "client_code",
             "staff",
             "category",
+            "category_",
             "status",
             "due_date",
             "date_completed",
@@ -129,3 +136,15 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "total_time_consumed",
             "job_order_category_comments"
         )
+    
+    def get_category_(self, instance):
+        if instance.category.category is None:
+            return "No Category exist as of now"
+        else:
+            return f"{instance.category.category}"
+    
+    def get_client_code(self, instance):
+        if instance.client is None:
+            return "Client being process"
+        else:
+            return f"{instance.client.client_code}"
