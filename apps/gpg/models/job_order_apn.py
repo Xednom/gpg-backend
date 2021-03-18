@@ -94,7 +94,8 @@ class CategoryType(TimeStamped):
 class JobOrderCategory(TimeStamped):
     ticket_number = models.CharField(max_length=100, blank=True)
     client = models.ForeignKey(
-        Client, related_name="client_jo_by_categories", on_delete=models.CASCADE
+        Client, related_name="client_jo_by_categories", on_delete=models.CASCADE, blank=True,
+        null=True,
     )
     staff = models.ForeignKey(
         Staff,
@@ -118,7 +119,7 @@ class JobOrderCategory(TimeStamped):
     completed_url_work = models.URLField(blank=True)
     notes_va = models.TextField(blank=True)
     notes_management = models.TextField(blank=True)
-    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2)
+    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f"Job order by {self.category}"
