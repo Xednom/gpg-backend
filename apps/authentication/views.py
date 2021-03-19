@@ -13,14 +13,7 @@ class StaffViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-
-    def get_queryset(self):
-        current_user = self.request.user
-        staff = Staff.objects.all()
-        
-        if current_user:
-            qs = staff.filter(user__username=current_user)
-            return qs
+    queryset = Staff.objects.all()
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -29,15 +22,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated
     ]
-    
-    def get_queryset(self):
-        current_user = self.request.user
-        client = Client.objects.all()
-
-        if current_user:
-            qs = client.filter(user__username=current_user)
-            return qs
-
+    queryset = Client.objects.all()
 
 class ClientFilesViewSet(viewsets.ModelViewSet):
     serializer_class = ClientInternalFileSerializer
