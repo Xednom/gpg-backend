@@ -11,6 +11,7 @@ User = get_user_model()
 __all__ = (
     "PropertyPriceStatus",
     "PropertyDetail",
+    "PropertyPrice",
     "CategoryType",
     "JobOrderCategory",
     "CommentByApn",
@@ -32,34 +33,24 @@ class PropertyDetail(TimeStamped):
         Staff, related_name="staff_assigned_properties", on_delete=models.CASCADE,
         blank=True, null=True
     )
-    price_status = models.CharField(
-        max_length=30,
-        choices=PropertyPriceStatus.choices,
-        default=PropertyPriceStatus.active,
-        blank=True,
-    )
     property_status = models.CharField(
         choices=Status.choices, blank=True, max_length=25
-    )
-    category = models.CharField(
-        choices=ListingAdCategory.choices, max_length=30, blank=True
     )
     apn = models.CharField(max_length=250)
     county = models.CharField(max_length=250)
     state = models.CharField(max_length=250)
     size = models.CharField(max_length=250)
-    asking_price = models.CharField(max_length=250)
-    cash_terms = models.TextField()
-    finance_terms = models.TextField()
-    other_terms = models.TextField()
-    notes = models.TextField()
+    company_name = models.CharField(max_length=250, blank=True)
+    phone = models.CharField(max_length=250, blank=True)
+    email = models.CharField(max_length=250, blank=True)
+    website_url = models.CharField(max_length=250, blank=True)
     ad_details = models.TextField(blank=True)
     notes_client_side = models.TextField(blank=True)
     notes_va_side = models.TextField(blank=True)
     notes_management_side = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Property Details of {self.client}"
+        return f"Property Details: {self.client}"
 
     def create_ticket_number(self):
         ticket_code = ""
@@ -91,8 +82,29 @@ class CategoryType(TimeStamped):
         return f"{self.category}"
 
 
+class PropertyPrice(TimeStamped):
+    property_detail = models.ForeignKey(PropertyDetail, related_name="property_price_statuses", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="user_property_prices", on_delete=models.CASCADE, blank=True, null=True)
+    asking_price = models.CharField(max_length=250)
+    cash_terms = models.CharField(max_length=250)
+    finance_terms = models.CharField(max_length=250)
+    other_terms = models.CharField(max_length=250)
+    price_status = models.CharField(
+        max_length=30,
+        choices=PropertyPriceStatus.choices,
+        default=PropertyPriceStatus.active,
+        blank=True,
+    )
+    notes = models.TextField()
+    updated_info = models.CharField(max_length=250, blank=True)
+
+    def __str__(self):
+        return f"{self.property_detail}: status - {self.price_status}"
+
+
 class JobOrderCategory(TimeStamped):
     ticket_number = models.CharField(max_length=100, blank=True)
+    property_detail = models.ForeignKey(PropertyDetail, related_name="apn_job_order_categories", on_delete=models.CASCADE)
     client = models.ForeignKey(
         Client, related_name="client_jo_by_categories", on_delete=models.CASCADE, blank=True,
         null=True,

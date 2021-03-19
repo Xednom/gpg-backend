@@ -6,6 +6,7 @@ from apps.gpg.models import (
     Comment,
     CommentByApn,
     PropertyDetail,
+    PropertyPrice,
     CategoryType
 )
 
@@ -18,6 +19,11 @@ class JobOrderComment(admin.TabularInline):
 class CategoryTypeAdmin(admin.ModelAdmin):
     model = CategoryType
     list_display = ("category",)
+
+
+class PropertyPriceAdmin(admin.TabularInline):
+    model = PropertyPrice
+    extra = 1
 
 
 class PropertyDetailsAdmin(admin.ModelAdmin):
@@ -40,29 +46,50 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Property price Information",
-            {
-                "fields": (
-                    "asking_price",
-                    "cash_terms",
-                    "finance_terms",
-                    "other_terms",
-                    "notes",
-                    "price_status",
-                )
-            },
-        ),
-        (
             "Listing Ad Detail",
             {
                 "fields": (
-                    "category",
+                    "company_name",
+                    "phone",
+                    "email",
+                    "website_url",
                     "ad_details",
                     "notes_client_side",
                     "notes_va_side",
                     "notes_management_side",
                 )
             },
+        ),
+    )
+    inlines = [PropertyPriceAdmin]
+
+
+class PropertyPriceAdmin(admin.ModelAdmin):
+    model = PropertyPrice
+    list_display = ("property_detail", "price_status")
+    readonly_fields = ["updated_info"]
+    fieldsets = (
+        (
+            "Property price Information",
+            {
+                "fields": (
+                    "property_detail",
+                    "price_status",
+                    "asking_price",
+                    "cash_terms",
+                    "finance_terms",
+                    "other_terms",
+                    "notes",
+                )
+            },
+        ),
+        (
+            "Important information",
+            {
+                "fields": (
+                    "updated_info",
+                )
+            }
         ),
     )
 
@@ -124,4 +151,5 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
 admin.site.register(JobOrderGeneral, JobOrderGeneralAdmin)
 admin.site.register(JobOrderCategory, JobOrderByCategoryAdmin)
 admin.site.register(PropertyDetail, PropertyDetailsAdmin)
+admin.site.register(PropertyPrice, PropertyPriceAdmin)
 admin.site.register(CategoryType, CategoryTypeAdmin)

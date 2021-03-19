@@ -1,9 +1,11 @@
 from rest_framework import serializers
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 from apps.gpg.models import (
     JobOrderCategory,
     CommentByApn,
     PropertyDetail,
+    PropertyPrice,
     CategoryType,
 )
 
@@ -35,10 +37,29 @@ class CommentByApnSerializer(serializers.ModelSerializer):
             return "Client"
 
 
-class PropertyDetailSerializer(serializers.ModelSerializer):
+class PropertyPriceSerializer(serializers.ModelSerializer):
+    property_detail = serializers.PrimaryKeyRelatedField(queryset=PropertyDetail.objects.all(), required=False, allow_null=True)
+    
+    class Meta:
+        model = PropertyPrice
+        fields = (
+            "property_detail",
+            "user",
+            "asking_price",
+            "cash_terms",
+            "finance_terms",
+            "other_terms",
+            "price_status",
+            "notes",
+            "updated_info"
+        )
+
+
+class PropertyDetailSerializer(WritableNestedModelSerializer):
     client_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
     staff_ = serializers.SerializerMethodField()
+    property_price_statuses = PropertyPriceSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
         model = PropertyDetail
@@ -52,19 +73,17 @@ class PropertyDetailSerializer(serializers.ModelSerializer):
             "apn",
             "county",
             "state",
-            "price_status",
             "property_status",
-            "category",
             "size",
-            "asking_price",
-            "cash_terms",
-            "finance_terms",
-            "other_terms",
-            "notes",
+            "company_name",
+            "phone",
+            "email",
+            "website_url",
             "ad_details",
             "notes_client_side",
             "notes_va_side",
             "notes_management_side",
+            "property_price_statuses",
         )
     
     def get_client_(self, instance):
