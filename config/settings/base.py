@@ -161,12 +161,13 @@ DJOSER = {
 
 # Email sender credentials
 ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")
+ANYMAIL_MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 # SERVER_EMAIL = "xednom@gmail.com"
 
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "xednom@gmail.com"
-EMAIL_HOST_PASSWORD = "ezrizpxmjcpoqndm"
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
