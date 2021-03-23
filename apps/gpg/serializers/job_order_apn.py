@@ -38,7 +38,7 @@ class CommentByApnSerializer(serializers.ModelSerializer):
             return "Client"
 
 
-class PropertyPriceSerializer(serializers.ModelSerializer):
+class PropertyPriceSerializer(WritableNestedModelSerializer):
     property_detail = serializers.PrimaryKeyRelatedField(queryset=PropertyDetail.objects.all(), required=False, allow_null=True)
     
     class Meta:
@@ -134,6 +134,7 @@ class ApnCommentSerializer(serializers.ModelSerializer):
 class JobOrderCategorySerializer(serializers.ModelSerializer):
     job_order_category_comments = ApnCommentSerializer(many=True, required=False, allow_null=True)
     category = serializers.SlugRelatedField(slug_field="category", queryset=CategoryType.objects.all())
+    property_detail = serializers.SlugRelatedField(slug_field="apn", queryset=PropertyDetail.objects.all())
     category_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
 
@@ -142,6 +143,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "ticket_number",
+            "property_detail",
             "client",
             "client_code",
             "staff",

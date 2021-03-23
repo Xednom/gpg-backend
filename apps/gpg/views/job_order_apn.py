@@ -7,10 +7,12 @@ from apps.gpg.models import (
     JobOrderCategory,
     CommentByApn,
     PropertyDetail,
+    PropertyPrice,
     CategoryType,
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
+    PropertyPriceSerializer,
     CategoryTypeSerializer,
     JobOrderCategorySerializer,
     CommentByApnSerializer,
@@ -20,7 +22,7 @@ from apps.gpg.serializers import (
 User = get_user_model()
 
 
-__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet", "CreateJobOrderByApnComment", "ApnCategoryViewSet")
+__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet", "CreateJobOrderByApnComment", "ApnCategoryViewSet", "PropertyPriceStatusViewSet")
 
 
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
@@ -40,6 +42,11 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
             queryset = PropertyDetail.objects.all()
             return queryset
 
+
+class PropertyPriceStatusViewSet(viewsets.ModelViewSet):
+    serializer_class = PropertyPriceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = PropertyPrice.objects.all()
 
 class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = JobOrderCategorySerializer

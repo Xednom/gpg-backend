@@ -23,6 +23,7 @@ router.register(
 router.register(
     r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
 )
+router.register(r"property-price", views.PropertyPriceStatusViewSet, basename="property-prices")
 router.register(r"apn-category-type", views.ApnCategoryViewSet, basename="apn-category-types")
 
 

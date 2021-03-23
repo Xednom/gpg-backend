@@ -124,6 +124,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "ticket_number",
+                    "property_detail",
                     "client",
                     "category",
                     "status",

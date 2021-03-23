@@ -36,7 +36,7 @@ class PropertyDetail(TimeStamped):
     property_status = models.CharField(
         choices=Status.choices, blank=True, max_length=25
     )
-    apn = models.CharField(max_length=250)
+    apn = models.CharField(max_length=250, unique=True)
     county = models.CharField(max_length=250)
     state = models.CharField(max_length=250)
     size = models.CharField(max_length=250)
@@ -50,7 +50,7 @@ class PropertyDetail(TimeStamped):
     notes_management_side = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Property Details: {self.client}"
+        return f"{self.apn}"
 
     def create_ticket_number(self):
         ticket_code = ""
