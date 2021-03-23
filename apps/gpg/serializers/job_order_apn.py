@@ -12,6 +12,7 @@ from apps.gpg.models import (
 __all__ = (
     "CommentByApnSerializer",
     "PropertyDetailSerializer",
+    "PropertyPriceSerializer",
     "CategoryTypeSerializer",
     "JobOrderCategorySerializer",
     "ApnCommentSerializer"
@@ -43,6 +44,7 @@ class PropertyPriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyPrice
         fields = (
+            "id",
             "property_detail",
             "user",
             "asking_price",
