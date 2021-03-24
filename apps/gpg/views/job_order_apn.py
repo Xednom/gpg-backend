@@ -9,6 +9,7 @@ from apps.gpg.models import (
     PropertyDetail,
     PropertyPrice,
     CategoryType,
+    Deadline,
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
@@ -16,13 +17,21 @@ from apps.gpg.serializers import (
     CategoryTypeSerializer,
     JobOrderCategorySerializer,
     CommentByApnSerializer,
-    ApnCommentSerializer
+    ApnCommentSerializer,
+    DeadlineSerializer,
 )
 
 User = get_user_model()
 
 
-__all__ = ("PropertyDetailsViewSet", "JobOrderByCategoryViewSet", "CreateJobOrderByApnComment", "ApnCategoryViewSet", "PropertyPriceStatusViewSet")
+__all__ = (
+    "PropertyDetailsViewSet",
+    "JobOrderByCategoryViewSet",
+    "CreateJobOrderByApnComment",
+    "ApnCategoryViewSet",
+    "PropertyPriceStatusViewSet",
+    "DeadlineViewSet",
+)
 
 
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
@@ -36,7 +45,9 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=current_user)
 
         if current_user:
-            queryset = job_order.filter(client__user__in=user) or job_order.filter(staff__user__in=user)
+            queryset = job_order.filter(client__user__in=user) or job_order.filter(
+                staff__user__in=user
+            )
             return queryset
         elif current_user.is_superuser:
             queryset = PropertyDetail.objects.all()
@@ -47,6 +58,7 @@ class PropertyPriceStatusViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyPriceSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = PropertyPrice.objects.all()
+
 
 class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = JobOrderCategorySerializer
@@ -59,7 +71,9 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=current_user)
 
         if current_user:
-            queryset = job_order.filter(client__user__in=user) or job_order.filter(staff__user__in=user)
+            queryset = job_order.filter(client__user__in=user) or job_order.filter(
+                staff__user__in=user
+            )
             return queryset
         elif current_user.is_superuser:
             queryset = JobOrderCategory.objects.all()
@@ -70,6 +84,12 @@ class ApnCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategoryTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = CategoryType.objects.all()
+
+
+class DeadlineViewSet(viewsets.ModelViewSet):
+    serializer_class = DeadlineSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Deadline.objects.all()
 
 
 class CreateJobOrderByApnComment(generics.CreateAPIView):

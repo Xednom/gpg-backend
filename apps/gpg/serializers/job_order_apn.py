@@ -7,6 +7,7 @@ from apps.gpg.models import (
     PropertyDetail,
     PropertyPrice,
     CategoryType,
+    Deadline
 )
 
 __all__ = (
@@ -15,7 +16,8 @@ __all__ = (
     "PropertyPriceSerializer",
     "CategoryTypeSerializer",
     "JobOrderCategorySerializer",
-    "ApnCommentSerializer"
+    "ApnCommentSerializer",
+    "DeadlineSerializer"
 )
 
 
@@ -81,7 +83,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "phone",
             "email",
             "website_url",
-            "ad_details",
+            "file_storage",
             "notes_client_side",
             "notes_va_side",
             "notes_management_side",
@@ -135,6 +137,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     job_order_category_comments = ApnCommentSerializer(many=True, required=False, allow_null=True)
     category = serializers.SlugRelatedField(slug_field="category", queryset=CategoryType.objects.all())
     property_detail = serializers.SlugRelatedField(slug_field="apn", queryset=PropertyDetail.objects.all())
+    deadline = serializers.SlugRelatedField(slug_field="deadline", queryset=Deadline.objects.all())
     category_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
 
@@ -153,11 +156,12 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "due_date",
             "date_completed",
             "job_description",
-            "completed_url_work",
+            "url_of_the_completed_jo",
             "notes_va",
             "notes_management",
             "total_time_consumed",
-            "job_order_category_comments"
+            "job_order_category_comments",
+            "deadline"
         )
     
     def get_category_(self, instance):
@@ -171,3 +175,9 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "Client being process"
         else:
             return f"{instance.client.client_code}"
+
+
+class DeadlineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Deadline
+        fields = ("id", "deadline",)

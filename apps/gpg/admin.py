@@ -4,6 +4,7 @@ from apps.gpg.models import (
     JobOrderGeneral,
     JobOrderCategory,
     Comment,
+    Deadline,
     CommentByApn,
     PropertyDetail,
     PropertyPrice,
@@ -19,6 +20,11 @@ class JobOrderComment(admin.TabularInline):
 class CategoryTypeAdmin(admin.ModelAdmin):
     model = CategoryType
     list_display = ("category",)
+
+
+class DeadlineAdmin(admin.ModelAdmin):
+    model = Deadline
+    list_display = ("deadline",)
 
 
 class PropertyPriceAdmin(admin.TabularInline):
@@ -53,7 +59,7 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
                     "phone",
                     "email",
                     "website_url",
-                    "ad_details",
+                    "file_storage",
                     "notes_client_side",
                     "notes_va_side",
                     "notes_management_side",
@@ -131,7 +137,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
                     "due_date",
                     "date_completed",
                     "total_time_consumed",
-                    "completed_url_work",
+                    "url_of_the_completed_jo",
                     "staff",
                     "job_description",
                 )
@@ -154,3 +160,4 @@ admin.site.register(JobOrderCategory, JobOrderByCategoryAdmin)
 admin.site.register(PropertyDetail, PropertyDetailsAdmin)
 admin.site.register(PropertyPrice, PropertyPriceAdmin)
 admin.site.register(CategoryType, CategoryTypeAdmin)
+admin.site.register(Deadline, DeadlineAdmin)

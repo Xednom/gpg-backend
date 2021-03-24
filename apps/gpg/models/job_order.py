@@ -53,6 +53,7 @@ class JobOrderStatus(models.TextChoices):
     follow_up = "follow_up", ("Follow up")
     dispute = "dispute", ("Dispute")
     complete = "complete", ("Complete")
+    under_quality_review = "under_quality_review", ("Under Quality Review")
 
 
 class JobOrderGeneral(TimeStamped):

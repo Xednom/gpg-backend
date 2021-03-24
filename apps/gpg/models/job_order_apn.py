@@ -13,13 +13,14 @@ __all__ = (
     "PropertyDetail",
     "PropertyPrice",
     "CategoryType",
+    "Deadline",
     "JobOrderCategory",
     "CommentByApn",
 )
 
 
 class PropertyPriceStatus(models.TextChoices):
-    change = "change", ("Change")
+    deactivate = "deactivate", ("Deactivate")
     active = "active", ("Active")
 
 
@@ -44,7 +45,7 @@ class PropertyDetail(TimeStamped):
     phone = models.CharField(max_length=250, blank=True)
     email = models.CharField(max_length=250, blank=True)
     website_url = models.CharField(max_length=250, blank=True)
-    ad_details = models.TextField(blank=True)
+    file_storage = models.CharField(max_length=500, blank=True)
     notes_client_side = models.TextField(blank=True)
     notes_va_side = models.TextField(blank=True)
     notes_management_side = models.TextField(blank=True)
@@ -87,8 +88,8 @@ class PropertyPrice(TimeStamped):
     user = models.ForeignKey(User, related_name="user_property_prices", on_delete=models.CASCADE, blank=True, null=True)
     asking_price = models.CharField(max_length=250)
     cash_terms = models.CharField(max_length=250)
-    finance_terms = models.CharField(max_length=250)
-    other_terms = models.CharField(max_length=250)
+    finance_terms = models.TextField()
+    other_terms = models.TextField()
     price_status = models.CharField(
         max_length=30,
         choices=PropertyPriceStatus.choices,
@@ -96,10 +97,17 @@ class PropertyPrice(TimeStamped):
         blank=True,
     )
     notes = models.TextField()
-    updated_info = models.CharField(max_length=250, blank=True)
+    updated_info = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.property_detail}: status - {self.price_status}"
+
+
+class Deadline(TimeStamped):
+    deadline = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"{self.deadline}"
 
 
 class JobOrderCategory(TimeStamped):
@@ -119,6 +127,9 @@ class JobOrderCategory(TimeStamped):
     category = models.ForeignKey(
         CategoryType, related_name="job_order_categories", on_delete=models.CASCADE
     )
+    deadline = models.ForeignKey(
+        Deadline, related_name="job_order_deadline", on_delete=models.CASCADE
+    )
     status = models.CharField(
         max_length=100,
         choices=JobOrderStatus.choices,
@@ -128,7 +139,7 @@ class JobOrderCategory(TimeStamped):
     due_date = models.DateField()
     date_completed = models.DateField(blank=True, null=True)
     job_description = models.TextField()
-    completed_url_work = models.URLField(blank=True)
+    url_of_the_completed_jo = models.TextField(blank=True)
     notes_va = models.TextField(blank=True)
     notes_management = models.TextField(blank=True)
     total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
