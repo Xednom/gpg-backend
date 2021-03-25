@@ -27,6 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
     job_order_comments = CommentSerializer(many=True, required=False, allow_null=True)
+    client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
     client_code = serializers.SerializerMethodField()
     client_name = serializers.SerializerMethodField()
     staff_name = serializers.SerializerMethodField()

@@ -92,6 +92,12 @@ class ClientSerializer(WritableNestedModelSerializer):
         # lookup_field = "user"
 
 
+class ClientCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = ("client_code",)
+
+
 class StaffSerializer(WritableNestedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         queryset=Staff.objects.all(), required=False, allow_null=True

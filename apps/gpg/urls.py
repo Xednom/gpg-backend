@@ -6,12 +6,14 @@ from apps.authentication.views import (
     ClientViewSet,
     ClientFilesViewSet,
     StaffFilesViewSet,
+    ClientCodeViewSet,
 )
 from . import views
 
 router = routers.DefaultRouter()
 router.register(r"staff", StaffViewSet, basename="staff-list")
 router.register(r"client", ClientViewSet, basename="client-list")
+router.register(r"client-code", ClientCodeViewSet, basename="client-code-list")
 router.register(r"client-files", ClientFilesViewSet, basename="client-files-list")
 router.register(r"staff-files", StaffFilesViewSet, basename="staff-files-list")
 router.register(

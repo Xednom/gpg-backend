@@ -60,7 +60,7 @@ class Client(TimeStamped):
     customer_id = models.CharField(max_length=250, blank=True)
 
     def __str__(self):
-        return f"{self.user} - {self.affiliate_partner_name}"
+        return f"{self.user} - {self.client_code}"
     
     def create_client_code(self):
         initial_name = self.user.first_name + self.user.last_name
