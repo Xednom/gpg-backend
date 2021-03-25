@@ -72,6 +72,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "client",
             "client_code",
             "client_",
+            "client_email",
             "staff",
             "staff_",
             "apn",

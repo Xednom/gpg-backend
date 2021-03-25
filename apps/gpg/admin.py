@@ -35,6 +35,7 @@ class PropertyPriceAdmin(admin.TabularInline):
 class PropertyDetailsAdmin(admin.ModelAdmin):
     model = PropertyDetail
     list_display = ("ticket_number", "client", "apn", "county", "state", "property_status")
+    readonly_fields = ["client_email"]
     fieldsets = (
         (
             "Property Information",
@@ -42,6 +43,7 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
                 "fields": (
                     "ticket_number",
                     "client",
+                    "client_email",
                     "staff",
                     "apn",
                     "county",

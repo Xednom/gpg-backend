@@ -1,5 +1,8 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, permissions, generics
+from django.core.mail import send_mail
+from rest_framework import viewsets, permissions, generics, filters, status
+from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Staff, Client, User
@@ -38,9 +41,12 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = "ticket_number"
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["property_price_statuses__price_status"]
 
     def get_queryset(self):
         job_order = PropertyDetail.objects.all()
+        property_price = PropertyPrice.objects.all()
         current_user = self.request.user
         user = User.objects.filter(username=current_user)
 
@@ -52,6 +58,32 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         elif current_user.is_superuser:
             queryset = PropertyDetail.objects.all()
             return queryset
+
+    def perform_update(self, serializer):
+
+        if serializer.is_valid():
+            property_status = serializer.validated_data["property_status"]
+            ticket_number = serializer.validated_data["ticket_number"]
+            client_email = serializer.validated_data["client_email"]
+            instance = serializer.save()
+            mail_text = "Your ticket with the number {}\n\nStatus has changed {}.\n\nClick below to see the response:\n\n{}".format(
+                ticket_number,
+                property_status,
+                "https://example.com/job-order/property-detail/{ticket_number}",
+            )
+            try:
+                send_mail(
+                    subject="Job order per APN",
+                    message=mail_text,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=client_email,
+                    fail_silently=False,
+                )
+            except (SMTPRecipientsRefused, SMTPSenderRefused):
+                LOGGER.exception("There was a problem submitting the form.")
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PropertyPriceStatusViewSet(viewsets.ModelViewSet):
