@@ -38,6 +38,7 @@ class PropertyDetail(TimeStamped):
         choices=Status.choices, blank=True, max_length=25
     )
     client_email = models.CharField(max_length=100, blank=True)
+    staff_email = models.CharField(max_length=100, blank=True)
     apn = models.CharField(max_length=250, unique=True)
     county = models.CharField(max_length=250)
     state = models.CharField(max_length=250)

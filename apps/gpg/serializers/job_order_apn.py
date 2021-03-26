@@ -63,6 +63,8 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
     client_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
     staff_ = serializers.SerializerMethodField()
+    client_email = serializers.CharField(required=False, allow_null=True)
+    staff_email = serializers.CharField(required=False, allow_null=True)
     property_price_statuses = PropertyPriceSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
@@ -72,10 +74,11 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "client",
             "client_code",
             "client_",
-            "client_email",
             "staff",
             "staff_",
             "apn",
+            "client_email",
+            "staff_email",
             "county",
             "state",
             "property_status",
