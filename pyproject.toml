@@ -17,6 +17,7 @@ djoser = {git = "https://github.com/sunscrapers/djoser", rev = "b648b07dc2da7dab
 djangorestframework-simplejwt = "^4.6.0"
 drf-writable-nested = "^0.6.2"
 django-anymail = {extras = ["mailgun"], version = "^8.2"}
+django-herald = "^0.2.1"
 
 [tool.poetry.dev-dependencies]
 
