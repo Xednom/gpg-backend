@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Staff, Client, User
+from apps.gpg.notifications.email import PropertyDetailEmail, JobOrderGeneralEmail, JobOrderCategoryEmail
 from apps.gpg.models import (
     JobOrderCategory,
     CommentByApn,
@@ -58,32 +59,17 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         elif current_user.is_superuser:
             queryset = PropertyDetail.objects.all()
             return queryset
-
+    
     def perform_update(self, serializer):
-
-        if serializer.is_valid():
-            property_status = serializer.validated_data["property_status"]
-            ticket_number = serializer.validated_data["ticket_number"]
-            client_email = serializer.validated_data["client_email"]
-            instance = serializer.save()
-            mail_text = "Your ticket with the number {}\n\nStatus has changed {}.\n\nClick below to see the response:\n\n{}".format(
-                ticket_number,
-                property_status,
-                "https://example.com/job-order/property-detail/{ticket_number}",
-            )
-            try:
-                send_mail(
-                    subject="Job order per APN",
-                    message=mail_text,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=client_email,
-                    fail_silently=False,
-                )
-            except (SMTPRecipientsRefused, SMTPSenderRefused):
-                LOGGER.exception("There was a problem submitting the form.")
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        instance = self.get_object()
+        ticket_number = instance.ticket_number
+        client_email = instance.client_email
+        staff_email = instance.staff_email
+        property_detail = serializer.validated_data
+        if instance:
+            # Email notification will only send if two email are present
+            PropertyDetailEmail(ticket_number, property_detail, client_email, staff_email).send()
+        return serializer.save()
 
 
 class PropertyPriceStatusViewSet(viewsets.ModelViewSet):
@@ -110,6 +96,16 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         elif current_user.is_superuser:
             queryset = JobOrderCategory.objects.all()
             return queryset
+    
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        ticket_number = instance.ticket_number
+        client_email = instance.client_email
+        staff_email = instance.staff_email
+        job_order_category = serializer.validated_data
+        if instance:
+            JobOrderCategoryEmail(ticket_number, job_order_category, client_email, staff_email).send()
+        return serializer.save()
 
 
 class ApnCategoryViewSet(viewsets.ModelViewSet):

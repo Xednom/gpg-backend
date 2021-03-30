@@ -5,6 +5,7 @@ from rest_framework.generics import get_object_or_404
 from apps.authentication.models import Client, Staff
 from apps.gpg.models import JobOrderGeneral, Comment
 from apps.gpg.serializers import JobOrderGeneralSerializer, CommentSerializer
+from apps.gpg.notifications.email import JobOrderGeneralEmail
 
 User = get_user_model()
 
@@ -28,6 +29,16 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
         elif current_user.is_superuser:
             queryset = JobOrderGeneral.objects.all()
             return queryset
+    
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        ticket_number = instance.ticket_number
+        client_email = instance.client_email
+        staff_email = instance.staff_email
+        job_order = serializer.validated_data
+        if instance:
+            JobOrderGeneralEmail(ticket_number, job_order, client_email, staff_email).send()
+        return serializer.save()
 
 
 class CreateJobOrderComment(generics.CreateAPIView):
