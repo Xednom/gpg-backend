@@ -119,6 +119,7 @@ class JobOrderCategory(TimeStamped):
         Client, related_name="client_jo_by_categories", on_delete=models.CASCADE, blank=True,
         null=True,
     )
+    client_email = models.EmailField(blank=True)
     staff = models.ForeignKey(
         Staff,
         related_name="staff_job_orders_by_categories",
@@ -126,6 +127,7 @@ class JobOrderCategory(TimeStamped):
         blank=True,
         null=True,
     )
+    staff_email = models.EmailField(blank=True)
     category = models.ForeignKey(
         CategoryType, related_name="job_order_categories", on_delete=models.CASCADE
     )

@@ -64,6 +64,7 @@ class JobOrderGeneral(TimeStamped):
         blank=True,
         null=True,
     )
+    client_email = models.EmailField(blank=True)
     va_assigned = models.ForeignKey(
         Staff,
         related_name="vas_job_orders",
@@ -71,6 +72,7 @@ class JobOrderGeneral(TimeStamped):
         blank=True,
         null=True,
     )
+    staff_email = models.EmailField(blank=True)
     ticket_number = models.CharField(max_length=100, blank=True)
     request_date = models.DateField()
     due_date = models.DateField()
