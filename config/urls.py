@@ -22,3 +22,6 @@ urlpatterns = [
     path("api/v1/", include("apps.gpg.urls")),
     path("herald/", include('herald.urls')),
 ]
+
+admin.site.site_title = "GPG Admin site admin"
+admin.site.site_header = "GPG Administration"
