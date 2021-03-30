@@ -5,4 +5,4 @@ if env.str("DATABASE_URL", ""):
         "default": env.db(),  # noqa F821
     }
 
-HTTP_PROTOCOL = "https"
+HTTP_PROTOCOL = "https://"
