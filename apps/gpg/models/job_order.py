@@ -111,9 +111,21 @@ class JobOrderGeneral(TimeStamped):
         in_int = int(in_id)
         ticket_code = "JO000" + str(int(in_int) + 1)
         return ticket_code
+    
+    def get_client_email(self):
+        if self.client:
+            email = self.client.user.email
+            return email
+    
+    def get_staff_email(self):
+        if self.va_assigned:
+            email = self.va_assigned.user.email
+            return email
 
     def save(self, *args, **kwargs):
         self.ticket_number = self.create_ticket_number()
+        self.client_email = self.get_client_email()
+        self.staff_email = self.get_staff_email()
         super(JobOrderGeneral, self).save(*args, **kwargs)
 
 

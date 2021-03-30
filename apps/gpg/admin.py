@@ -105,6 +105,7 @@ class PropertyPriceAdmin(admin.ModelAdmin):
 
 class JobOrderGeneralAdmin(admin.ModelAdmin):
     model = JobOrderGeneral
+    readonly_fields = ["client_email", "staff_email"]
     list_display = (
         "ticket_number",
         "client",
@@ -127,6 +128,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
         "date_completed",
         "status",
     )
+    readonly_fields = ["client_email", "staff_email"]
     fieldsets = (
         (
             "Job Order by Category Information",
@@ -135,6 +137,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
                     "ticket_number",
                     "property_detail",
                     "client",
+                    "client_email",
                     "category",
                     "status",
                     "due_date",
@@ -142,6 +145,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
                     "total_time_consumed",
                     "url_of_the_completed_jo",
                     "staff",
+                    "staff_email",
                     "job_description",
                 )
             },
