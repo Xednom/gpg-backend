@@ -13,7 +13,7 @@ User = get_user_model()
 class JobOrderGeneralViewSet(viewsets.ModelViewSet):
     serializer_class = JobOrderGeneralSerializer
     permission_classes = [permissions.IsAuthenticated]
-    # lookup_field = "ticket_number"
+    lookup_field = "ticket_number"
 
     def get_queryset(self):
         job_order = JobOrderGeneral.objects.all()
