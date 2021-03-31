@@ -36,8 +36,7 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
         client_email = instance.client_email
         staff_email = instance.staff_email
         job_order = serializer.validated_data
-        if instance:
-            JobOrderGeneralEmail(ticket_number, job_order, client_email, staff_email).send()
+        JobOrderGeneralEmail(ticket_number, job_order, client_email, staff_email).send()
         return serializer.save()
 
 

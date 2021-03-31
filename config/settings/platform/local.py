@@ -11,3 +11,7 @@ HTTP_PROTOCOL = "http://"
 INTERNAL_IPS = [
     "127.0.0.1"
 ]
+
+CRONJOBS = [
+    ('* * * * *', 'django.core.management.call_command', ['send_mail']),
+]

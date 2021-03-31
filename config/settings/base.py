@@ -52,7 +52,10 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "django_filters",
     "anymail",
-    "herald"
+    "herald",
+    "mailer",
+    "django_extensions",
+    "django_crontab"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -86,8 +89,6 @@ TEMPLATES = [
         },
     },
 ]
-
-print(os.path.join(BASE_DIR/'templates'))
 
 WSGI_APPLICATION = "config.wsgi.application"
 
@@ -164,7 +165,8 @@ DJOSER = {
 # Email sender credentials
 ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")
 ANYMAIL_MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
-EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+EMAIL_BACKEND = "mailer.backend.DbBackend"
+MAILER_EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 # SERVER_EMAIL = "xednom@gmail.com"
 

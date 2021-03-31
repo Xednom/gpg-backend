@@ -66,9 +66,8 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         client_email = instance.client_email
         staff_email = instance.staff_email
         property_detail = serializer.validated_data
-        if instance:
-            # Email notification will only send if two email are present
-            PropertyDetailEmail(ticket_number, property_detail, client_email, staff_email).send()
+        # Email notification will only send if two email are present
+        PropertyDetailEmail(ticket_number, property_detail, client_email, staff_email).send()
         return serializer.save()
 
 
@@ -103,8 +102,7 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         client_email = instance.client_email
         staff_email = instance.staff_email
         job_order_category = serializer.validated_data
-        if instance:
-            JobOrderCategoryEmail(ticket_number, job_order_category, client_email, staff_email).send()
+        JobOrderCategoryEmail(ticket_number, job_order_category, client_email, staff_email).send()
         return serializer.save()
 
 
