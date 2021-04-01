@@ -116,11 +116,15 @@ class JobOrderGeneral(TimeStamped):
         if self.client:
             email = self.client.user.email
             return email
+        else:
+            return ""
     
     def get_staff_email(self):
         if self.va_assigned:
             email = self.va_assigned.user.email
             return email
+        else:
+            return ""
 
     def save(self, *args, **kwargs):
         self.ticket_number = self.create_ticket_number()
