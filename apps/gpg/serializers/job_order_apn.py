@@ -70,6 +70,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
     class Meta:
         model = PropertyDetail
         fields = (
+            "id",
             "ticket_number",
             "client",
             "client_code",
