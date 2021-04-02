@@ -46,7 +46,7 @@ __all__ = (
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = "ticket_number"
+    lookup_field = "apn"
     filter_backends = [filters.SearchFilter]
     search_fields = ["property_price_statuses__price_status"]
 
@@ -81,6 +81,8 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
 class PropertyPriceStatusViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyPriceSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["property_detail__id"]
     queryset = PropertyPrice.objects.all()
 
 
