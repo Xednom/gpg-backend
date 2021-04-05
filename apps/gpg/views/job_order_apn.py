@@ -19,6 +19,8 @@ from apps.gpg.models import (
     PropertyPrice,
     CategoryType,
     Deadline,
+    State,
+    County
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
@@ -28,6 +30,8 @@ from apps.gpg.serializers import (
     CommentByApnSerializer,
     ApnCommentSerializer,
     DeadlineSerializer,
+    StateSerializer,
+    CountySerializer
 )
 
 User = get_user_model()
@@ -40,6 +44,8 @@ __all__ = (
     "ApnCategoryViewSet",
     "PropertyPriceStatusViewSet",
     "DeadlineViewSet",
+    "StateViewSet",
+    "CountyViewSet"
 )
 
 
@@ -140,3 +146,18 @@ class CreateJobOrderByApnComment(generics.CreateAPIView):
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
         JobOrderCategoryCommentEmail(job_order.ticket_number, job_order, job_order.client_email, job_order.staff_email).send()
         serializer.save(user=user, job_order_category=job_order)
+
+
+class StateViewSet(viewsets.ModelViewSet):
+    serializer_class = StateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = State.objects.all()
+
+
+class CountyViewSet(viewsets.ModelViewSet):
+    serializer_class = CountySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = County.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["state__name"]
+

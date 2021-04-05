@@ -7,7 +7,9 @@ from apps.gpg.models import (
     PropertyDetail,
     PropertyPrice,
     CategoryType,
-    Deadline
+    Deadline,
+    State,
+    County
 )
 
 __all__ = (
@@ -17,7 +19,9 @@ __all__ = (
     "CategoryTypeSerializer",
     "JobOrderCategorySerializer",
     "ApnCommentSerializer",
-    "DeadlineSerializer"
+    "DeadlineSerializer",
+    "StateSerializer",
+    "CountySerializer"
 )
 
 
@@ -188,3 +192,16 @@ class DeadlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deadline
         fields = ("id", "deadline",)
+
+
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = State
+        fields = ("name",)
+
+
+class CountySerializer(serializers.ModelSerializer):
+    state = serializers.SlugRelatedField(slug_field="name", queryset=State.objects.all())
+    class Meta:
+        model = County
+        fields = ("name", "state")

@@ -28,6 +28,8 @@ router.register(
 router.register(r"property-price", views.PropertyPriceStatusViewSet, basename="property-prices")
 router.register(r"apn-category-type", views.ApnCategoryViewSet, basename="apn-category-types")
 router.register(r"deadline", views.DeadlineViewSet, basename="deadline")
+router.register(r"state", views.StateViewSet, basename="state")
+router.register(r"county", views.CountyViewSet, basename="county")
 
 
 app_name = "gpg"
