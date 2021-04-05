@@ -16,6 +16,8 @@ __all__ = (
     "Deadline",
     "JobOrderCategory",
     "CommentByApn",
+    "State",
+    "County"
 )
 
 
@@ -187,3 +189,21 @@ class CommentByApn(TimeStamped):
 
     class Meta:
         ordering = ["created_at"]
+
+
+class State(TimeStamped):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class County(TimeStamped):
+    name = models.CharField(max_length=250)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Counties"
+
+    def __str__(self):
+        return f"{self.name} - {self.state}"

@@ -8,7 +8,9 @@ from apps.gpg.models import (
     CommentByApn,
     PropertyDetail,
     PropertyPrice,
-    CategoryType
+    CategoryType,
+    State,
+    County
 )
 
 
@@ -168,3 +170,5 @@ admin.site.register(PropertyDetail, PropertyDetailsAdmin)
 admin.site.register(PropertyPrice, PropertyPriceAdmin)
 admin.site.register(CategoryType, CategoryTypeAdmin)
 admin.site.register(Deadline, DeadlineAdmin)
+admin.site.register(State)
+admin.site.register(County)
