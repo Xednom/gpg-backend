@@ -10,7 +10,7 @@ from apps.gpg.notifications.email import (
     PropertyDetailEmail,
     JobOrderGeneralEmail,
     JobOrderCategoryEmail,
-    JobOrderCategoryCommentEmail
+    JobOrderCategoryCommentEmail,
 )
 from apps.gpg.models import (
     JobOrderCategory,
@@ -20,7 +20,7 @@ from apps.gpg.models import (
     CategoryType,
     Deadline,
     State,
-    County
+    County,
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
@@ -31,7 +31,7 @@ from apps.gpg.serializers import (
     ApnCommentSerializer,
     DeadlineSerializer,
     StateSerializer,
-    CountySerializer
+    CountySerializer,
 )
 
 User = get_user_model()
@@ -45,7 +45,7 @@ __all__ = (
     "PropertyPriceStatusViewSet",
     "DeadlineViewSet",
     "StateViewSet",
-    "CountyViewSet"
+    "CountyViewSet",
 )
 
 
@@ -57,18 +57,18 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
     search_fields = ["property_price_statuses__price_status"]
 
     def get_queryset(self):
-        job_order = PropertyDetail.objects.all()
-        property_price = PropertyPrice.objects.all()
         current_user = self.request.user
         user = User.objects.filter(username=current_user)
 
         if current_user:
-            queryset = job_order.filter(client__user__in=user) or job_order.filter(
+            queryset = PropertyDetail.objects.select_related("client", "staff").filter(
+                client__user__in=user
+            ) or PropertyDetail.objects.select_related("client", "staff").filter(
                 staff__user__in=user
             )
             return queryset
         elif current_user.is_superuser:
-            queryset = PropertyDetail.objects.all()
+            queryset = PropertyDetail.objects.select_related("client", "staff").all()
             return queryset
 
     def perform_update(self, serializer):
@@ -78,9 +78,10 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         staff_email = instance.staff_email
         property_detail = serializer.validated_data
         # Email notification will only send if two email are present
-        PropertyDetailEmail(
-            ticket_number, property_detail, client_email, staff_email
-        ).send()
+        if client_email and staff_email:
+            PropertyDetailEmail(
+                ticket_number, property_detail, client_email, staff_email
+            ).send()
         return serializer.save()
 
 
@@ -98,17 +99,22 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
     lookup_field = "ticket_number"
 
     def get_queryset(self):
-        job_order = JobOrderCategory.objects.all()
-        current_user = self.request.user
-        user = User.objects.filter(username=current_user)
+        current_user = self.request.user.id
+        user = User.objects.filter(id=current_user)
 
         if current_user:
-            queryset = job_order.filter(client__user__in=user) or job_order.filter(
+            queryset = JobOrderCategory.objects.select_related(
+                "client", "staff", "deadline", "property_detail"
+            ).filter(client__user__in=user) or JobOrderCategory.objects.select_related(
+                "client", "staff", "deadline", "property_detail"
+            ).filter(
                 staff__user__in=user
             )
             return queryset
         elif current_user.is_superuser:
-            queryset = JobOrderCategory.objects.all()
+            queryset = JobOrderCategory.objects.select_related(
+                "client", "staff", "deadline", "property_detail"
+            ).all()
             return queryset
 
     def perform_update(self, serializer):
@@ -117,9 +123,10 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         client_email = instance.client_email
         staff_email = instance.staff_email
         job_order_category = serializer.validated_data
-        JobOrderCategoryEmail(
-            ticket_number, job_order_category, client_email, staff_email
-        ).send()
+        if client_email and staff_email:
+            JobOrderCategoryEmail(
+                ticket_number, job_order_category, client_email, staff_email
+            ).send()
         return serializer.save()
 
 
@@ -138,13 +145,19 @@ class DeadlineViewSet(viewsets.ModelViewSet):
 class CreateJobOrderByApnComment(generics.CreateAPIView):
     serializer_class = ApnCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = CommentByApn.objects.all()
+    queryset = CommentByApn.objects.select_related("job_order_category", "user").all()
 
     def perform_create(self, serializer):
         user = self.request.user
         job_order_id = self.kwargs.get("id")
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
-        JobOrderCategoryCommentEmail(job_order.ticket_number, job_order, job_order.client_email, job_order.staff_email).send()
+        if job_order.client_email and job_order.staff_email:
+            JobOrderCategoryCommentEmail(
+                job_order.ticket_number,
+                job_order,
+                job_order.client_email,
+                job_order.staff_email,
+            ).send()
         serializer.save(user=user, job_order_category=job_order)
 
 
@@ -157,7 +170,6 @@ class StateViewSet(viewsets.ModelViewSet):
 class CountyViewSet(viewsets.ModelViewSet):
     serializer_class = CountySerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = County.objects.all()
+    queryset = County.objects.select_related("state").all()
     filter_backends = [filters.SearchFilter]
     search_fields = ["state__name"]
-
