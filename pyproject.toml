@@ -5,7 +5,7 @@ description = "backend for the GPG system"
 authors = ["Xednom <monde.lacanlalay@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 Django = "^3.1.6"
 django-environ = "^0.4.5"
 django-split-settings = "^1.0.1"
