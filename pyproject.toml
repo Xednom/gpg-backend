@@ -21,7 +21,7 @@ django-mailer = "^2.1"
 django-extensions = "^3.1.1"
 django-crontab = "^0.7.1"
 mysqlclient = "^2.0.3"
-djoser = {git = "https://github.com/sunscrapers/djoser", rev = "b648b07dc2da7dab4c00c1c39af3d6ec53f58eb6"}
+djoser = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
