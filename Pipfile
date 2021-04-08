@@ -66,6 +66,7 @@ mysqlclient = "*"
 djoser = "*"
 django-environ = "*"
 django-split-settings = "*"
+importlib-resources = "*"
 
 [requires]
 python_version = "3.8"
