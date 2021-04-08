@@ -67,6 +67,7 @@ django-environ = "*"
 django-split-settings = "*"
 importlib-resources = "*"
 importlib-metadata = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.8"
