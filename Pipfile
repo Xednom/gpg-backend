@@ -65,6 +65,7 @@ django-crontab = "*"
 mysqlclient = "*"
 djoser = "*"
 django-environ = "*"
+django-split-settings = "*"
 
 [requires]
 python_version = "3.8"
