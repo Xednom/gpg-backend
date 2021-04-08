@@ -7,7 +7,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "gpg$gpg_corp",
         "USER": "gpg",
-        "PASSWORD": "fishmond22",
+        "PASSWORD": "admin12345",
         "HOST": "gpg.mysql.pythonanywhere-services.com",
         "PORT": "3306",
         "OPTIONS": {
