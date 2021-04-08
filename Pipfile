@@ -7,7 +7,6 @@ verify_ssl = true
 graphviz = "*"
 pydotplus = "*"
 pydot = "*"
-black = "*"
 
 [packages]
 appdirs = "==1.4.4"
