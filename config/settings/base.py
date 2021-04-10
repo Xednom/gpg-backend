@@ -49,13 +49,18 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     "corsheaders",
     "djoser",
+    "allauth",
+    'allauth.account',
+    'allauth.socialaccount',
     "rest_framework",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
     "django_filters",
     "anymail",
     "herald",
     "mailer",
     "django_extensions",
-    "django_crontab"
+    "django_crontab",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

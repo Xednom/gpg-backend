@@ -7,6 +7,7 @@ verify_ssl = true
 graphviz = "*"
 pydotplus = "*"
 pydot = "*"
+black = "*"
 
 [packages]
 appdirs = "==1.4.4"
@@ -62,12 +63,14 @@ django-herald = "*"
 django-mailer = "*"
 django-crontab = "*"
 mysqlclient = "*"
-djoser = "*"
 django-environ = "*"
 django-split-settings = "*"
 importlib-resources = "*"
 importlib-metadata = "*"
 django-extensions = "*"
+dj-rest-auth = "*"
+django-allauth = "*"
+djoser = "*"
 
 [requires]
 python_version = "3.8"
