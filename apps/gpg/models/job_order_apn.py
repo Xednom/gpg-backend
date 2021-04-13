@@ -75,8 +75,24 @@ class PropertyDetail(TimeStamped):
         ticket_code = "PD000" + str(int(in_int) + 1)
         return ticket_code
 
+    def get_client_email(self):
+        if self.client:
+            email = self.client.user.email
+            return email
+        else:
+            return ""
+    
+    def get_staff_email(self):
+        if self.staff:
+            email = self.staff.user.email
+            return email
+        else:
+            return ""
+
     def save(self, *args, **kwargs):
         self.ticket_number = self.create_ticket_number()
+        self.client_email = self.get_client_email()
+        self.staff_email = self.get_staff_email()
         super(PropertyDetail, self).save(*args, **kwargs)
 
 
@@ -150,6 +166,9 @@ class JobOrderCategory(TimeStamped):
     notes_management = models.TextField(blank=True)
     total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Job Order Categories"
+
     def __str__(self):
         return f"Job order by {self.category}"
 
@@ -170,9 +189,25 @@ class JobOrderCategory(TimeStamped):
         in_int = int(in_id)
         ticket_code = "JOC000" + str(int(in_int) + 1)
         return ticket_code
+    
+    def get_client_email(self):
+        if self.client:
+            email = self.client.user.email
+            return email
+        else:
+            return ""
+    
+    def get_staff_email(self):
+        if self.staff:
+            email = self.staff.user.email
+            return email
+        else:
+            return ""
 
     def save(self, *args, **kwargs):
         self.ticket_number = self.create_ticket_number()
+        self.client_email = self.get_client_email()
+        self.staff_email = self.get_staff_email()
         super(JobOrderCategory, self).save(*args, **kwargs)
 
 
