@@ -49,16 +49,10 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     "corsheaders",
     "djoser",
-    "allauth",
-    'allauth.account',
-    'allauth.socialaccount',
     "rest_framework",
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
     "django_filters",
     "anymail",
-    "herald",
-    "mailer",
+    "post_office",
     "django_extensions",
     "django_crontab",
 ]
@@ -153,6 +147,7 @@ SITE_ID = 1
 
 DJOSER = {
     "SEND_CONFIRMATION_EMAIL": True,
+    "USER_CREATE_PASSWORD_RETYPE": True,
     "PASSWORD_RESET_CONFIRM_URL": "users/reset_password_confirm/{uid}/{token}",
     "ACTIVATION_URL": "auth/users/activation/{uid}/{token}",
     # TODO: set SEND_ACTIVATION_EMAIL to true when the new fix has arrived
@@ -167,11 +162,16 @@ DJOSER = {
     }
 }
 
+POST_OFFICE = {
+    "BACKENDS": {
+        "default": "anymail.backends.mailgun.EmailBackend"
+    }
+}
+
 # Email sender credentials
 ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")
 ANYMAIL_MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
-EMAIL_BACKEND = "mailer.backend.DbBackend"
-MAILER_EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+EMAIL_BACKEND = "post_office.EmailBackend"
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 # SERVER_EMAIL = "xednom@gmail.com"
 
