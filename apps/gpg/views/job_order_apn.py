@@ -1,4 +1,7 @@
 from django.conf import settings
+
+from post_office.models import EmailTemplate
+from post_office import mail
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from rest_framework import viewsets, permissions, generics, filters, status
@@ -6,12 +9,6 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Staff, Client, User
-from apps.gpg.notifications.email import (
-    PropertyDetailEmail,
-    JobOrderGeneralEmail,
-    JobOrderCategoryEmail,
-    JobOrderCategoryCommentEmail,
-)
 from apps.gpg.models import (
     JobOrderCategory,
     CommentByApn,
@@ -79,9 +76,13 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         property_detail = serializer.validated_data
         # Email notification will only send if two email are present
         if client_email and staff_email:
-            PropertyDetailEmail(
-                ticket_number, property_detail, client_email, staff_email
-            ).send()
+            mail.send(
+                [staff_email, client_email],
+                template="property_detail_update",
+                context={
+                    "property_detail": property_detail
+                 },
+            )
         return serializer.save()
 
 
@@ -124,9 +125,13 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         staff_email = instance.staff_email
         job_order_category = serializer.validated_data
         if client_email and staff_email:
-            JobOrderCategoryEmail(
-                ticket_number, job_order_category, client_email, staff_email
-            ).send()
+            mail.send(
+                [staff_email, client_email],
+                template="job_order_category_update",
+                context={
+                    "job_order_category": job_order_category
+                 },
+            )
         return serializer.save()
 
 
@@ -152,12 +157,13 @@ class CreateJobOrderByApnComment(generics.CreateAPIView):
         job_order_id = self.kwargs.get("id")
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
         if job_order.client_email and job_order.staff_email:
-            JobOrderCategoryCommentEmail(
-                job_order.ticket_number,
-                job_order,
-                job_order.client_email,
-                job_order.staff_email,
-            ).send()
+            mail.send(
+                [job_order.staff_email, job_order.client_email],
+                template="job_order_category_comment",
+                context={
+                    "job_order": job_order
+                 },
+            )
         serializer.save(user=user, job_order_category=job_order)
 
 
