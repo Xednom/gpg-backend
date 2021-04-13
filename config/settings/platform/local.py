@@ -13,7 +13,7 @@ INTERNAL_IPS = [
 ]
 
 CRONJOBS = [
-    ('* * * * *', 'django.core.management.call_command', ['send_mail']),
+    ('* * * * *', 'django.core.management.call_command', ['send_queued_mail']),
 ]
 
 DATABASES = {
