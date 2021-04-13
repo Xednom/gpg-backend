@@ -42,6 +42,14 @@ class User(AbstractUser):
     company_category = models.CharField(
         choices=CompanyCategory.choices, blank=True, max_length=40
     )
+    REQUIRED_FIELDS = [
+        "first_name",
+        "last_name",
+        "phone",
+        "email",
+        "designation_category",
+        "company_category",
+    ]
 
     @property
     def user_full_name(self):
@@ -61,31 +69,30 @@ class Client(TimeStamped):
 
     def __str__(self):
         return f"{self.user} - {self.client_code}"
-    
+
     def create_client_code(self):
         initial_name = self.user.first_name + self.user.last_name
         client_code = ""
 
         for i in initial_name.upper().split():
             client_code += i[0]
-        
+
         last_in = Client.objects.all().order_by("id").last()
 
         if not last_in:
             seq = 0
             client_code = client_code + "000" + str(int(seq) + 1)
             return client_code
-        
+
         if self.id:
             client_code = client_code + "000" + str(self.id)
             return client_code
-        
+
         in_id = last_in.id
         in_int = int(in_id)
 
         client_code = client_code + "000" + str(int(in_int) + 1)
         return client_code
-
 
     def create_affiliate_partner_code(self):
         code = self.affiliate_partner_name
@@ -100,7 +107,7 @@ class Client(TimeStamped):
             seq = 0
             partner_code = partner_code + "000" + str((int(seq) + 1))
             return partner_code
-        
+
         if self.id:
             partner_code = partner_code + "000" + str(self.id)
             return partner_code
@@ -123,7 +130,7 @@ class Client(TimeStamped):
             seq = 0
             customer_code = customer_code + "000" + str((int(seq) + 1))
             return customer_code
-        
+
         if self.id:
             customer_code = customer_code + "000" + str(self.id)
             return customer_code
@@ -188,7 +195,7 @@ class Staff(TimeStamped):
 
     def __str__(self):
         return f"{self.user.user_full_name} - staff"
-    
+
     @property
     def staff_name(self):
         return f"{self.user.user_full_name}"
@@ -203,11 +210,11 @@ class Staff(TimeStamped):
             seq = 0
             company_code = company_code + "000" + str((int(seq) + 1))
             return company_code
-        
+
         if self.id:
             company_code = company_code + "000" + str(self.id)
             return company_code
-        
+
         in_id = last_in.id
         in_int = int(in_id)
         company_code = company_code + "000" + str(int(in_int) + 1)
@@ -236,11 +243,11 @@ class Staff(TimeStamped):
         if self.id:
             staff_code = staff_initials + staff_code + "000" + str(self.id)
             return staff_code
-        
+
         in_id = last_in.id
         in_int = int(in_id)
         staff_code = staff_initials + staff_code + "000" + str(int(in_int) + 1)
-        
+
         return staff_code
 
     def save(self, *args, **kwargs):
@@ -256,6 +263,9 @@ class InternalFiles(TimeStamped):
     file_name = models.CharField(max_length=250, blank=True)
     url = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = "Internal file"
 
     def __str__(self):
         return f"{self.client} - {self.file_name}"
