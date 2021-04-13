@@ -2,6 +2,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["gpg.pythonanywhere.com"]
 
+CORS_ALLOWED_ORIGINS = ["https://gpg-frontend.vercel.app"]
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
