@@ -159,6 +159,9 @@ DJOSER = {
         "user_create": "apps.authentication.serializers.UserRegistrationSerializer",
         "user": "apps.authentication.serializers.UserListSerializer",
         "current_user": "apps.authentication.serializers.CurrentUserSerializer"
+    },
+    "EMAIL": {
+        "confirmation": "apps.authentication.views.GpgConfirmationEmail"
     }
 }
 

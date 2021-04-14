@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, filters
+from djoser.email import ConfirmationEmail
 
 from .models import Staff, Client, InternalFiles, InternalFilesStaff
 from .serializers import StaffSerializer, ClientSerializer, ClientInternalFileSerializer, StaffInternalFileSerializer, ClientCodeSerializer
@@ -62,3 +63,7 @@ class StaffFilesViewSet(viewsets.ModelViewSet):
         if current_user:
             qs = InternalFilesStaff.objects.filter(staff__user=current_user)
             return qs
+
+
+class GpgConfirmationEmail(ConfirmationEmail):
+    template_name = "email/confirmation_email.html"
