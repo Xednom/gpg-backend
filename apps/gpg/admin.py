@@ -19,6 +19,11 @@ class JobOrderComment(admin.TabularInline):
     extra = 1
 
 
+class JobOrderCategoryComment(admin.TabularInline):
+    model = CommentByApn
+    extra = 1
+
+
 class CategoryTypeAdmin(admin.ModelAdmin):
     model = CategoryType
     list_display = ("category",)
@@ -131,6 +136,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
         "status",
     )
     readonly_fields = ["client_email", "staff_email"]
+    inlines = [JobOrderCategoryComment]
     fieldsets = (
         (
             "Job Order by Category Information",
