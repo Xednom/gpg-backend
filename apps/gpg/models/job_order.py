@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 from django.contrib.auth import get_user_model
 
 from apps.core.models import TimeStamped
@@ -65,14 +66,12 @@ class JobOrderGeneral(TimeStamped):
         null=True,
     )
     client_email = models.EmailField(blank=True)
-    va_assigned = models.ForeignKey(
+    va_assigned = models.ManyToManyField(
         Staff,
         related_name="vas_job_orders",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
+        blank=True
     )
-    staff_email = models.EmailField(blank=True)
+    staff_email = models.CharField(max_length=100, blank=True)
     ticket_number = models.CharField(max_length=100, blank=True)
     request_date = models.DateField()
     due_date = models.DateField()
@@ -93,6 +92,9 @@ class JobOrderGeneral(TimeStamped):
 
     class Meta:
         ordering = ["-ticket_number"]
+
+    def __str__(self):
+        return "Job Order general of " + self.client.user.get_full_name()
 
     def create_ticket_number(self):
         ticket_code = ""
@@ -118,19 +120,23 @@ class JobOrderGeneral(TimeStamped):
             return email
         else:
             return ""
-    
+
     def get_staff_email(self):
         if self.va_assigned:
-            email = self.va_assigned.user.email
-            return email
-        else:
-            return ""
+            current_staff = self.va_assigned.through.objects.all()
+            staff_emails = ' '.join(staff.company_email for staff in self.va_assigned.all())
+        return staff_emails
 
     def save(self, *args, **kwargs):
-        self.ticket_number = self.create_ticket_number()
-        self.client_email = self.get_client_email()
-        self.staff_email = self.get_staff_email()
-        super(JobOrderGeneral, self).save(*args, **kwargs)
+        if not self.id:
+            super(JobOrderGeneral, self).save(*args, **kwargs)
+            self.ticket_number = self.create_ticket_number()
+            super(JobOrderGeneral, self).save(*args, **kwargs)
+        else:
+            self.ticket_number = self.create_ticket_number()
+            self.client_email = self.get_client_email()
+            self.staff_email = self.get_staff_email()
+            super(JobOrderGeneral, self).save(*args, **kwargs)
 
 
 class Comment(TimeStamped):

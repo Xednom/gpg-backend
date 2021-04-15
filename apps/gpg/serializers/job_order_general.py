@@ -30,7 +30,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
     client_code = serializers.SerializerMethodField()
     client_name = serializers.SerializerMethodField()
-    staff_name = serializers.SerializerMethodField()
+    # staff_name = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
     class Meta:
         model = JobOrderGeneral
@@ -43,7 +43,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "client_code",
             "va_assigned",
             "staff_email",
-            "staff_name",
+            # "staff_name",
             "request_date",
             "due_date",
             "job_title",
@@ -63,11 +63,11 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
         else:
             return instance.client.client_code
     
-    def get_staff_name(self, instance):
-        if instance.va_assigned is None:
-            return "processing a VA"
-        else:
-            return instance.va_assigned.staff_name
+    # def get_staff_name(self, instance):
+    #     if instance.va_assigned is None:
+    #         return "processing a VA"
+    #     else:
+    #         return instance.va_assigned.staff_name
     
     def get_client_name(self, instance):
         if instance.client is None:

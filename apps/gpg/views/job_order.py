@@ -28,17 +28,14 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
 
         if current_user:
             queryset = JobOrderGeneral.objects.select_related(
-                "client", "va_assigned"
+                "client"
             ).filter(client__user__in=client) or JobOrderGeneral.objects.select_related(
-                "client", "va_assigned"
-            ).filter(
+                "client").filter(
                 va_assigned__user__in=staff
             )
             return queryset
-        elif current_user.is_superuser:
-            queryset = JobOrderGeneral.objects.select_related(
-                "client", "va_assigned"
-            ).all()
+        else:
+            queryset = JobOrderGeneral.objects.all()
             return queryset
 
     def perform_update(self, serializer):
@@ -47,9 +44,11 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
         client_email = instance.client_email
         staff_email = instance.staff_email
         job_order = serializer.validated_data
+        staff_emails = staff_email.split()
         if client_email and staff_email:
             mail.send(
-                [staff_email, client_email],
+                [client_email],
+                cc=staff_emails,
                 template="job_order_general_update",
                 context={
                     "job_order": job_order

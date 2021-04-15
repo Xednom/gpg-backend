@@ -17,7 +17,7 @@ __all__ = (
     "JobOrderCategory",
     "CommentByApn",
     "State",
-    "County"
+    "County",
 )
 
 
@@ -29,12 +29,14 @@ class PropertyPriceStatus(models.TextChoices):
 class PropertyDetail(TimeStamped):
     ticket_number = models.CharField(max_length=150, blank=True)
     client = models.ForeignKey(
-        Client, related_name="client_properties", on_delete=models.CASCADE,
-        blank=True, null=True
+        Client,
+        related_name="client_properties",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
-    staff = models.ForeignKey(
-        Staff, related_name="staff_assigned_properties", on_delete=models.CASCADE,
-        blank=True, null=True
+    staff = models.ManyToManyField(
+        Staff, related_name="staff_assigned_properties", blank=True
     )
     property_status = models.CharField(
         choices=Status.choices, blank=True, max_length=25
@@ -81,7 +83,7 @@ class PropertyDetail(TimeStamped):
             return email
         else:
             return ""
-    
+
     def get_staff_email(self):
         if self.staff:
             email = self.staff.user.email
@@ -104,8 +106,16 @@ class CategoryType(TimeStamped):
 
 
 class PropertyPrice(TimeStamped):
-    property_detail = models.ForeignKey(PropertyDetail, related_name="property_price_statuses", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name="user_property_prices", on_delete=models.CASCADE, blank=True, null=True)
+    property_detail = models.ForeignKey(
+        PropertyDetail, related_name="property_price_statuses", on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User,
+        related_name="user_property_prices",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     asking_price = models.CharField(max_length=250)
     cash_terms = models.CharField(max_length=250)
     finance_terms = models.TextField()
@@ -132,18 +142,23 @@ class Deadline(TimeStamped):
 
 class JobOrderCategory(TimeStamped):
     ticket_number = models.CharField(max_length=100, blank=True)
-    property_detail = models.ForeignKey(PropertyDetail, related_name="apn_job_order_categories", on_delete=models.CASCADE)
-    client = models.ForeignKey(
-        Client, related_name="client_jo_by_categories", on_delete=models.CASCADE, blank=True,
-        null=True,
+    property_detail = models.ForeignKey(
+        PropertyDetail,
+        related_name="apn_job_order_categories",
+        on_delete=models.CASCADE,
     )
-    client_email = models.EmailField(blank=True)
-    staff = models.ForeignKey(
-        Staff,
-        related_name="staff_job_orders_by_categories",
+    client = models.ForeignKey(
+        Client,
+        related_name="client_jo_by_categories",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
+    )
+    client_email = models.EmailField(blank=True)
+    staff = models.ManyToManyField(
+        Staff,
+        related_name="staff_job_orders_by_categories",
+        blank=True,
     )
     staff_email = models.EmailField(blank=True)
     category = models.ForeignKey(
@@ -164,7 +179,9 @@ class JobOrderCategory(TimeStamped):
     url_of_the_completed_jo = models.TextField(blank=True)
     notes_va = models.TextField(blank=True)
     notes_management = models.TextField(blank=True)
-    total_time_consumed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    total_time_consumed = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
 
     class Meta:
         verbose_name_plural = "Job Order Categories"
@@ -189,20 +206,20 @@ class JobOrderCategory(TimeStamped):
         in_int = int(in_id)
         ticket_code = "JOC000" + str(int(in_int) + 1)
         return ticket_code
-    
+
     def get_client_email(self):
         if self.client:
             email = self.client.user.email
             return email
         else:
             return ""
-    
+
     def get_staff_email(self):
         if self.staff:
-            email = self.staff.user.email
-            return email
-        else:
-            return ""
+            staffs = Staff.objects.all()
+            for staff in staffs:
+                staff_emails = ' '.join(staff.user.email for staff in self.staff.all())
+                return staff_emails
 
     def save(self, *args, **kwargs):
         self.ticket_number = self.create_ticket_number()

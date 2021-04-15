@@ -58,14 +58,14 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=current_user)
 
         if current_user:
-            queryset = PropertyDetail.objects.select_related("client", "staff").filter(
+            queryset = PropertyDetail.objects.select_related("client").filter(
                 client__user__in=user
-            ) or PropertyDetail.objects.select_related("client", "staff").filter(
+            ) or PropertyDetail.objects.select_related("client").filter(
                 staff__user__in=user
             )
             return queryset
         elif current_user.is_superuser:
-            queryset = PropertyDetail.objects.select_related("client", "staff").all()
+            queryset = PropertyDetail.objects.select_related("client").all()
             return queryset
 
     def perform_update(self, serializer):
@@ -105,16 +105,16 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
 
         if current_user:
             queryset = JobOrderCategory.objects.select_related(
-                "client", "staff", "deadline", "property_detail"
+                "client", "deadline", "property_detail"
             ).filter(client__user__in=user) or JobOrderCategory.objects.select_related(
-                "client", "staff", "deadline", "property_detail"
+                "client", "deadline", "property_detail"
             ).filter(
                 staff__user__in=user
             )
             return queryset
         elif current_user.is_superuser:
             queryset = JobOrderCategory.objects.select_related(
-                "client", "staff", "deadline", "property_detail"
+                "client", "deadline", "property_detail"
             ).all()
             return queryset
 
