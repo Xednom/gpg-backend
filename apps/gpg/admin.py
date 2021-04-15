@@ -116,7 +116,6 @@ class JobOrderGeneralAdmin(admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "client",
-        "va_assigned",
         "request_date",
         "due_date",
         "job_title",
@@ -130,7 +129,6 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "client",
-        "staff",
         "due_date",
         "date_completed",
         "status",
