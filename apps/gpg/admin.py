@@ -10,7 +10,7 @@ from apps.gpg.models import (
     PropertyPrice,
     CategoryType,
     State,
-    County
+    County,
 )
 
 
@@ -41,7 +41,7 @@ class PropertyPriceAdmin(admin.TabularInline):
 
 class PropertyDetailsAdmin(admin.ModelAdmin):
     model = PropertyDetail
-    list_display = ("ticket_number", "client", "apn", "county", "state", "property_status")
+    list_display = ("apn", "client", "county", "state", "property_status", "size")
     readonly_fields = ["client_email", "staff_email"]
     fieldsets = (
         (
@@ -82,7 +82,13 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
 
 class PropertyPriceAdmin(admin.ModelAdmin):
     model = PropertyPrice
-    list_display = ("property_detail", "price_status")
+    list_display = (
+        "property_detail",
+        "asking_price",
+        "cash_terms",
+        "finance_terms",
+        "price_status",
+    )
     readonly_fields = ["updated_info"]
     fieldsets = (
         (
@@ -99,14 +105,7 @@ class PropertyPriceAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (
-            "Important information",
-            {
-                "fields": (
-                    "updated_info",
-                )
-            }
-        ),
+        ("Important information", {"fields": ("updated_info",)}),
     )
 
 
@@ -131,6 +130,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
         "client",
         "category",
         "property_detail",
+        "total_time_consumed",
         "due_date",
         "date_completed",
         "status",

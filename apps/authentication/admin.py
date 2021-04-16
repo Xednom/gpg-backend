@@ -26,6 +26,15 @@ class InternalFilesStaffAdmin(admin.TabularInline):
 
 
 class UserProfileAdmin(UserAdmin):
+    list_display = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "designation_category",
+        "company_category",
+        "is_staff",
+    )
     UserAdmin.fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
@@ -42,7 +51,15 @@ class UserProfileAdmin(UserAdmin):
         ),
         (
             ("Permissions"),
-            {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")},
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
         ),
         (("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
