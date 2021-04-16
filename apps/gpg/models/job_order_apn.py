@@ -21,6 +21,19 @@ __all__ = (
 )
 
 
+class PropertyDetailStatus(models.TextChoices):
+    sold = "sold", ("Sold")
+    available = "available", ("Available")
+    in_escrow = "in_escrow", ("In Escrow")
+    in_contract = "in_contract", ("In Contract")
+    ready_to_purchase = "ready_to_purchase", ("Ready to Purchase")
+    ready_for_contract = "ready_for_contract", ("Ready for Contract")
+    canceled_transaction = "canceled_transaction", ("Canceled Transaction")
+    interested_to_purchase = "interested_to_purchase", ("Interested to purchase")
+    need_of_research = "need_of_research", ("In need of research")
+    not_applicable = "not_applicable", ("Not applicable")
+
+
 class PropertyPriceStatus(models.TextChoices):
     deactivate = "deactivate", ("Deactivate")
     active = "active", ("Active")
@@ -39,7 +52,7 @@ class PropertyDetail(TimeStamped):
         Staff, related_name="staff_assigned_properties", blank=True
     )
     property_status = models.CharField(
-        choices=Status.choices, blank=True, max_length=25
+        choices=PropertyDetailStatus.choices, blank=True, max_length=25
     )
     client_email = models.CharField(max_length=100, blank=True)
     staff_email = models.CharField(max_length=100, blank=True)
