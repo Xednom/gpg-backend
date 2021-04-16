@@ -86,16 +86,20 @@ class PropertyDetail(TimeStamped):
 
     def get_staff_email(self):
         if self.staff:
-            email = self.staff.user.email
-            return email
-        else:
-            return ""
+            staffs = Staff.objects.all()
+            for staff in staffs:
+                staff_emails = ' '.join(staff.company_email for staff in self.staff.all())
+                return staff_emails
 
     def save(self, *args, **kwargs):
-        self.ticket_number = self.create_ticket_number()
-        self.client_email = self.get_client_email()
-        self.staff_email = self.get_staff_email()
-        super(PropertyDetail, self).save(*args, **kwargs)
+        if not self.id:
+            self.ticket_number = self.create_ticket_number()
+            super(PropertyDetail, self).save(*args, **kwargs)
+        else:
+            self.ticket_number = self.create_ticket_number()
+            self.client_email = self.get_client_email()
+            self.staff_email = self.get_staff_email()
+            super(PropertyDetail, self).save(*args, **kwargs)
 
 
 class CategoryType(TimeStamped):
@@ -218,14 +222,18 @@ class JobOrderCategory(TimeStamped):
         if self.staff:
             staffs = Staff.objects.all()
             for staff in staffs:
-                staff_emails = ' '.join(staff.user.email for staff in self.staff.all())
+                staff_emails = ' '.join(staff.company_email for staff in self.staff.all())
                 return staff_emails
 
     def save(self, *args, **kwargs):
-        self.ticket_number = self.create_ticket_number()
-        self.client_email = self.get_client_email()
-        self.staff_email = self.get_staff_email()
-        super(JobOrderCategory, self).save(*args, **kwargs)
+        if not self.id:
+            self.ticket_number = self.create_ticket_number()
+            super(JobOrderCategory, self).save(*args, **kwargs)
+        elif self.id:
+            self.ticket_number = self.create_ticket_number()
+            self.client_email = self.get_client_email()
+            self.staff_email = self.get_staff_email()
+            super(JobOrderCategory, self).save(*args, **kwargs)
 
 
 class CommentByApn(TimeStamped):

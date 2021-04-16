@@ -129,6 +129,8 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "client",
+        "category",
+        "property_detail",
         "due_date",
         "date_completed",
         "status",

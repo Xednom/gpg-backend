@@ -129,10 +129,9 @@ class JobOrderGeneral(TimeStamped):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            super(JobOrderGeneral, self).save(*args, **kwargs)
             self.ticket_number = self.create_ticket_number()
             super(JobOrderGeneral, self).save(*args, **kwargs)
-        else:
+        elif self.id:
             self.ticket_number = self.create_ticket_number()
             self.client_email = self.get_client_email()
             self.staff_email = self.get_staff_email()
