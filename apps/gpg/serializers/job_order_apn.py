@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
+from apps.authentication.models import Client
+
 from apps.gpg.models import (
     JobOrderCategory,
     CommentByApn,
@@ -64,6 +66,7 @@ class PropertyPriceSerializer(WritableNestedModelSerializer):
 
 
 class PropertyDetailSerializer(WritableNestedModelSerializer):
+    client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
     client_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
     staff_ = serializers.SerializerMethodField()
@@ -143,6 +146,7 @@ class ApnCommentSerializer(serializers.ModelSerializer):
 
 
 class JobOrderCategorySerializer(serializers.ModelSerializer):
+    client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
     job_order_category_comments = ApnCommentSerializer(many=True, required=False, allow_null=True)
     category = serializers.SlugRelatedField(slug_field="category", queryset=CategoryType.objects.all())
     property_detail = serializers.SlugRelatedField(slug_field="apn", queryset=PropertyDetail.objects.all())
