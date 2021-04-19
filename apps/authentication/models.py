@@ -19,6 +19,7 @@ class CompanyCategory(models.TextChoices):
     land_master = "land_master", ("Landmaster.us")
     call_me = "call_me_ph", ("CallMe.com.ph")
     psalms_global = "psalms_global", ("Psalmsglobal.com")
+    english_academy = "english_academy", ("English Academy")
     affiliate_partner = "affiliate_partner", ("Affiliate Partner")
 
 
