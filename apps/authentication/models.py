@@ -51,6 +51,9 @@ class User(AbstractUser):
         "company_category",
     ]
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
     @property
     def user_full_name(self):
         return f"{self.first_name} {self.last_name}"

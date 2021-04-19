@@ -42,6 +42,8 @@ class PropertyPriceAdmin(admin.TabularInline):
 class PropertyDetailsAdmin(admin.ModelAdmin):
     model = PropertyDetail
     list_display = ("apn", "client", "county", "state", "property_status", "size")
+    list_filter = ("client", "county", "state", "property_status")
+    search_fields = ("apn",)
     readonly_fields = ["client_email", "staff_email"]
     fieldsets = (
         (
@@ -89,6 +91,8 @@ class PropertyPriceAdmin(admin.ModelAdmin):
         "finance_terms",
         "price_status",
     )
+    list_filter = ("asking_price",)
+    search_fields = ("property_detail",)
     readonly_fields = ["updated_info"]
     fieldsets = (
         (
@@ -120,6 +124,7 @@ class JobOrderGeneralAdmin(admin.ModelAdmin):
         "job_title",
         "status",
     )
+    list_filter = ("client", "job_title", "status")
     inlines = [JobOrderComment]
 
 
@@ -135,6 +140,8 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
         "date_completed",
         "status",
     )
+    list_filter = ("client", "category", "status", "total_time_consumed")
+    search_fields = ("property_detail", "ticket_number")
     readonly_fields = ["client_email", "staff_email"]
     inlines = [JobOrderCategoryComment]
     fieldsets = (

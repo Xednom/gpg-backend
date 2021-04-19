@@ -67,7 +67,9 @@ class UserProfileAdmin(UserAdmin):
 
 class ClientProfileAdmin(admin.ModelAdmin):
     model = Client
-    list_display = ("user", "client_code", "affiliate_partner_code", "customer_id")
+    list_display = ("user", "client_code", "get_email", "affiliate_partner_name", "affiliate_partner_code", "customer_id")
+    list_filter = ("affiliate_partner_code", "affiliate_partner_name", "user", "client_code")
+    search_fields = ("affiliate_partner_name", "affiliate_partner_code", "user", "client_code")
     fieldsets = (
         (
             "Personal Information",
@@ -86,10 +88,16 @@ class ClientProfileAdmin(admin.ModelAdmin):
     )
     inlines = [InternalFilesAdmin]
 
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.admin_order_field = "user"
+    get_email.short_description = "User email"
+
 
 class StaffProfileAdmin(admin.ModelAdmin):
     model = Staff
-    list_display = ("user", "staff_id", "company_id")
+    list_display = ("user", "get_email", "date_of_birth", "phone_number", "date_hired_in_contract", "staff_id", "company_id")
+    list_filter = ("user", "position", "status", "category")
     fieldsets = (
         (
             "Personal Information",
@@ -150,6 +158,11 @@ class StaffProfileAdmin(admin.ModelAdmin):
         ),
     )
     inlines = [InternalFilesStaffAdmin]
+
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.admin_order_field = "user"
+    get_email.short_description = "Staff email"
 
 
 admin.site.register(User, UserProfileAdmin)
