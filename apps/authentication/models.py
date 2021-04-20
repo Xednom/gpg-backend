@@ -194,6 +194,9 @@ class Staff(TimeStamped):
     bank_type = models.CharField(max_length=250, blank=True)
     bank_account_number = models.CharField(max_length=250, blank=True)
 
+    class Meta:
+        ordering = ["user"]
+
     def __str__(self):
         return f"{self.user.user_full_name} - staff"
 
