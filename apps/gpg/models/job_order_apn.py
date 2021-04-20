@@ -18,6 +18,7 @@ __all__ = (
     "CommentByApn",
     "State",
     "County",
+    "PropertyDetailFile"
 )
 
 
@@ -101,14 +102,16 @@ class PropertyDetail(TimeStamped):
         if self.staff:
             staffs = Staff.objects.all()
             for staff in staffs:
-                staff_emails = ' '.join(staff.company_email for staff in self.staff.all())
+                staff_emails = " ".join(
+                    staff.user.email for staff in self.staff.all()
+                )
                 return staff_emails
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.ticket_number = self.create_ticket_number()
             super(PropertyDetail, self).save(*args, **kwargs)
-        else:
+        elif self.id:
             self.ticket_number = self.create_ticket_number()
             self.client_email = self.get_client_email()
             self.staff_email = self.get_staff_email()
@@ -235,7 +238,9 @@ class JobOrderCategory(TimeStamped):
         if self.staff:
             staffs = Staff.objects.all()
             for staff in staffs:
-                staff_emails = ' '.join(staff.company_email for staff in self.staff.all())
+                staff_emails = " ".join(
+                    staff.user.email for staff in self.staff.all()
+                )
                 return staff_emails
 
     def save(self, *args, **kwargs):
@@ -280,3 +285,22 @@ class County(TimeStamped):
 
     def __str__(self):
         return f"{self.name} - {self.state}"
+
+
+class PropertyDetailFile(TimeStamped):
+    property_detail = models.ForeignKey(
+        PropertyDetail,
+        related_name="property_detail_files",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    details = models.CharField(max_length=250, blank=True)
+    url = models.CharField(max_length=500, blank=True)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ["created_at"]
+    
+    def __str__(self):
+        return f"Property details #apn({self.property_detail}) file name({self.details})"

@@ -11,6 +11,7 @@ from apps.gpg.models import (
     CategoryType,
     State,
     County,
+    PropertyDetailFile
 )
 
 
@@ -36,6 +37,11 @@ class DeadlineAdmin(admin.ModelAdmin):
 
 class PropertyPriceAdmin(admin.TabularInline):
     model = PropertyPrice
+    extra = 1
+
+
+class PropertyDetailFileAdmin(admin.TabularInline):
+    model = PropertyDetailFile
     extra = 1
 
 
@@ -79,7 +85,7 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
             },
         ),
     )
-    inlines = [PropertyPriceAdmin]
+    inlines = [PropertyPriceAdmin, PropertyDetailFileAdmin]
 
 
 class PropertyPriceAdmin(admin.ModelAdmin):
@@ -183,5 +189,6 @@ admin.site.register(PropertyDetail, PropertyDetailsAdmin)
 admin.site.register(PropertyPrice, PropertyPriceAdmin)
 admin.site.register(CategoryType, CategoryTypeAdmin)
 admin.site.register(Deadline, DeadlineAdmin)
+admin.site.register(PropertyDetailFile)
 admin.site.register(State)
 admin.site.register(County)

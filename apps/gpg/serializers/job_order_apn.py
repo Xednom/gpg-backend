@@ -11,7 +11,8 @@ from apps.gpg.models import (
     CategoryType,
     Deadline,
     State,
-    County
+    County,
+    PropertyDetailFile,
 )
 
 __all__ = (
@@ -23,7 +24,7 @@ __all__ = (
     "ApnCommentSerializer",
     "DeadlineSerializer",
     "StateSerializer",
-    "CountySerializer"
+    "CountySerializer",
 )
 
 
@@ -47,8 +48,10 @@ class CommentByApnSerializer(serializers.ModelSerializer):
 
 
 class PropertyPriceSerializer(WritableNestedModelSerializer):
-    property_detail = serializers.PrimaryKeyRelatedField(queryset=PropertyDetail.objects.all(), required=False, allow_null=True)
-    
+    property_detail = serializers.PrimaryKeyRelatedField(
+        queryset=PropertyDetail.objects.all(), required=False, allow_null=True
+    )
+
     class Meta:
         model = PropertyPrice
         fields = (
@@ -61,18 +64,35 @@ class PropertyPriceSerializer(WritableNestedModelSerializer):
             "other_terms",
             "price_status",
             "notes",
-            "updated_info"
+            "updated_info",
         )
 
 
+class PropertyDetailFileSerializer(WritableNestedModelSerializer):
+    property_detail = serializers.PrimaryKeyRelatedField(
+        queryset=PropertyDetail.objects.all(), allow_null=True, required=False
+    )
+
+    class Meta:
+        model = PropertyDetailFile
+        fields = ("id", "property_detail", "details", "url", "description")
+
+
 class PropertyDetailSerializer(WritableNestedModelSerializer):
-    client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
+    client = serializers.SlugRelatedField(
+        slug_field="client_code", queryset=Client.objects.all()
+    )
     client_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
     staff_ = serializers.SerializerMethodField()
     client_email = serializers.CharField(required=False, allow_null=True)
     staff_email = serializers.CharField(required=False, allow_null=True)
-    property_price_statuses = PropertyPriceSerializer(many=True, allow_null=True, required=False)
+    property_price_statuses = PropertyPriceSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_files = PropertyDetailFileSerializer(
+        many=True, allow_null=True, required=False
+    )
 
     class Meta:
         model = PropertyDetail
@@ -100,8 +120,9 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "notes_va_side",
             "notes_management_side",
             "property_price_statuses",
+            "property_detail_files"
         )
-    
+
     def get_client_(self, instance):
         if instance.client is None:
             return "Management on process"
@@ -111,7 +132,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
     def get_client_code(self, instance):
         if instance.client is None:
             return "Management on process"
-        
+
         else:
             return instance.client.client_code
 
@@ -131,12 +152,7 @@ class ApnCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommentByApn
-        fields = (
-            "job_order_category",
-            "user",
-            "comment",
-            "commenter"
-        )
+        fields = ("job_order_category", "user", "comment", "commenter")
 
     def get_commenter(self, instance):
         if instance.user.designation_category == "staff":
@@ -146,11 +162,21 @@ class ApnCommentSerializer(serializers.ModelSerializer):
 
 
 class JobOrderCategorySerializer(serializers.ModelSerializer):
-    client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
-    job_order_category_comments = ApnCommentSerializer(many=True, required=False, allow_null=True)
-    category = serializers.SlugRelatedField(slug_field="category", queryset=CategoryType.objects.all())
-    property_detail = serializers.SlugRelatedField(slug_field="apn", queryset=PropertyDetail.objects.all())
-    deadline = serializers.SlugRelatedField(slug_field="deadline", queryset=Deadline.objects.all())
+    client = serializers.SlugRelatedField(
+        slug_field="client_code", queryset=Client.objects.all()
+    )
+    job_order_category_comments = ApnCommentSerializer(
+        many=True, required=False, allow_null=True
+    )
+    category = serializers.SlugRelatedField(
+        slug_field="category", queryset=CategoryType.objects.all()
+    )
+    property_detail = serializers.SlugRelatedField(
+        slug_field="apn", queryset=PropertyDetail.objects.all()
+    )
+    deadline = serializers.SlugRelatedField(
+        slug_field="deadline", queryset=Deadline.objects.all()
+    )
     category_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
 
@@ -176,15 +202,15 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "notes_management",
             "total_time_consumed",
             "job_order_category_comments",
-            "deadline"
+            "deadline",
         )
-    
+
     def get_category_(self, instance):
         if instance.category.category is None:
             return "No Category exist as of now"
         else:
             return f"{instance.category.category}"
-    
+
     def get_client_code(self, instance):
         if instance.client is None:
             return "Client being process"
@@ -195,7 +221,10 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
 class DeadlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deadline
-        fields = ("id", "deadline",)
+        fields = (
+            "id",
+            "deadline",
+        )
 
 
 class StateSerializer(serializers.ModelSerializer):
@@ -205,7 +234,10 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class CountySerializer(serializers.ModelSerializer):
-    state = serializers.SlugRelatedField(slug_field="name", queryset=State.objects.all())
+    state = serializers.SlugRelatedField(
+        slug_field="name", queryset=State.objects.all()
+    )
+
     class Meta:
         model = County
         fields = ("name", "state")
