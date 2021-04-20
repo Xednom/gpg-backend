@@ -55,6 +55,9 @@ class JobOrderStatus(models.TextChoices):
     dispute = "dispute", ("Dispute")
     complete = "complete", ("Complete")
     under_quality_review = "under_quality_review", ("Under Quality Review")
+    daily_tasks = "daily_tasks", ("Daily Tasks")
+    weekly_tasks = "weekly_tasks", ("Weekly Tasks")
+    redo = "redo", ("Redo")
 
 
 class JobOrderGeneral(TimeStamped):
@@ -124,7 +127,7 @@ class JobOrderGeneral(TimeStamped):
     def get_staff_email(self):
         if self.va_assigned:
             current_staff = self.va_assigned.through.objects.all()
-            staff_emails = ' '.join(staff.company_email for staff in self.va_assigned.all())
+            staff_emails = ' '.join(staff.user.email for staff in self.va_assigned.all())
         return staff_emails
 
     def save(self, *args, **kwargs):
