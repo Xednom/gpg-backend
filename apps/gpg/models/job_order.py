@@ -57,6 +57,7 @@ class JobOrderStatus(models.TextChoices):
     under_quality_review = "under_quality_review", ("Under Quality Review")
     daily_tasks = "daily_tasks", ("Daily Tasks")
     weekly_tasks = "weekly_tasks", ("Weekly Tasks")
+    monthly_tasks = "monthly_tasks", ("Monthly Tasks")
     redo = "redo", ("Redo")
 
 
