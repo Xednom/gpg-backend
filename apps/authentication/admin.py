@@ -67,9 +67,28 @@ class UserProfileAdmin(UserAdmin):
 
 class ClientProfileAdmin(admin.ModelAdmin):
     model = Client
-    list_display = ("get_user", "client_code", "get_email", "affiliate_partner_name", "affiliate_partner_code", "customer_id")
-    list_filter = ("affiliate_partner_code", "affiliate_partner_name", "user", "client_code")
-    search_fields = ("affiliate_partner_name", "affiliate_partner_code", "user", "client_code")
+    list_display = (
+        "get_user",
+        "client_code",
+        "get_email",
+        "affiliate_partner_name",
+        "affiliate_partner_code",
+        "customer_id",
+    )
+    list_filter = (
+        "affiliate_partner_code",
+        "affiliate_partner_name",
+        "user",
+        "client_code",
+    )
+    search_fields = (
+        "affiliate_partner_name",
+        "affiliate_partner_code",
+        "user__first_name",
+        "user_username",
+        "user__last_name",
+        "client_code",
+    )
     fieldsets = (
         (
             "Personal Information",
@@ -90,19 +109,30 @@ class ClientProfileAdmin(admin.ModelAdmin):
 
     def get_user(self, obj):
         return obj.user.user_full_name
+
     get_user.admin_order_field = "user"
     get_user.short_description = "Client name"
 
     def get_email(self, obj):
         return obj.user.email
+
     get_email.admin_order_field = "user"
     get_email.short_description = "User email"
 
 
 class StaffProfileAdmin(admin.ModelAdmin):
     model = Staff
-    list_display = ("get_user", "get_email", "date_of_birth", "phone_number", "date_hired_in_contract", "staff_id", "company_id")
+    list_display = (
+        "get_user",
+        "get_email",
+        "date_of_birth",
+        "phone_number",
+        "date_hired_in_contract",
+        "staff_id",
+        "company_id",
+    )
     list_filter = ("user", "position", "status", "category")
+    search_fields = ("user__first_name", "user__last_name", "user__username")
     fieldsets = (
         (
             "Personal Information",
@@ -166,11 +196,13 @@ class StaffProfileAdmin(admin.ModelAdmin):
 
     def get_user(self, obj):
         return obj.user.user_full_name
+
     get_user.admin_order_field = "user"
     get_user.short_description = "Staff name"
 
     def get_email(self, obj):
         return obj.user.email
+
     get_email.admin_order_field = "user"
     get_email.short_description = "Staff email"
 
