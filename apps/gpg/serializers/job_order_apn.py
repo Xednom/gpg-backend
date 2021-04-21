@@ -112,6 +112,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "state",
             "property_status",
             "size",
+            "property_owner",
             "company_name",
             "phone",
             "email",
