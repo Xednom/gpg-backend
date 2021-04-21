@@ -26,6 +26,9 @@ class Status(models.TextChoices):
     ready_to_purchase = "ready_to_purchase", ("Ready to Purchase")
     ready_for_contract = "ready_for_contract", ("Ready for Contract")
     canceled_transaction = "canceled_transaction", ("Canceled Transaction")
+    interested_to_purchase = "interested_to_purchase", ("Interested to purchase")
+    need_of_research = "need_of_research", ("In need of research")
+    not_applicable = "not_applicable", ("Not applicable")
 
 
 class ListingAdCategory(models.TextChoices):
