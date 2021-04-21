@@ -49,7 +49,7 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
     model = PropertyDetail
     list_display = ("apn", "client", "county", "state", "property_status", "size")
     list_filter = ("client", "county", "state", "property_status")
-    search_fields = ("apn",)
+    search_fields = ("apn", "client__client_code", "county", "state")
     readonly_fields = ["client_email", "staff_email"]
     fieldsets = (
         (
