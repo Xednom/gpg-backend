@@ -88,3 +88,13 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             return "Dispute"
         elif instance.status == "complete":
             return "Complete"
+        elif instance.status == "under_quality_review":
+            return "Under Quality Review"
+        elif instance.status == "daily_tasks":
+            return "Daily Tasks"
+        elif instance.status == "weekly_tasks":
+            return "Weekly Tasks"
+        elif instance.status == "monthly_tasks":
+            return "Monthly Tasks"
+        elif instance.status == "redo":
+            return "Redo"
