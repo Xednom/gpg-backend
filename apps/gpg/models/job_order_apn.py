@@ -61,6 +61,7 @@ class PropertyDetail(TimeStamped):
     county = models.CharField(max_length=250)
     state = models.CharField(max_length=250)
     size = models.CharField(max_length=250)
+    property_owner = models.CharField(max_length=250, blank=True)
     company_name = models.CharField(max_length=250, blank=True)
     phone = models.CharField(max_length=250, blank=True)
     email = models.CharField(max_length=250, blank=True)
@@ -136,17 +137,17 @@ class PropertyPrice(TimeStamped):
         blank=True,
         null=True,
     )
-    asking_price = models.CharField(max_length=250)
-    cash_terms = models.CharField(max_length=250)
-    finance_terms = models.TextField()
-    other_terms = models.TextField()
+    asking_price = models.CharField(max_length=250, blank=True)
+    cash_terms = models.CharField(max_length=250, blank=True)
+    finance_terms = models.TextField(blank=True)
+    other_terms = models.TextField(blank=True)
     price_status = models.CharField(
         max_length=30,
         choices=PropertyPriceStatus.choices,
         default=PropertyPriceStatus.active,
         blank=True,
     )
-    notes = models.TextField()
+    notes = models.TextField(blank=True)
     updated_info = models.TextField(blank=True)
 
     def __str__(self):
