@@ -25,6 +25,7 @@ __all__ = (
     "DeadlineSerializer",
     "StateSerializer",
     "CountySerializer",
+    "PropertyDetailFileSerializer"
 )
 
 

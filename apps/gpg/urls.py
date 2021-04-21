@@ -26,6 +26,7 @@ router.register(
     r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
 )
 router.register(r"property-price", views.PropertyPriceStatusViewSet, basename="property-prices")
+router.register(r"property-detail-file", views.PropertyDetailFileViewSet, basename="property-detail-files")
 router.register(r"apn-category-type", views.ApnCategoryViewSet, basename="apn-category-types")
 router.register(r"deadline", views.DeadlineViewSet, basename="deadline")
 router.register(r"state", views.StateViewSet, basename="state")

@@ -18,6 +18,7 @@ from apps.gpg.models import (
     Deadline,
     State,
     County,
+    PropertyDetailFile
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
@@ -29,6 +30,7 @@ from apps.gpg.serializers import (
     DeadlineSerializer,
     StateSerializer,
     CountySerializer,
+    PropertyDetailFileSerializer
 )
 
 User = get_user_model()
@@ -43,6 +45,7 @@ __all__ = (
     "DeadlineViewSet",
     "StateViewSet",
     "CountyViewSet",
+    "PropertyDetailFileViewSet"
 )
 
 
@@ -73,11 +76,13 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         ticket_number = instance.ticket_number
         client_email = instance.client_email
         staff_email = instance.staff_email
+        staff_emails = staff_email.split()
         property_detail = serializer.validated_data
         # Email notification will only send if two email are present
         if client_email and staff_email:
             mail.send(
-                [staff_email, client_email],
+                [client_email],
+                cc=staff_emails,
                 template="property_detail_update",
                 context={
                     "property_detail": property_detail
@@ -92,6 +97,14 @@ class PropertyPriceStatusViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ["property_detail__id"]
     queryset = PropertyPrice.objects.all()
+
+
+class PropertyDetailFileViewSet(viewsets.ModelViewSet):
+    serializer_class = PropertyDetailFileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["property_detail__id"]
+    queryset = PropertyDetailFile.objects.all()
 
 
 class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
@@ -123,10 +136,12 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         ticket_number = instance.ticket_number
         client_email = instance.client_email
         staff_email = instance.staff_email
+        staff_emails = staff_email.split()
         job_order_category = serializer.validated_data
         if client_email and staff_email:
             mail.send(
-                [staff_email, client_email],
+                [client_email],
+                cc=staff_emails,
                 template="job_order_category_update",
                 context={
                     "job_order_category": job_order_category
