@@ -179,6 +179,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     deadline = serializers.SlugRelatedField(
         slug_field="deadline", queryset=Deadline.objects.all()
     )
+    status_ = serializers.SerializerMethodField()
     category_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
 
@@ -196,6 +197,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "category",
             "category_",
             "status",
+            "status_",
             "due_date",
             "date_completed",
             "job_description",
@@ -218,6 +220,38 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "Client being process"
         else:
             return f"{instance.client.client_code}"
+    
+    def get_status_(self, instance):
+        if instance.status == "na": 
+            return "N/A"
+        elif instance.status == "job_order_request":
+            return "Request for job order"
+        elif instance.status == "va_processing":
+            return "VA Processing"
+        elif instance.status == "management_processing":
+            return "Management Processing"
+        elif instance.status == "verified_job_order":
+            return "Verified Job Order"
+        elif instance.status == "on_hold":
+            return "On Hold"
+        elif instance.status == "canceled":
+            return "Canceled"
+        elif instance.status == "follow_up":
+            return "Follow up"
+        elif instance.status == "dispute":
+            return "Dispute"
+        elif instance.status == "complete":
+            return "Complete"
+        elif instance.status == "under_quality_review":
+            return "Under Quality Review"
+        elif instance.status == "daily_tasks":
+            return "Daily Tasks"
+        elif instance.status == "weekly_tasks":
+            return "Weekly Tasks"
+        elif instance.status == "monthly_tasks":
+            return "Monthly Tasks"
+        elif instance.status == "redo":
+            return "Redo"
 
 
 class DeadlineSerializer(serializers.ModelSerializer):
