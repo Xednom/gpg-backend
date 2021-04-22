@@ -109,13 +109,13 @@ class ClientProfileAdmin(admin.ModelAdmin):
     def get_user(self, obj):
         return obj.user.user_full_name
 
-    get_user.admin_order_field = "user"
+    get_user.admin_order_field = "user__first_name"
     get_user.short_description = "Client name"
 
     def get_email(self, obj):
         return obj.user.email
 
-    get_email.admin_order_field = "user"
+    get_email.admin_order_field = "user__email"
     get_email.short_description = "User email"
 
 
@@ -196,13 +196,13 @@ class StaffProfileAdmin(admin.ModelAdmin):
     def get_user(self, obj):
         return obj.user.user_full_name
 
-    get_user.admin_order_field = "user"
+    get_user.admin_order_field = "user__first_name"
     get_user.short_description = "Staff name"
 
     def get_email(self, obj):
         return obj.user.email
 
-    get_email.admin_order_field = "user"
+    get_email.admin_order_field = "user__email"
     get_email.short_description = "Staff email"
 
 
