@@ -206,6 +206,7 @@ class JobOrderCategory(TimeStamped):
 
     class Meta:
         verbose_name_plural = "Job Order Categories"
+        ordering = ["-id"]
 
     def __str__(self):
         return f"Job order by {self.category}"
