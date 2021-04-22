@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from apps.core.admin import ModelAdminMixin
 from apps.gpg.models import (
     JobOrderGeneral,
     JobOrderCategory,
@@ -47,9 +48,9 @@ class PropertyDetailFileAdmin(admin.TabularInline):
     extra = 1
 
 
-class PropertyDetailsAdmin(admin.ModelAdmin):
+class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = PropertyDetail
-    list_display = ("apn", "client", "county", "state", "property_status", "size")
+    list_display = ("apn", "get_client", "county", "state", "property_status", "size")
     list_filter = ("client", "county", "state", "property_status")
     search_fields = ("apn", "client__client_code", "county", "state")
     readonly_fields = ["client_email", "staff_email"]
@@ -88,6 +89,15 @@ class PropertyDetailsAdmin(admin.ModelAdmin):
         ),
     )
     inlines = [PropertyPriceAdmin, PropertyDetailFileAdmin]
+
+    def get_client(self, obj):
+        if self.request.user.is_superuser:
+            return obj.client.client_name, obj.client.client_code
+        else:
+            return obj.client.client_code
+    
+    get_client.admin_order_field = "client__user__first_name"
+    get_client.short_description = "Client"
 
 
 class PropertyPriceAdmin(admin.ModelAdmin):
@@ -128,12 +138,12 @@ class PropertyDetailFileAdmin(admin.ModelAdmin):
     search_fields = ("property_detail__apn", "details")
 
 
-class JobOrderGeneralAdmin(admin.ModelAdmin):
+class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = JobOrderGeneral
     readonly_fields = ["client_email", "staff_email"]
     list_display = (
         "ticket_number",
-        "client",
+        "get_client",
         "request_date",
         "due_date",
         "job_title",
@@ -142,12 +152,21 @@ class JobOrderGeneralAdmin(admin.ModelAdmin):
     list_filter = ("client", "job_title", "status")
     inlines = [JobOrderComment]
 
+    def get_client(self, obj):
+        if self.request.user.is_superuser:
+            return obj.client.client_name, obj.client.client_code
+        else:
+            return obj.client.client_code
+    
+    get_client.admin_order_field = "client__user__first_name"
+    get_client.short_description = "Client"
 
-class JobOrderByCategoryAdmin(admin.ModelAdmin):
+
+class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = JobOrderCategory
     list_display = (
         "ticket_number",
-        "client",
+        "get_client",
         "category",
         "property_detail",
         "total_time_consumed",
@@ -173,7 +192,7 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
                 "fields": (
                     "ticket_number",
                     "property_detail",
-                    "client",
+                    "get_client",
                     "client_email",
                     "category",
                     "status",
@@ -197,6 +216,15 @@ class JobOrderByCategoryAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def get_client(self, obj):
+        if self.request.user.is_superuser:
+            return obj.client.client_name, obj.client.client_code
+        else:
+            return obj.client.client_code
+    
+    get_client.admin_order_field = "client__user__first_name"
+    get_client.short_description = "Client"
 
 
 class StateAdmin(admin.ModelAdmin):

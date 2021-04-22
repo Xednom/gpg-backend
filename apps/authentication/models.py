@@ -69,10 +69,7 @@ class Client(TimeStamped):
     customer_id = models.CharField(max_length=250, blank=True)
 
     def __str__(self):
-        if not self.user.is_superuser:
-            return f"{self.client_code}"
-        else:
-            return f"{self.user.user_full_name} - {self.client_code}"
+        return self.client_code
     
     @property
     def client_name(self):
