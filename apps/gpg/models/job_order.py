@@ -96,9 +96,10 @@ class JobOrderGeneral(TimeStamped):
     total_time_consumed = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
+    url_of_the_completed_jo = models.TextField(blank=True)
 
     class Meta:
-        ordering = ["-ticket_number"]
+        ordering = ["-id"]
 
     def __str__(self):
         return "Job Order general of " + self.client.user.get_full_name()

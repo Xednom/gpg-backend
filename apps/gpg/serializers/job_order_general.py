@@ -52,6 +52,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "status_",
             "date_completed",
             "total_time_consumed",
+            "url_of_the_completed_jo",
             "job_order_comments",
         )
     
