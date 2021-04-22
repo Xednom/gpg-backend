@@ -79,13 +79,12 @@ class ClientProfileAdmin(admin.ModelAdmin):
         "affiliate_partner_code",
         "affiliate_partner_name",
         "user",
-        "client_code",
     )
     search_fields = (
         "affiliate_partner_name",
         "affiliate_partner_code",
         "user__first_name",
-        "user_username",
+        "user__username",
         "user__last_name",
         "client_code",
     )
