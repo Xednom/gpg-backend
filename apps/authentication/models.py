@@ -69,7 +69,14 @@ class Client(TimeStamped):
     customer_id = models.CharField(max_length=250, blank=True)
 
     def __str__(self):
-        return f"{self.client_code}"
+        if not self.user.is_superuser:
+            return f"{self.client_code}"
+        else:
+            return f"{self.user.user_full_name} - {self.client_code}"
+    
+    @property
+    def client_name(self):
+        return f"{self.user.user_full_name}"
 
     def create_client_code(self):
         initial_name = self.user.first_name + self.user.last_name
@@ -94,30 +101,6 @@ class Client(TimeStamped):
 
         client_code = client_code + "000" + str(int(in_int) + 1)
         return client_code
-
-    def create_affiliate_partner_code(self):
-        code = self.affiliate_partner_name
-        partner_code = ""
-        for i in code.upper().split():
-            partner_code += i[0]
-        last_in = Client.objects.all().order_by("id").last()
-
-        if not last_in:
-            for i in code.upper().split():
-                partner_code += i[0]
-            seq = 0
-            partner_code = partner_code + "000" + str((int(seq) + 1))
-            return partner_code
-
-        if self.id:
-            partner_code = partner_code + "000" + str(self.id)
-            return partner_code
-
-        in_id = last_in.id
-        in_int = int(in_id)
-
-        partner_code = partner_code + "000" + str(int(in_int) + 1)
-        return partner_code
 
     def create_customer_id(self):
         code = self.user.company_category
@@ -144,7 +127,6 @@ class Client(TimeStamped):
 
     def save(self, *args, **kwargs):
         self.client_code = self.create_client_code()
-        self.affiliate_partner_code = self.create_affiliate_partner_code()
         self.customer_id = self.create_customer_id()
         super().save(*args, **kwargs)
 
