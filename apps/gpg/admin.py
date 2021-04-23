@@ -192,7 +192,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
                 "fields": (
                     "ticket_number",
                     "property_detail",
-                    "get_client",
+                    "client",
                     "client_email",
                     "category",
                     "status",
