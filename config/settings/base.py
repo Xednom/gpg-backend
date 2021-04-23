@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 DJANGO_APPS = [
+    "grappelli",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -170,6 +171,8 @@ POST_OFFICE = {
         "default": "anymail.backends.mailgun.EmailBackend"
     }
 }
+
+GRAPPELLI_ADMIN_TITLE = "GPG Admin"
 
 # Email sender credentials
 ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")

@@ -70,6 +70,7 @@ django-crontab = "*"
 django-post-office = "*"
 bleach = "*"
 xlrd = "*"
+django-grappelli = "*"
 
 [requires]
 python_version = "3.8"
