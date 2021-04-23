@@ -13,7 +13,7 @@ class LoginCredential(TimeStamped):
         null=True,
     )
     category = models.CharField(max_length=250, blank=True)
-    url = models.URLField(max_length=500, blank=True)
+    url = models.CharField(max_length=500, blank=True)
     username = models.CharField(max_length=250, blank=True)
     password = models.CharField(max_length=250, blank=True)
     notes = models.TextField(blank=True)

@@ -6,14 +6,20 @@ from apps.account.models import LoginCredential
 
 class LoginCredentialSerializer(serializers.ModelSerializer):
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
-
+    client_code = serializers.SerializerMethodField()
     class Meta:
         model = LoginCredential
         fields = (
+            "id",
             "client",
+            "client_code",
             "category",
+            "url",
             "username",
             "password",
             "notes",
-            "staff"
+            "staff",
         )
+    
+    def get_client_code(self, instance):
+        return f"{instance.client.client_code}"
