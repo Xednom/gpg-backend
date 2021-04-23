@@ -95,7 +95,7 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
             return obj.client.client_name, obj.client.client_code
         else:
             return obj.client.client_code
-    
+
     get_client.admin_order_field = "client__user__first_name"
     get_client.short_description = "Client"
 
@@ -149,6 +149,12 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "job_title",
         "status",
     )
+    search_fields = (
+        "ticket_number",
+        "client__user__first_name",
+        "client__user__last_name",
+        "job_title"
+    )
     list_filter = ("client", "job_title", "status")
     inlines = [JobOrderComment]
 
@@ -157,7 +163,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
             return obj.client.client_name, obj.client.client_code
         else:
             return obj.client.client_code
-    
+
     get_client.admin_order_field = "client__user__first_name"
     get_client.short_description = "Client"
 
@@ -221,7 +227,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
             return obj.client.client_name, obj.client.client_code
         else:
             return obj.client.client_code
-    
+
     get_client.admin_order_field = "client__user__first_name"
     get_client.short_description = "Client"
 
