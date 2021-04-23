@@ -62,6 +62,9 @@ class JobOrderStatus(models.TextChoices):
     weekly_tasks = "weekly_tasks", ("Weekly Tasks")
     monthly_tasks = "monthly_tasks", ("Monthly Tasks")
     redo = "redo", ("Redo")
+    pending = "pending", ("Pending")
+    request_for_posting = "request_for_posting", ("Request for Posting")
+    mark_as_sold_request = "mark_as_sold_request", ("Mark as Sold Request")
 
 
 class JobOrderGeneral(TimeStamped):
