@@ -252,6 +252,12 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "Monthly Tasks"
         elif instance.status == "redo":
             return "Redo"
+        elif instance.status == "pending":
+            return "Pending"
+        elif instance.status == "request_for_posting":
+            return "Request for Posting"
+        elif instance.status == "mark_as_sold_request":
+            return "Mark as Sold Request"
 
 
 class DeadlineSerializer(serializers.ModelSerializer):
