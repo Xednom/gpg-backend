@@ -8,6 +8,7 @@ from apps.authentication.views import (
     StaffFilesViewSet,
     ClientCodeViewSet,
 )
+from apps.account.views import LoginCredentialViewSet
 from . import views
 
 router = routers.DefaultRouter()
@@ -31,6 +32,7 @@ router.register(r"apn-category-type", views.ApnCategoryViewSet, basename="apn-ca
 router.register(r"deadline", views.DeadlineViewSet, basename="deadline")
 router.register(r"state", views.StateViewSet, basename="state")
 router.register(r"county", views.CountyViewSet, basename="county")
+router.register(r"login-credentials", LoginCredentialViewSet, basename="logins")
 
 
 app_name = "gpg"

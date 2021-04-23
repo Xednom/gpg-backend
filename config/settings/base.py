@@ -45,6 +45,7 @@ LOCAL_APPS = [
     "apps.authentication",
     "apps.core",
     "apps.gpg",
+    "apps.account",
 ]
 
 THIRD_PARTY_APPS = [
