@@ -180,7 +180,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         "date_completed",
         "status",
     )
-    list_filter = ("client", "category__category", "status", "total_time_consumed")
+    list_filter = ("client", "staff", "category__category", "status", "total_time_consumed")
     search_fields = (
         "property_detail__apn",
         "ticket_number",
