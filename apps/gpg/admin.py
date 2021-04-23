@@ -176,9 +176,8 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
     list_filter = ("client", "category__category", "status", "total_time_consumed")
     search_fields = (
-        "property_detail",
+        "property_detail__apn",
         "ticket_number",
-        "job_title",
         "client__user__username",
         "client__user__first_name",
         "client__user__last_name",
