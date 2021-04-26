@@ -39,7 +39,7 @@ class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
 class AccountFileAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = AccountFile
     list_display = ("get_client", "file_name", "url")
-    search_fields = ("client", "file_name", "staff")
+    search_fields = ("client__user__first_name", "client__user__last_name", "file_name")
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
