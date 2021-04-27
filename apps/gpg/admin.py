@@ -92,7 +92,8 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
-            return obj.client.client_name, obj.client.client_code
+            if obj.client.client_name:
+                return obj.client.client_name, obj.client.client_code
         else:
             return obj.client.client_code
 
@@ -160,7 +161,8 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
-            return obj.client.client_name, obj.client.client_code
+            if obj.client.client_name:
+                return obj.client.client_name, obj.client.client_code
         else:
             return obj.client.client_code
 
@@ -224,7 +226,8 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
-            return obj.client.client_name, obj.client.client_code
+            if obj.client.client_name:
+                return obj.client.client_name, obj.client.client_code
         else:
             return obj.client.client_code
 
