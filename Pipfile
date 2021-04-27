@@ -71,6 +71,7 @@ django-post-office = "*"
 bleach = "*"
 xlrd = "*"
 django-grappelli = "*"
+django-money = "*"
 
 [requires]
 python_version = "3.8"

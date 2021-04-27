@@ -46,6 +46,7 @@ LOCAL_APPS = [
     "apps.core",
     "apps.gpg",
     "apps.account",
+    "apps.timesheet",
 ]
 
 THIRD_PARTY_APPS = [
@@ -57,6 +58,7 @@ THIRD_PARTY_APPS = [
     "post_office",
     "django_extensions",
     "django_crontab",
+    "djmoney"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
