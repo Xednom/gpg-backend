@@ -93,7 +93,13 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
     def get_client(self, obj):
         if self.request.user.is_superuser:
             if obj.client.client_name:
-                return obj.client.client_name, obj.client.client_code
+                return (
+                    obj.client.user.first_name
+                    + " "
+                    + obj.client.user.last_name
+                    + " - "
+                    + obj.client.client_code
+                )
         else:
             return obj.client.client_code
 
@@ -154,7 +160,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "ticket_number",
         "client__user__first_name",
         "client__user__last_name",
-        "job_title"
+        "job_title",
     )
     list_filter = ("client", "job_title", "status")
     inlines = [JobOrderComment]
@@ -162,7 +168,13 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     def get_client(self, obj):
         if self.request.user.is_superuser:
             if obj.client.client_name:
-                return obj.client.client_name, obj.client.client_code
+                return (
+                    obj.client.user.first_name
+                    + " "
+                    + obj.client.user.last_name
+                    + " - "
+                    + obj.client.client_code
+                )
         else:
             return obj.client.client_code
 
@@ -182,7 +194,13 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         "date_completed",
         "status",
     )
-    list_filter = ("client", "staff", "category__category", "status", "total_time_consumed")
+    list_filter = (
+        "client",
+        "staff",
+        "category__category",
+        "status",
+        "total_time_consumed",
+    )
     search_fields = (
         "property_detail__apn",
         "ticket_number",
@@ -227,7 +245,13 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     def get_client(self, obj):
         if self.request.user.is_superuser:
             if obj.client.client_name:
-                return obj.client.client_name, obj.client.client_code
+                return (
+                    obj.client.user.first_name
+                    + " "
+                    + obj.client.user.last_name
+                    + " - "
+                    + obj.client.client_code
+                )
         else:
             return obj.client.client_code
 
