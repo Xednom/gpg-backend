@@ -9,7 +9,7 @@ from apps.authentication.views import (
     ClientCodeViewSet,
 )
 from apps.account.views import LoginCredentialViewSet, AccountFileViewSet
-from apps.timesheet.views import AccountBalanceViewSet
+from apps.timesheet.views import AccountBalanceViewSet, AccountChargeViewSet, PaymentHistoryViewSet
 from . import views
 
 router = routers.DefaultRouter()
@@ -36,6 +36,8 @@ router.register(r"county", views.CountyViewSet, basename="county")
 router.register(r"login-credentials", LoginCredentialViewSet, basename="logins")
 router.register(r"account-files", AccountFileViewSet, basename="account-file")
 router.register(r"account-balance", AccountBalanceViewSet, basename="account-balance")
+router.register(r"account-charge", AccountChargeViewSet, basename="account-charge")
+router.register(r"payment-history", PaymentHistoryViewSet, basename="payment-history")
 
 app_name = "gpg"
 urlpatterns = [
