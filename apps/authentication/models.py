@@ -73,7 +73,7 @@ class Client(TimeStamped):
     
     @property
     def client_name(self):
-        return f"{self.user.user_full_name}"
+        return f"{self.user.first_name} {self.user.last_name}"
 
     def create_client_code(self):
         initial_name = self.user.first_name + self.user.last_name
