@@ -179,6 +179,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     deadline = serializers.SlugRelatedField(
         slug_field="deadline", queryset=Deadline.objects.all()
     )
+    property_detail_ticket = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
     category_ = serializers.SerializerMethodField()
     client_code = serializers.SerializerMethodField()
@@ -189,6 +190,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "id",
             "ticket_number",
             "property_detail",
+            "property_detail_ticket",
             "client",
             "client_email",
             "client_code",
@@ -220,6 +222,10 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "Client being process"
         else:
             return f"{instance.client.client_code}"
+    
+    def get_property_detail_ticket(self, instance):
+        if instance.property_detail:
+            return instance.property_detail.ticket_number
     
     def get_status_(self, instance):
         if instance.status == "na": 
