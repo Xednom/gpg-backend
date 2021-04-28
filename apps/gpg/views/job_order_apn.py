@@ -52,7 +52,7 @@ __all__ = (
 class PropertyDetailsViewSet(viewsets.ModelViewSet):
     serializer_class = PropertyDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = "apn"
+    lookup_field = "ticket_number"
     filter_backends = [filters.SearchFilter]
     search_fields = ["property_price_statuses__price_status"]
 
