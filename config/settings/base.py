@@ -175,7 +175,7 @@ POST_OFFICE = {
     }
 }
 
-GRAPPELLI_ADMIN_TITLE = "G.P.G Corp. Management Team"
+GRAPPELLI_ADMIN_TITLE = "G.P.G Corp. Management System"
 
 # Email sender credentials
 ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")
