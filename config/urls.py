@@ -23,5 +23,5 @@ urlpatterns = [
     path("api/v1/", include("apps.gpg.urls"))
 ]
 
-admin.site.site_title = "GPG Admin site admin"
-admin.site.site_header = "GPG Administration"
+admin.site.site_title = "G.P.G Corp Management Team Admin site"
+admin.site.site_header = "G.P.G Corp. Management Team"
