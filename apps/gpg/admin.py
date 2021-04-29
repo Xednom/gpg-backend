@@ -88,6 +88,7 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
             },
         ),
     )
+    filter_horizontal = ("staff",)
     inlines = [PropertyPriceAdmin, PropertyDetailFileAdmin]
 
     def get_client(self, obj):
@@ -167,6 +168,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "client__user__last_name",
         "job_title",
     )
+    filter_horizontal = ("va_assigned",)
     list_filter = ("client", "job_title", "status")
     inlines = [JobOrderComment]
 
@@ -205,6 +207,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         "client__user__last_name",
     )
     readonly_fields = ["client_email", "staff_email"]
+    filter_horizontal = ("staff",)
     inlines = [JobOrderCategoryComment]
     fieldsets = (
         (

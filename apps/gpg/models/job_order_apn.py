@@ -327,6 +327,8 @@ class PropertyDetailFile(TimeStamped):
     description = models.TextField(blank=True)
 
     class Meta:
+        verbose_name = "Per APN file data"
+        verbose_name_plural = "Per APN files data"
         ordering = ["created_at"]
     
     def __str__(self):
