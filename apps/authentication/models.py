@@ -68,6 +68,9 @@ class Client(TimeStamped):
     )
     customer_id = models.CharField(max_length=250, blank=True)
 
+    class Meta:
+        ordering = ["-user"]
+
     def __str__(self):
         return self.user.user_full_name + " - " + self.client_code
     
