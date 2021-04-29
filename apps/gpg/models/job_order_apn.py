@@ -24,6 +24,8 @@ __all__ = (
 
 class PropertyDetailStatus(models.TextChoices):
     sold = "sold", ("Sold")
+    sold_in_cash = "sold_in_cash", ("Sold in Cash")
+    sold_in_terms = "sold_in_terms", ("Sold in Terms")
     available = "available", ("Available")
     in_escrow = "in_escrow", ("In Escrow")
     in_contract = "in_contract", ("In Contract")
