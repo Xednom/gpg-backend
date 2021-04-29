@@ -68,8 +68,11 @@ class CreateJobOrderComment(generics.CreateAPIView):
         ticket_number = self.kwargs.get("ticket_number")
         job_order = get_object_or_404(JobOrderGeneral, id=job_order_id)
         if job_order.client_email and job_order.staff_email:
+            staff_email = job_order.staff_email
+            staff_emails = staff_email.split()
             mail.send(
-                [job_order.staff_email, job_order.client_email],
+                [job_order.client_email],
+                cc=staff_emails,
                 template="job_order_comment_update",
                 context={
                     "job_order": job_order

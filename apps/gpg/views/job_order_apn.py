@@ -172,8 +172,11 @@ class CreateJobOrderByApnComment(generics.CreateAPIView):
         job_order_id = self.kwargs.get("id")
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
         if job_order.client_email and job_order.staff_email:
+            staff_email = job_order.staff_email
+            staff_emails = staff_email.split()
             mail.send(
-                [job_order.staff_email, job_order.client_email],
+                [job_order.client_email],
+                cc=staff_emails,
                 template="job_order_category_comment",
                 context={
                     "job_order": job_order
