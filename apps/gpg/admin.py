@@ -50,7 +50,7 @@ class PropertyDetailFileAdmin(admin.TabularInline):
 
 class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = PropertyDetail
-    list_display = ("apn", "get_client", "county", "state", "property_status", "size")
+    list_display = ("apn", "client", "get_staffs", "county", "state", "property_status", "size")
     list_filter = ("client", "county", "state", "property_status")
     search_fields = ("apn", "client__client_code", "county", "state")
     readonly_fields = ["client_email", "staff_email"]
@@ -101,10 +101,12 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
                     + obj.client.client_code
                 )
         else:
-            return obj.client.client_code
+            return obj.client.client_code or obj.client.user
+    
+    def get_staffs(self, obj):
+        return ", ".join([staff.staff_name for staff in obj.staff.all()])
 
-    get_client.admin_order_field = "client__user__first_name"
-    get_client.short_description = "Client"
+    get_staffs.short_description = "Staffs"
 
 
 class PropertyPriceAdmin(admin.ModelAdmin):
@@ -150,7 +152,8 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     readonly_fields = ["client_email", "staff_email"]
     list_display = (
         "ticket_number",
-        "get_client",
+        "client",
+        "get_staffs",
         "request_date",
         "due_date",
         "job_title",
@@ -165,28 +168,18 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_filter = ("client", "job_title", "status")
     inlines = [JobOrderComment]
 
-    def get_client(self, obj):
-        if self.request.user.is_superuser:
-            if obj.client:
-                return (
-                    obj.client.user.first_name
-                    + " "
-                    + obj.client.user.last_name
-                    + " - "
-                    + obj.client.client_code
-                )
-        else:
-            return obj.client.client_code
+    def get_staffs(self, obj):
+        return ", ".join([staff.staff_name for staff in obj.va_assigned.all()])
 
-    get_client.admin_order_field = "client__user__first_name"
-    get_client.short_description = "Client"
+    get_staffs.short_description = "Staffs"
 
 
 class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = JobOrderCategory
     list_display = (
         "ticket_number",
-        "get_client",
+        "client",
+        "get_staffs",
         "category",
         "deadline",
         "property_detail",
@@ -244,21 +237,10 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         ),
     )
 
-    def get_client(self, obj):
-        if self.request.user.is_superuser:
-            if obj.client:
-                return (
-                    obj.client.user.first_name
-                    + " "
-                    + obj.client.user.last_name
-                    + " - "
-                    + obj.client.client_code
-                )
-        else:
-            return obj.client.client_code
+    def get_staffs(self, obj):
+        return ", ".join([staff.staff_name for staff in obj.staff.all()])
 
-    get_client.admin_order_field = "client__user__first_name"
-    get_client.short_description = "Client"
+    get_staffs.short_description = "Staffs"
 
 
 class StateAdmin(admin.ModelAdmin):
