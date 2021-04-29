@@ -157,6 +157,8 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "request_date",
         "due_date",
         "job_title",
+        "date_completed",
+        "total_time_consumed",
         "status",
     )
     search_fields = (
