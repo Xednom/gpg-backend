@@ -51,7 +51,7 @@ class PropertyDetailFileAdmin(admin.TabularInline):
 class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = PropertyDetail
     list_display = ("apn", "client", "get_staffs", "county", "state", "property_status", "size")
-    list_filter = ("client", "county", "state", "property_status")
+    list_filter = ("client", "staff", "county", "state", "property_status")
     search_fields = ("apn", "client__client_code", "county", "state")
     readonly_fields = ["client_email", "staff_email"]
     fieldsets = (
@@ -169,7 +169,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "job_title",
     )
     filter_horizontal = ("va_assigned",)
-    list_filter = ("client", "job_title", "status")
+    list_filter = ("client", "va_assigned", "job_title", "status")
     inlines = [JobOrderComment]
 
     def get_staffs(self, obj):

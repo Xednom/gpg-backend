@@ -6,7 +6,9 @@ from .models import LoginCredential, AccountFile
 
 class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = LoginCredential
-    list_display = ("get_client", "category", "url")
+    list_display = ("client", "get_staffs", "category", "url")
+    list_filter = ("client", "staff")
+    filter_horizontal = ("staff",)
     search_fields = ("client__user__first_name", "client__user__last_name", "category", "username")
 
     fieldsets = (
@@ -26,29 +28,23 @@ class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
         ),
     )
 
-    def get_client(self, obj):
-        if self.request.user.is_superuser:
-            return obj.client.client_name, obj.client.client_code
-        else:
-            return obj.client.client_code
+    def get_staffs(self, obj):
+        return ", ".join([staff.staff_name for staff in obj.staff.all()])
 
-    get_client.admin_order_field = "client__user__first_name"
-    get_client.short_description = "Client"
+    get_staffs.short_description = "Staffs"
 
 
 class AccountFileAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = AccountFile
-    list_display = ("get_client", "file_name", "url")
+    list_display = ("client", "get_staffs", "file_name", "url")
+    list_filter = ("staff", "client")
+    filter_horizontal = ("staff",)
     search_fields = ("client__user__first_name", "client__user__last_name", "file_name")
 
-    def get_client(self, obj):
-        if self.request.user.is_superuser:
-            return obj.client.client_name, obj.client.client_code
-        else:
-            return obj.client.client_code
+    def get_staffs(self, obj):
+        return ", ".join([staff.staff_name for staff in obj.staff.all()])
 
-    get_client.admin_order_field = "client__user__first_name"
-    get_client.short_description = "Client"
+    get_staffs.short_description = "Staffs"
 
 
 admin.site.register(LoginCredential, LoginCredentialAdmin)
