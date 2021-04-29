@@ -71,6 +71,10 @@ class PropertyDetail(TimeStamped):
     notes_va_side = models.TextField(blank=True)
     notes_management_side = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name = "APN Invetory list"
+        verbose_name_plural = "APN Invetory lists"
+
     def __str__(self):
         return f"{self.apn}"
 
@@ -122,6 +126,11 @@ class PropertyDetail(TimeStamped):
 class CategoryType(TimeStamped):
     category = models.CharField(max_length=250)
 
+    class Meta:
+        verbose_name = "Job Order Category"
+        verbose_name_plural = "Job Order Categories"
+        ordering = ["category"]
+
     def __str__(self):
         return f"{self.category}"
 
@@ -150,12 +159,21 @@ class PropertyPrice(TimeStamped):
     notes = models.TextField(blank=True)
     updated_info = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name = "APN Pricing Term"
+        verbose_name_plural = "APN Pricing Terms"
+
     def __str__(self):
         return f"{self.property_detail}: status - {self.price_status}"
 
 
 class Deadline(TimeStamped):
     deadline = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "Deadline Category"
+        verbose_name_plural = "Deadline Categories"
+        ordering = ["deadline"]
 
     def __str__(self):
         return f"{self.deadline}"
@@ -205,7 +223,8 @@ class JobOrderCategory(TimeStamped):
     )
 
     class Meta:
-        verbose_name_plural = "Job Order Categories"
+        verbose_name = "Job Order Request by APN"
+        verbose_name_plural = "Job Order Request by APNs"
         ordering = ["-id"]
 
     def __str__(self):
@@ -274,6 +293,11 @@ class CommentByApn(TimeStamped):
 class State(TimeStamped):
     name = models.CharField(max_length=250)
 
+    class Meta:
+        verbose_name = "List of State in USA"
+        verbose_name_plural = "List of States in USA"
+        ordering = ["name"]
+
     def __str__(self):
         return f"{self.name}"
 
@@ -283,7 +307,8 @@ class County(TimeStamped):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural = "Counties"
+        verbose_name = "List of County in USA"
+        verbose_name_plural = "List of Counties in USA"
 
     def __str__(self):
         return f"{self.name} - {self.state}"

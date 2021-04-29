@@ -102,6 +102,8 @@ class JobOrderGeneral(TimeStamped):
     url_of_the_completed_jo = models.TextField(blank=True)
 
     class Meta:
+        verbose_name = "General Order Request"
+        verbose_name_plural = "General Order Requests"
         ordering = ["-id"]
 
     def __str__(self):
