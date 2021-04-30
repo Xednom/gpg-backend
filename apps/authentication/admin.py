@@ -73,6 +73,7 @@ class ClientProfileAdmin(admin.ModelAdmin):
         "get_email",
         "affiliate_partner_name",
         "affiliate_partner_code",
+        "hourly_rate",
         "customer_id",
     )
     list_filter = (
@@ -97,6 +98,7 @@ class ClientProfileAdmin(admin.ModelAdmin):
                     "client_code",
                     "affiliate_partner_code",
                     "affiliate_partner_name",
+                    "hourly_rate",
                     "pin",
                     "lead_information",
                     "customer_id",
