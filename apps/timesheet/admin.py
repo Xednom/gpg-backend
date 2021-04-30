@@ -43,10 +43,49 @@ class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
     readonly_fields = (
         "client_total_due",
-        "client_other_fee",
         "client_total_charge",
         "staff_total_due",
-        "staff_fee",
+    )
+    fieldsets = (
+        (
+            "Account Charge Information",
+            {
+                "fields": (
+                    "ticket_number",
+                    "shift_date",
+                    "job_request",
+                    "job_request_description",
+                    "total_items",
+                    "total_time",
+                    "status",
+                    "notes",
+                )
+            },
+        ),
+        (
+            "Staff information",
+            {
+                "fields": (
+                    "staff",
+                    "staff_hourly_rate",
+                    "staff_fee",
+                    "staff_other_fee",
+                    "staff_total_due",
+                )
+            },
+        ),
+        (
+            "Client information",
+            {
+                "fields": (
+                    "client",
+                    "client_hourly_rate",
+                    "client_other_fee",
+                    "client_total_charge",
+                    "client_total_due",
+                )
+            },
+        ),
     )
 
 
