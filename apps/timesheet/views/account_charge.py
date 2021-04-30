@@ -22,7 +22,7 @@ class AccountChargeViewSet(viewsets.ModelViewSet):
         if current_user:
             queryset = AccountCharge.objects.select_related("client", "staff").filter(
                 client__user__in=user
-            ) or AccountCharge.objects.select_relatedd("client", "staff").filter(
+            ) or AccountCharge.objects.select_related("client", "staff").filter(
                 staff__user__in=user
             )
             return queryset
