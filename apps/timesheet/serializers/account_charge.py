@@ -6,12 +6,14 @@ from apps.timesheet.models import AccountCharge
 
 class AccountChargeSerializer(serializers.ModelSerializer):
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
+    client_code = serializers.CharField(source="client.client_code")
 
     class Meta:
         model = AccountCharge
         fields = (
             "ticket_number",
             "client",
+            "client_code",
             "shift_date",
             "job_request",
             "total_items",
