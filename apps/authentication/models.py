@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 
+from djmoney.models.fields import MoneyField
+
 from apps.core.models import TimeStamped
 
 
@@ -67,6 +69,14 @@ class Client(TimeStamped):
         blank=True, help_text="Where did you hear about our company?"
     )
     customer_id = models.CharField(max_length=250, blank=True)
+    hourly_rate = MoneyField(
+        max_digits=19,
+        decimal_places=2,
+        default_currency="USD",
+        default=0.00,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ["user__first_name"]
