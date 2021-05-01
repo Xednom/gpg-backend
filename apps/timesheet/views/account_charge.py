@@ -14,6 +14,7 @@ __all__ = ("AccountChargeViewSet",)
 class AccountChargeViewSet(viewsets.ModelViewSet):
     serializer_class = AccountChargeSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "ticket_number"
 
     def get_queryset(self):
         current_user = self.request.user

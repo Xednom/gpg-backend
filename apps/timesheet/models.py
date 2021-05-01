@@ -143,6 +143,9 @@ class AccountCharge(TimeStamped):
         null=True,
     )
 
+    class Meta:
+        ordering = ["-id"]
+
     def __str__(self):
         return f"Account charges of {self.client}"
 

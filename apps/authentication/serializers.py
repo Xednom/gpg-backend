@@ -82,6 +82,7 @@ class ClientSerializer(WritableNestedModelSerializer):
             "id",
             "user",
             "client_code",
+            "hourly_rate",
             "affiliate_partner_code",
             "affiliate_partner_name",
             "pin",
@@ -95,7 +96,7 @@ class ClientSerializer(WritableNestedModelSerializer):
 class ClientCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ("client_code",)
+        fields = ("client_code", "hourly_rate")
 
 
 class StaffSerializer(WritableNestedModelSerializer):
