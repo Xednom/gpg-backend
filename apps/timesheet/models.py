@@ -149,24 +149,6 @@ class AccountCharge(TimeStamped):
     def __str__(self):
         return f"Account charges of {self.client}"
 
-    def create_ticket_number(self):
-        ticket_code = ""
-        last_in = AccountCharge.objects.all().order_by("id").last()
-
-        if not last_in:
-            seq = 0
-            ticket_number = "AC000" + str((int(seq) + 1))
-            return ticket_number
-
-        if self.id:
-            ticket_number = "AC000" + str(self.id)
-            return ticket_number
-
-        in_id = last_in.id
-        in_int = int(in_id)
-        ticket_code = "AC000" + str(int(in_int) + 1)
-        return ticket_code
-
     def compute_staff_fee(self):
         staff_fee = self.total_time * self.staff_hourly_rate
         return staff_fee
@@ -188,7 +170,6 @@ class AccountCharge(TimeStamped):
         return total_charge
 
     def save(self, *args, **kwargs):
-        self.ticket_number = self.create_ticket_number()
         self.staff_fee = self.compute_staff_fee()
         self.staff_total_due = self.compute_staff_total_due()
         self.client_other_fee = self.compute_client_other_fee()
