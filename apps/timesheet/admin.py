@@ -37,15 +37,18 @@ class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "shift_date",
+        "job_request",
         "client",
         "client_hourly_rate",
         "client_other_fee",
         "client_total_charge",
         "client_total_due",
-        "job_request",
         "staff",
+        "staff_hourly_rate",
+        "staff_fee",
+        "staff_other_fee",
         "staff_total_due",
-        "client_total_due",
+        "total_time"
     )
     readonly_fields = (
         "client_total_due",
