@@ -39,7 +39,9 @@ class AccountBalance(TimeStamped):
     total_time_consumed = models.DecimalField(
         max_digits=19, decimal_places=2, default=0.00, blank=True
     )
-    amount_due = MoneyField(max_digits=19, decimal_places=2, default_currency="USD")
+    account_charges = MoneyField(
+        max_digits=19, decimal_places=2, default_currency="USD"
+    )
     account_balance = MoneyField(
         max_digits=19,
         decimal_places=2,
@@ -176,3 +178,36 @@ class AccountCharge(TimeStamped):
         self.client_total_charge = self.compute_client_total_charge()
         self.client_total_due = self.compute_client_total_amount_due()
         super(AccountCharge, self).save(*args, **kwargs)
+
+
+class StaffPaymentHistory(TimeStamped):
+    date = models.DateField()
+    staff = models.ForeignKey(
+        Staff, related_name="staff_payment_histories", on_delete=models.DO_NOTHING
+    )
+    amount = MoneyField(max_digits=19, decimal_places=2, default_currency="PHP")
+    transaction_number = models.CharField(max_length=250, blank=True)
+    payment_channel = models.CharField(max_length=250, blank=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = "Staff payment histories"
+
+    def __str__(self):
+        return f"{self.transaction_number}"
+
+
+class StaffAccountBalance(TimeStamped):
+    date = models.CharField(max_length=250)
+    staff = models.ForeignKey(
+        Staff, related_name="staff_account_balances", on_delete=models.DO_NOTHING
+    )
+    amount_due = MoneyField(max_digits=19, decimal_places=2, default_currency="PHP")
+    payment_made = MoneyField(max_digits=19, decimal_places=2, default_currency="PHP")
+    account_balance = MoneyField(
+        max_digits=19, decimal_places=2, default_currency="USD"
+    )
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"Account balance of {self.date} {self.staff}"

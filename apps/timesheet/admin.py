@@ -1,7 +1,13 @@
 from django.contrib import admin
 
 from apps.core.admin import ModelAdminMixin
-from apps.timesheet.models import PaymentHistory, AccountBalance, AccountCharge
+from apps.timesheet.models import (
+    PaymentHistory,
+    AccountBalance,
+    AccountCharge,
+    StaffPaymentHistory,
+    StaffAccountBalance,
+)
 
 
 class PaymentHistoryAdmin(ModelAdminMixin, admin.ModelAdmin):
@@ -21,7 +27,7 @@ class AccountBalanceAdmin(ModelAdminMixin, admin.ModelAdmin):
         "client",
         "total_payment_made",
         "total_time_consumed",
-        "amount_due",
+        "account_charges",
         "account_balance",
     )
 
@@ -89,6 +95,25 @@ class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
 
 
+class StaffPaymentHistoryAdmin(admin.ModelAdmin):
+    model = StaffPaymentHistory
+    list_display = ("transaction_number", "date", "staff", "amount", "payment_channel")
+    search_fields = (
+        "transaction_number",
+        "staff__user__first_name",
+        "staff__user__last_name",
+    )
+
+
+class StaffAccountBalanceAdmin(admin.ModelAdmin):
+    model = StaffAccountBalance
+    list_display = ("date", "staff", "amount_due", "payment_made", "account_balance")
+    search_fields = ("staff__user__first_name", "staff__user__last_name")
+    list_filter = ("date",)
+
+
 admin.site.register(PaymentHistory, PaymentHistoryAdmin)
 admin.site.register(AccountBalance, AccountBalanceAdmin)
 admin.site.register(AccountCharge, AccountChargeAdmin)
+admin.site.register(StaffPaymentHistory, StaffPaymentHistoryAdmin)
+admin.site.register(StaffAccountBalance, StaffAccountBalanceAdmin)
