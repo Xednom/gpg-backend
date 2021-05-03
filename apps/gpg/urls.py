@@ -9,7 +9,13 @@ from apps.authentication.views import (
     ClientCodeViewSet,
 )
 from apps.account.views import LoginCredentialViewSet, AccountFileViewSet
-from apps.timesheet.views import AccountBalanceViewSet, AccountChargeViewSet, PaymentHistoryViewSet
+from apps.timesheet.views import (
+    AccountBalanceViewSet,
+    AccountChargeViewSet,
+    PaymentHistoryViewSet,
+    StaffAccountBalanceViewSet,
+    StaffPaymentHistoryViewSet,
+)
 from . import views
 
 router = routers.DefaultRouter()
@@ -22,14 +28,24 @@ router.register(
     r"job-order", views.JobOrderGeneralViewSet, basename="job-order-general"
 )
 router.register(
-    r"job-order-by-category", views.JobOrderByCategoryViewSet, basename="job-order-category"
+    r"job-order-by-category",
+    views.JobOrderByCategoryViewSet,
+    basename="job-order-category",
 )
 router.register(
     r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
 )
-router.register(r"property-price", views.PropertyPriceStatusViewSet, basename="property-prices")
-router.register(r"property-detail-file", views.PropertyDetailFileViewSet, basename="property-detail-files")
-router.register(r"apn-category-type", views.ApnCategoryViewSet, basename="apn-category-types")
+router.register(
+    r"property-price", views.PropertyPriceStatusViewSet, basename="property-prices"
+)
+router.register(
+    r"property-detail-file",
+    views.PropertyDetailFileViewSet,
+    basename="property-detail-files",
+)
+router.register(
+    r"apn-category-type", views.ApnCategoryViewSet, basename="apn-category-types"
+)
 router.register(r"deadline", views.DeadlineViewSet, basename="deadline")
 router.register(r"state", views.StateViewSet, basename="state")
 router.register(r"county", views.CountyViewSet, basename="county")
@@ -38,10 +54,24 @@ router.register(r"account-files", AccountFileViewSet, basename="account-file")
 router.register(r"account-balance", AccountBalanceViewSet, basename="account-balance")
 router.register(r"account-charge", AccountChargeViewSet, basename="account-charge")
 router.register(r"payment-history", PaymentHistoryViewSet, basename="payment-history")
+router.register(
+    r"staff-account-balance",
+    StaffAccountBalanceViewSet,
+    basename="staff-account-balance",
+)
+router.register(r"staff-payment-history", StaffPaymentHistoryViewSet, basename="staff-payment-history")
 
 app_name = "gpg"
 urlpatterns = [
     path("", include(router.urls)),
-    path("job-order/<int:id>/comment/", views.CreateJobOrderComment.as_view(), name="job-order-comment"),
-    path("job-order-category/<int:id>/comment/", views.CreateJobOrderByApnComment.as_view(), name="job-order-apn-comment")
+    path(
+        "job-order/<int:id>/comment/",
+        views.CreateJobOrderComment.as_view(),
+        name="job-order-comment",
+    ),
+    path(
+        "job-order-category/<int:id>/comment/",
+        views.CreateJobOrderByApnComment.as_view(),
+        name="job-order-apn-comment",
+    ),
 ]
