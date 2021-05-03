@@ -46,9 +46,11 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
         job_order = serializer.validated_data
         staff_emails = staff_email.split()
         if client_email and staff_email:
+            emails = client_email + ' ' + staff_email
+            emails = emails.split()
             mail.send(
-                [client_email],
-                cc=staff_emails,
+                "postmaster@landmaster.us",
+                bcc=emails,
                 template="job_order_general_update",
                 context={
                     "job_order": job_order
@@ -68,11 +70,11 @@ class CreateJobOrderComment(generics.CreateAPIView):
         ticket_number = self.kwargs.get("ticket_number")
         job_order = get_object_or_404(JobOrderGeneral, id=job_order_id)
         if job_order.client_email and job_order.staff_email:
-            staff_email = job_order.staff_email
-            staff_emails = staff_email.split()
+            emails = job_order.client_email + ' ' + job_order.staff_email
+            emails = emails.split()
             mail.send(
-                [job_order.client_email],
-                cc=staff_emails,
+                "postmaster@landmaster.us",
+                bcc=emails,
                 template="job_order_comment_update",
                 context={
                     "job_order": job_order

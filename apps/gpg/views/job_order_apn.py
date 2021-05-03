@@ -80,9 +80,11 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         property_detail = serializer.validated_data
         # Email notification will only send if two email are present
         if client_email and staff_email:
+            email = client_email + ' ' + staff_email
+            emails = email.split()
             mail.send(
-                [client_email],
-                cc=staff_emails,
+                "postmaster@landmaster.us",
+                bcc=emails,
                 template="property_detail_update",
                 context={
                     "property_detail": property_detail
@@ -139,9 +141,11 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         staff_emails = staff_email.split()
         job_order_category = serializer.validated_data
         if client_email and staff_email:
+            emails = client_email + ' ' + staff_email
+            emails = emails.split()
             mail.send(
-                [client_email],
-                cc=staff_emails,
+                "postmaster@landmaster.us",
+                bcc=emails,
                 template="job_order_category_update",
                 context={
                     "job_order_category": job_order_category
@@ -173,10 +177,11 @@ class CreateJobOrderByApnComment(generics.CreateAPIView):
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
         if job_order.client_email and job_order.staff_email:
             staff_email = job_order.staff_email
-            staff_emails = staff_email.split()
+            emails = job_order.client_email + ' ' + staff_email
+            emails = emails.split()
             mail.send(
-                [job_order.client_email],
-                cc=staff_emails,
+                "postmaster@landmaster.us",
+                bcc=emails,
                 template="job_order_category_comment",
                 context={
                     "job_order": job_order
