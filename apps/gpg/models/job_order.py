@@ -81,7 +81,7 @@ class JobOrderGeneral(TimeStamped):
         related_name="vas_job_orders",
         blank=True
     )
-    staff_email = models.CharField(max_length=100, blank=True)
+    staff_email = models.CharField(max_length=500, blank=True)
     ticket_number = models.CharField(max_length=100, blank=True)
     request_date = models.DateField()
     due_date = models.DateField()
