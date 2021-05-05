@@ -205,7 +205,7 @@ class StaffAccountBalance(TimeStamped):
     amount_due = MoneyField(max_digits=19, decimal_places=2, default_currency="PHP")
     payment_made = MoneyField(max_digits=19, decimal_places=2, default_currency="PHP")
     account_balance = MoneyField(
-        max_digits=19, decimal_places=2, default_currency="USD"
+        max_digits=19, decimal_places=2, default_currency="PHP"
     )
     notes = models.TextField(blank=True)
 
