@@ -35,6 +35,7 @@ class UserProfileAdmin(UserAdmin):
         "company_category",
         "is_staff",
     )
+    list_filter = ("designation_category", "company_category")
     UserAdmin.fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
