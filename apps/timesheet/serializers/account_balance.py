@@ -8,6 +8,7 @@ __all__ = ("AccountBalanceSerializer",)
 
 class AccountBalanceSerializer(serializers.ModelSerializer):
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
+    account_charges = serializers.CharField()
     total_payment_made = serializers.CharField()
     account_balance = serializers.CharField()
     class Meta:
