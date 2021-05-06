@@ -75,6 +75,7 @@ class ClientSerializer(WritableNestedModelSerializer):
     client_files = ClientInternalFileSerializer(
         many=True, allow_null=True, required=False
     )
+    client_hourly_rate = serializers.CharField(source="hourly_rate")
 
     class Meta:
         model = Client
@@ -83,6 +84,7 @@ class ClientSerializer(WritableNestedModelSerializer):
             "user",
             "client_code",
             "hourly_rate",
+            "client_hourly_rate",
             "affiliate_partner_code",
             "affiliate_partner_name",
             "pin",
