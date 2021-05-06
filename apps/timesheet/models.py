@@ -159,10 +159,6 @@ class AccountCharge(TimeStamped):
         total = self.staff_fee + self.staff_other_fee
         return total
 
-    def compute_client_other_fee(self):
-        fee = self.total_time * self.client_hourly_rate
-        return fee
-
     def compute_client_total_charge(self):
         charge = self.total_time * self.client_hourly_rate
         return charge
@@ -174,7 +170,6 @@ class AccountCharge(TimeStamped):
     def save(self, *args, **kwargs):
         self.staff_fee = self.compute_staff_fee()
         self.staff_total_due = self.compute_staff_total_due()
-        self.client_other_fee = self.compute_client_other_fee()
         self.client_total_charge = self.compute_client_total_charge()
         self.client_total_due = self.compute_client_total_amount_due()
         super(AccountCharge, self).save(*args, **kwargs)
