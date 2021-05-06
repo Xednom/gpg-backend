@@ -31,7 +31,7 @@ class ClientCodeViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Client.objects.all()
     filter_backends = [filters.SearchFilter]
-    search_fields = ['client_code']
+    search_fields = ['=client_code']
 
 class ClientFilesViewSet(viewsets.ModelViewSet):
     serializer_class = ClientInternalFileSerializer
