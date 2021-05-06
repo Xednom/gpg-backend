@@ -13,6 +13,7 @@ from apps.timesheet.models import (
 
 class PaymentHistoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = PaymentHistory
+    list_filter = ("client",)
     list_display = (
         "client",
         "date",
@@ -24,6 +25,7 @@ class PaymentHistoryAdmin(ModelAdminMixin, admin.ModelAdmin):
 
 class AccountBalanceAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = AccountBalance
+    list_filter= ("client",)
     list_display = (
         "client",
         "total_payment_made",
@@ -39,6 +41,7 @@ class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
         "ticket_number",
         "shift_date",
         "job_request",
+        "status",
         "client",
         "client_hourly_rate",
         "client_other_fee",
@@ -56,6 +59,7 @@ class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
         "client_total_charge",
         "staff_total_due",
     )
+    list_filter = ("client", "staff", "status")
     fieldsets = (
         (
             "Account Charge Information",
@@ -102,6 +106,7 @@ class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
 class StaffPaymentHistoryAdmin(admin.ModelAdmin):
     model = StaffPaymentHistory
     list_display = ("transaction_number", "date", "staff", "amount", "payment_channel")
+    list_filter = ("staff",)
     search_fields = (
         "transaction_number",
         "staff__user__first_name",
@@ -113,7 +118,14 @@ class StaffAccountBalanceAdmin(admin.ModelAdmin):
     model = StaffAccountBalance
     list_display = ("date", "staff", "amount_due", "payment_made", "account_balance")
     search_fields = ("staff__user__first_name", "staff__user__last_name")
-    list_filter = ("date",)
+    list_filter = ("date", "staff")
+
+
+class PaymentPortalAdmin(admin.ModelAdmin):
+    model = PaymentPortal
+    list_display = ("name", "url")
+    list_filter = ("name",)
+    search_fields = ("name",)
 
 
 admin.site.register(PaymentHistory, PaymentHistoryAdmin)
@@ -121,4 +133,4 @@ admin.site.register(AccountBalance, AccountBalanceAdmin)
 admin.site.register(AccountCharge, AccountChargeAdmin)
 admin.site.register(StaffPaymentHistory, StaffPaymentHistoryAdmin)
 admin.site.register(StaffAccountBalance, StaffAccountBalanceAdmin)
-admin.site.register(PaymentPortal)
+admin.site.register(PaymentPortal, PaymentPortalAdmin)
