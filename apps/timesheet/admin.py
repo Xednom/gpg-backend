@@ -7,6 +7,7 @@ from apps.timesheet.models import (
     AccountCharge,
     StaffPaymentHistory,
     StaffAccountBalance,
+    PaymentPortal
 )
 
 
@@ -120,3 +121,4 @@ admin.site.register(AccountBalance, AccountBalanceAdmin)
 admin.site.register(AccountCharge, AccountChargeAdmin)
 admin.site.register(StaffPaymentHistory, StaffPaymentHistoryAdmin)
 admin.site.register(StaffAccountBalance, StaffAccountBalanceAdmin)
+admin.site.register(PaymentPortal)

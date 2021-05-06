@@ -15,6 +15,7 @@ from apps.timesheet.views import (
     PaymentHistoryViewSet,
     StaffAccountBalanceViewSet,
     StaffPaymentHistoryViewSet,
+    PaymentPortalViewSet
 )
 from . import views
 
@@ -60,6 +61,8 @@ router.register(
     basename="staff-account-balance",
 )
 router.register(r"staff-payment-history", StaffPaymentHistoryViewSet, basename="staff-payment-history")
+router.register(r"payment-portal", PaymentPortalViewSet, basename="payment-portal")
+
 
 app_name = "gpg"
 urlpatterns = [

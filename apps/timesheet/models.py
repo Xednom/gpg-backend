@@ -211,3 +211,11 @@ class StaffAccountBalance(TimeStamped):
 
     def __str__(self):
         return f"Account balance of {self.date} {self.staff}"
+
+
+class PaymentPortal(TimeStamped):
+    name = models.CharField(max_length=250)
+    url = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.name
