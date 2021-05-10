@@ -60,13 +60,13 @@ class User(AbstractUser):
     def user_full_name(self):
         return f"{self.first_name} {self.last_name}"
     
-    def save(self, *args, **kwargs):
-        query = User.objects.filter(email=self.email, is_active=True)
-        if self.id:
-            query = query.exclude(id=self.id)
-        if query.exists():
-            raise serializers.ValidationError({"email": "An active user with this email already exists."})
-        super(User, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     query = User.objects.filter(email=self.email, is_active=True)
+    #     if self.id:
+    #         query = query.exclude(id=self.id)
+    #     if query.exists():
+    #         raise serializers.ValidationError({"email": "An active user with this email already exists."})
+    #     super(User, self).save(*args, **kwargs)
 
 
 class Client(TimeStamped):
