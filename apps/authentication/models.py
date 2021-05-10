@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 
+from rest_framework import serializers
+
 from djmoney.models.fields import MoneyField
 
 from apps.core.models import TimeStamped
@@ -57,6 +59,14 @@ class User(AbstractUser):
     @property
     def user_full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def save(self, *args, **kwargs):
+        query = User.objects.filter(email=self.email, is_active=True)
+        if self.id:
+            query = query.exclude(id=self.id)
+        if query.exists():
+            raise serializers.ValidationError({"email": "An active user with this email already exists."})
+        super(User, self).save(*args, **kwrags)
 
 
 class Client(TimeStamped):
@@ -83,7 +93,7 @@ class Client(TimeStamped):
 
     def __str__(self):
         return self.user.user_full_name + " - " + self.client_code
-    
+
     @property
     def client_name(self):
         return f"{self.user.first_name} {self.user.last_name}"
