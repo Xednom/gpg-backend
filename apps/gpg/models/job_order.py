@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 from apps.core.models import TimeStamped
 from apps.authentication.models import Client, Staff
+from apps.account.models import AccountFile
 
 User = get_user_model()
 
@@ -75,6 +76,7 @@ class JobOrderGeneral(TimeStamped):
         blank=True,
         null=True,
     )
+    client_file = models.CharField(max_length=500, blank=True)
     client_email = models.EmailField(blank=True)
     va_assigned = models.ManyToManyField(
         Staff,
@@ -140,13 +142,21 @@ class JobOrderGeneral(TimeStamped):
             current_staff = self.va_assigned.through.objects.all()
             staff_emails = ' '.join(staff.user.email for staff in self.va_assigned.all())
         return staff_emails
+    
+    def get_account_files(self):
+        account_file = AccountFile.objects.filter(client=self.client)
+        for i in account_file:
+            account_file_url = i.url
+            return account_file_url
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.ticket_number = self.create_ticket_number()
+            self.client_file = self.get_account_files()
             super(JobOrderGeneral, self).save(*args, **kwargs)
         elif self.id:
             self.ticket_number = self.create_ticket_number()
+            self.client_file = self.get_account_files()
             self.client_email = self.get_client_email()
             self.staff_email = self.get_staff_email()
             super(JobOrderGeneral, self).save(*args, **kwargs)
