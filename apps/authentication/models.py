@@ -41,6 +41,7 @@ class StaffCategory(models.TextChoices):
 
 class User(AbstractUser):
     phone = models.CharField(blank=True, max_length=50)
+    email = models.EmailField(unique=True)
     designation_category = models.CharField(
         choices=DesignationCategory.choices, blank=True, max_length=30
     )
@@ -59,14 +60,6 @@ class User(AbstractUser):
     @property
     def user_full_name(self):
         return f"{self.first_name} {self.last_name}"
-    
-    # def save(self, *args, **kwargs):
-    #     query = User.objects.filter(email=self.email, is_active=True)
-    #     if self.id:
-    #         query = query.exclude(id=self.id)
-    #     if query.exists():
-    #         raise serializers.ValidationError({"email": "An active user with this email already exists."})
-    #     super(User, self).save(*args, **kwargs)
 
 
 class Client(TimeStamped):
