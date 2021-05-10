@@ -150,7 +150,7 @@ class PropertyDetailFileAdmin(admin.ModelAdmin):
 
 class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = JobOrderGeneral
-    readonly_fields = ["client_email", "staff_email"]
+    readonly_fields = ["client_email", "staff_email", "client_file"]
     list_display = (
         "ticket_number",
         "client",
