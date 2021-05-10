@@ -35,8 +35,15 @@ class AccountBalanceAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
 
 
-class AccountChargeAdmin(ModelAdminMixin, admin.ModelAdmin):
+def charge_approval(AccountChargeAdmin, request, queryset):
+    queryset.update(status="approved")
+    
+charge_approval.short_description='Mark selected charges as Approved'
+
+
+class AccountChargeAdmin(admin.ModelAdmin):
     model = AccountCharge
+    actions = [charge_approval]
     list_display = (
         "ticket_number",
         "shift_date",
