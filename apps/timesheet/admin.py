@@ -48,7 +48,7 @@ class AccountChargeAdmin(admin.ModelAdmin):
         "ticket_number",
         "shift_date",
         "job_request",
-        "job_request_description_wrapped",
+        "job_request_description",
         "status",
         "client",
         "client_hourly_rate",
