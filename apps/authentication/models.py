@@ -66,7 +66,7 @@ class User(AbstractUser):
             query = query.exclude(id=self.id)
         if query.exists():
             raise serializers.ValidationError({"email": "An active user with this email already exists."})
-        super(User, self).save(*args, **kwrags)
+        super(User, self).save(*args, **kwargs)
 
 
 class Client(TimeStamped):
