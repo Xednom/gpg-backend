@@ -89,6 +89,7 @@ class JobOrderGeneral(TimeStamped):
     job_description = models.TextField()
     client_notes = models.TextField(blank=True)
     va_notes = models.TextField(blank=True)
+    management_notes = models.TextField(blank=True)
     status = models.CharField(
         max_length=100,
         choices=JobOrderStatus.choices,

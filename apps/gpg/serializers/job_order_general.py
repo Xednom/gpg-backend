@@ -48,6 +48,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "job_description",
             "client_notes",
             "va_notes",
+            "management_notes",
             "status",
             "status_",
             "date_completed",
