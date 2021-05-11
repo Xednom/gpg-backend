@@ -100,7 +100,7 @@ class PropertyDetail(TimeStamped):
 
     def get_client_email(self):
         if self.client:
-            email = self.client.email
+            email = self.client.user.email
             return email
         else:
             return ""
@@ -252,7 +252,7 @@ class JobOrderCategory(TimeStamped):
 
     def get_client_email(self):
         if self.client:
-            email = self.client.email
+            email = self.client.user.email
             return email
         else:
             return ""
