@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
-
+from django.utils.crypto import get_random_string
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 
@@ -9,6 +9,12 @@ from rest_framework import serializers
 from djmoney.models.fields import MoneyField
 
 from apps.core.models import TimeStamped
+
+
+def email_randomizer():
+    unique_email = get_random_string(length=20)
+    unique_email = unique_email + "@gmail.com"
+    return unique_email
 
 
 class DesignationCategory(models.TextChoices):
@@ -64,7 +70,7 @@ class User(AbstractUser):
 
 class Client(TimeStamped):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
-    email = models.CharField(max_length=250, unique=True, blank=True)
+    email = models.CharField(max_length=250, unique=True, blank=True, default=email_randomizer)
     client_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_name = models.CharField(max_length=250, blank=True)
