@@ -145,9 +145,8 @@ class JobOrderGeneral(TimeStamped):
     
     def get_account_files(self):
         account_file = AccountFile.objects.filter(client=self.client)
-        for i in account_file:
-            account_file_url = i.url
-            return account_file_url
+        account_files = ', '.join(i.url for i in account_file)
+        return account_files
 
     def save(self, *args, **kwargs):
         if not self.id:
