@@ -83,7 +83,6 @@ class ClientSerializer(WritableNestedModelSerializer):
             "id",
             "user",
             "client_code",
-            "email",
             "hourly_rate",
             "client_hourly_rate",
             "affiliate_partner_code",
