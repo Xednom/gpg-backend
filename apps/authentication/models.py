@@ -70,7 +70,6 @@ class User(AbstractUser):
 
 class Client(TimeStamped):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
-    email = models.CharField(max_length=250, blank=True, default=email_randomizer)
     client_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_name = models.CharField(max_length=250, blank=True)

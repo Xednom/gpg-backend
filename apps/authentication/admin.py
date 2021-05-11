@@ -78,7 +78,7 @@ class ClientProfileAdmin(admin.ModelAdmin):
     list_display = (
         "get_user",
         "client_code",
-        "email",
+        "get_email",
         "affiliate_partner_name",
         "affiliate_partner_code",
         "hourly_rate",
@@ -104,7 +104,6 @@ class ClientProfileAdmin(admin.ModelAdmin):
                 "fields": (
                     "user",
                     "client_code",
-                    "email",
                     "affiliate_partner_code",
                     "affiliate_partner_name",
                     "hourly_rate",
@@ -122,6 +121,12 @@ class ClientProfileAdmin(admin.ModelAdmin):
 
     get_user.admin_order_field = "user__first_name"
     get_user.short_description = "Client name"
+
+    def get_email(self, obj):
+        return obj.user.email
+
+    get_email.admin_order_field = "user__email"
+    get_email.short_description = "User email"
 
 
 class StaffProfileAdmin(admin.ModelAdmin):
