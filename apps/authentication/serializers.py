@@ -83,6 +83,7 @@ class ClientSerializer(WritableNestedModelSerializer):
             "id",
             "user",
             "client_code",
+            "email",
             "hourly_rate",
             "client_hourly_rate",
             "affiliate_partner_code",
@@ -92,7 +93,6 @@ class ClientSerializer(WritableNestedModelSerializer):
             "customer_id",
             "client_files",
         )
-        # lookup_field = "user"
 
 
 class ClientCodeSerializer(serializers.ModelSerializer):

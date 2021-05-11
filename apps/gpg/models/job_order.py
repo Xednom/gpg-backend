@@ -132,7 +132,7 @@ class JobOrderGeneral(TimeStamped):
     
     def get_client_email(self):
         if self.client:
-            email = self.client.user.email
+            email = self.client.email
             return email
         else:
             return ""
