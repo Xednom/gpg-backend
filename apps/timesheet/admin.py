@@ -51,6 +51,7 @@ class AccountChargeAdmin(admin.ModelAdmin):
         "job_request_description",
         "status",
         "client",
+        "total_time",
         "client_hourly_rate",
         "client_other_fee",
         "client_total_charge",
@@ -60,7 +61,6 @@ class AccountChargeAdmin(admin.ModelAdmin):
         "staff_fee",
         "staff_other_fee",
         "staff_total_due",
-        "total_time"
     )
     readonly_fields = (
         "client_total_due",
