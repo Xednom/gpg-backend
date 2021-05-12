@@ -207,7 +207,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         "client__user__first_name",
         "client__user__last_name",
     )
-    readonly_fields = ["client_email", "staff_email"]
+    readonly_fields = ["client_email", "staff_email", "client_file"]
     filter_horizontal = ("staff",)
     inlines = [JobOrderCategoryComment]
     fieldsets = (
