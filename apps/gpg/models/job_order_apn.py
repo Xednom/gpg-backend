@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 from apps.core.models import TimeStamped
 from apps.authentication.models import Client, Staff
+from apps.account.models import AccountFile
 from .job_order import JobOrderStatus, Status, ListingAdCategory
 
 User = get_user_model()
@@ -195,6 +196,7 @@ class JobOrderCategory(TimeStamped):
         blank=True,
         null=True,
     )
+    client_file = models.CharField(max_length=500, blank=True)
     client_email = models.EmailField(blank=True)
     staff = models.ManyToManyField(
         Staff,
@@ -265,13 +267,20 @@ class JobOrderCategory(TimeStamped):
                     staff.user.email for staff in self.staff.all()
                 )
                 return staff_emails
+    
+    def get_account_files(self):
+        account_file = AccountFile.objects.filter(client=self.client)
+        account_files = ', '.join(i.url for i in account_file)
+        return account_files
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.ticket_number = self.create_ticket_number()
+            self.client_file = self.get_account_files()
             super(JobOrderCategory, self).save(*args, **kwargs)
         elif self.id:
             self.ticket_number = self.create_ticket_number()
+            self.client_file = self.get_account_files()
             self.client_email = self.get_client_email()
             self.staff_email = self.get_staff_email()
             super(JobOrderCategory, self).save(*args, **kwargs)
