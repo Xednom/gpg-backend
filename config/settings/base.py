@@ -47,6 +47,7 @@ LOCAL_APPS = [
     "apps.gpg",
     "apps.account",
     "apps.timesheet",
+    "apps.due_diligence",
 ]
 
 THIRD_PARTY_APPS = [
