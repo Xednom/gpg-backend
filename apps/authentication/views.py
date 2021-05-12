@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, filters
-from djoser.email import ConfirmationEmail
+from djoser.email import ConfirmationEmail, PasswordResetEmail
 
 from .models import Staff, Client, InternalFiles, InternalFilesStaff
 from .serializers import StaffSerializer, ClientSerializer, ClientInternalFileSerializer, StaffInternalFileSerializer, ClientCodeSerializer
@@ -67,3 +67,7 @@ class StaffFilesViewSet(viewsets.ModelViewSet):
 
 class GpgConfirmationEmail(ConfirmationEmail):
     template_name = "email/confirmation_email.html"
+
+
+class GpgPasswordResetEmail(PasswordResetEmail):
+    template_name = "email/forgot_password_email.html"

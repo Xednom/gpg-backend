@@ -165,7 +165,8 @@ DJOSER = {
         "current_user": "apps.authentication.serializers.CurrentUserSerializer"
     },
     "EMAIL": {
-        "confirmation": "apps.authentication.views.GpgConfirmationEmail"
+        "confirmation": "apps.authentication.views.GpgConfirmationEmail",
+        "password_reset": "apps.authentication.views.GpgPasswordResetEmail"
     }
 }
 
