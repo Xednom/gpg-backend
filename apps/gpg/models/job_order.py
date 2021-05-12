@@ -66,6 +66,11 @@ class JobOrderStatus(models.TextChoices):
     pending = "pending", ("Pending")
     request_for_posting = "request_for_posting", ("Request for Posting")
     mark_as_sold_request = "mark_as_sold_request", ("Mark as Sold Request")
+    initial_dd_processing = "initial_dd_processing", ("Initial DD Processing")
+    initial_dd_complete = "initial_dd_complete", ("Initial DD Complete")
+    dd_call_out_processing = "dd_call_out_processing", ("DD Call Out Processing")
+    dd_call_out_complete = "dd_call_out_complete", ("DD Call Out Complete")
+    duplicate_request = "duplicate_request", ("Duplicate Request")
 
 
 class JobOrderGeneral(TimeStamped):
