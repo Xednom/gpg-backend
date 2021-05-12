@@ -17,3 +17,6 @@ class PhoneLineExtension(TimeStamped):
 
     class Meta:
         ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"User id({self.user_id}) of {self.allocation_company}"
