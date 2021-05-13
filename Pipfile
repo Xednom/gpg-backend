@@ -8,6 +8,7 @@ graphviz = "*"
 pydotplus = "*"
 pydot = "*"
 black = "*"
+django-debug-toolbar = "*"
 
 [packages]
 appdirs = "==1.4.4"

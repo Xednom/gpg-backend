@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
 from django.contrib import admin
 from django.urls import include, path
 
@@ -20,7 +21,8 @@ urlpatterns = [
     path("grappelli", include("grappelli.urls")),
     path("admin/", admin.site.urls),
     path("auth/", include("apps.authentication.urls")),
-    path("api/v1/", include("apps.gpg.urls"))
+    path("api/v1/", include("apps.gpg.urls")),
+    path("__debug__/", include(debug_toolbar.urls)),
 ]
 
 admin.site.site_title = "G.P.G Corp Management System Admin site"
