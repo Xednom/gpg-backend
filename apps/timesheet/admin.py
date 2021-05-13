@@ -11,7 +11,7 @@ from apps.timesheet.models import (
 )
 
 
-class PaymentHistoryAdmin(ModelAdminMixin, admin.ModelAdmin):
+class PaymentHistoryAdmin(admin.ModelAdmin):
     model = PaymentHistory
     list_filter = ("client",)
     list_display = (
@@ -23,7 +23,7 @@ class PaymentHistoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
 
 
-class AccountBalanceAdmin(ModelAdminMixin, admin.ModelAdmin):
+class AccountBalanceAdmin(admin.ModelAdmin):
     model = AccountBalance
     list_filter= ("client",)
     list_display = (
