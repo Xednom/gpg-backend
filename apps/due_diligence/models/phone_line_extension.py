@@ -12,6 +12,7 @@ class PhoneLineExtension(TimeStamped):
     allocated_extension_staff = models.ManyToManyField(
         Staff, related_name="allocated_extension_staffs"
     )
+    original_extension_owner = models.CharField(max_length=250, blank=True)
     code_name = models.CharField(max_length=250)
     allocation_company = models.CharField(max_length=250)
 
