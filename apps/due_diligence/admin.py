@@ -25,7 +25,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
     def get_staffs(self, obj):
         return ", ".join([staff.staff_name for staff in obj.allocated_extension_staff.all()])
 
-    get_staffs.short_description = "Staffs"
+    get_staffs.short_description = "Allocated extension - Staff assigned"
 
 
 admin.site.register(PhoneLineExtension, PhoneLineExtensionAdmin)
