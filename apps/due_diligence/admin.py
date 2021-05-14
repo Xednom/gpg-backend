@@ -45,6 +45,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
 
 class DueDiligenceCallOutAdmin(admin.ModelAdmin):
     model = DueDiligenceCallOut
+    filter_horizontal = ("staff_initial_dd", "staff_assigned_for_call_out")
     list_display = (
         "ticket_number",
         "client",
