@@ -73,6 +73,7 @@ bleach = "*"
 xlrd = "*"
 django-grappelli = "*"
 django-money = "*"
+django-import-export = "*"
 
 [requires]
 python_version = "3.8"

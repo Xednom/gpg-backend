@@ -59,7 +59,8 @@ THIRD_PARTY_APPS = [
     "post_office",
     "django_extensions",
     "django_crontab",
-    "djmoney"
+    "djmoney",
+    "import_export"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

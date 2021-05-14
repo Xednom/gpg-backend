@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from apps.core.admin import ModelAdminMixin
+from import_export.admin import ImportExportModelAdmin
 from apps.timesheet.models import (
     PaymentHistory,
     AccountBalance,
@@ -9,6 +10,7 @@ from apps.timesheet.models import (
     StaffAccountBalance,
     PaymentPortal
 )
+from apps.timesheet.resources import AccountChargeResource
 
 
 class PaymentHistoryAdmin(admin.ModelAdmin):
@@ -41,8 +43,9 @@ def charge_approval(AccountChargeAdmin, request, queryset):
 charge_approval.short_description='Mark selected charges as Approved'
 
 
-class AccountChargeAdmin(admin.ModelAdmin):
+class AccountChargeAdmin(ImportExportModelAdmin):
     model = AccountCharge
+    resource_class = AccountChargeResource
     actions = [charge_approval]
     list_display = (
         "ticket_number",
