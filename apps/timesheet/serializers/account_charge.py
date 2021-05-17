@@ -7,6 +7,7 @@ from apps.timesheet.models import AccountCharge
 class AccountChargeSerializer(serializers.ModelSerializer):
     client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
     client_code = serializers.CharField(source="client.client_code", required=False, allow_null=True)
+    staff_code = serializers.CharField(source="staff.staff_id", required=False, allow_null=True)
     staffs_hourly_rate = serializers.CharField(source="staff_hourly_rate", required=False, allow_null=True)
     staffs_fee = serializers.CharField(source="staff_fee", required=False, allow_null=True)
     staffs_other_fee = serializers.CharField(source="staff_other_fee", required=False, allow_null=True)
@@ -22,6 +23,7 @@ class AccountChargeSerializer(serializers.ModelSerializer):
             "ticket_number",
             "client",
             "client_code",
+            "staff_code",
             "shift_date",
             "job_request",
             "job_request_description",
