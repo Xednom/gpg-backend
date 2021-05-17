@@ -75,8 +75,8 @@ class PropertyDetail(TimeStamped):
     notes_management_side = models.TextField(blank=True)
 
     class Meta:
-        verbose_name = "APN Invetory list"
-        verbose_name_plural = "APN Invetory lists"
+        verbose_name = "APN Inventory list"
+        verbose_name_plural = "APN Inventory lists"
 
     def __str__(self):
         return f"{self.apn}"
