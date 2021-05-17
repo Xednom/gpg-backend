@@ -1,4 +1,5 @@
 from django.contrib import admin
+from rangefilter.filters import DateRangeFilter
 
 from apps.core.admin import ModelAdminMixin
 from import_export.admin import ImportExportModelAdmin
@@ -70,7 +71,7 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         "client_total_charge",
         "staff_total_due",
     )
-    list_filter = ("client", "staff", "status")
+    list_filter = ("client", "staff", "status", ("shift_date", DateRangeFilter))
     fieldsets = (
         (
             "Account Charge Information",

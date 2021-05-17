@@ -60,7 +60,8 @@ THIRD_PARTY_APPS = [
     "django_extensions",
     "django_crontab",
     "djmoney",
-    "import_export"
+    "import_export",
+    "rangefilter"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
