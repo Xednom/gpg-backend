@@ -15,6 +15,7 @@ User = get_user_model()
 class CallOutViewSet(viewsets.ModelViewSet):
     serializer_class = CallOutSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "id"
 
     def get_queryset(self):
         current_user = self.request.user

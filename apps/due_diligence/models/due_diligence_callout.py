@@ -17,6 +17,7 @@ class DueDiligenceStatus(models.TextChoices):
     for_follow_up = "for_follow_up", ("For Follow Up")
     processing = "processing", ("Processing")
     not_applicable = "not_applicable", ("Not Applicable")
+    job_order_request = "job_request", ("Job order request")
 
 
 class DueDiligenceCallOut(TimeStamped):
