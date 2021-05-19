@@ -19,11 +19,19 @@ class CallOutViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         current_user = self.request.user
-        staffs = User.objects.filter(username=current_user)
-        staff = staffs.all()
+        user = User.objects.filter(username=current_user)
+        user = user.all()
 
-        if staffs:
-            queryset = DueDiligenceCallOut.objects.prefetch_related(
-                "staff_initial_dd", "staff_assigned_for_call_out"
-            ).filter(staff_initial_dd__user__in=staff, staff_assigned_for_call_out__user__in=staff)
+        if user:
+            queryset = (
+                DueDiligenceCallOut.objects.prefetch_related(
+                    "staff_initial_dd", "staff_assigned_for_call_out"
+                ).filter(
+                    staff_initial_dd__user__in=user,
+                    staff_assigned_for_call_out__user__in=user,
+                )
+                or DueDiligenceCallOut.objects.select_related("client").filter(
+                    client__user__in=user
+                )
+            )
             return queryset
