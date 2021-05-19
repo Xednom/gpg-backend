@@ -56,3 +56,5 @@ DATABASES = {
         },
     }
 }
+
+ADMIN_EMAIL = ["lightwizard20@gmail.com", "xednom@gmail.com"]

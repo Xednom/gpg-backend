@@ -46,3 +46,5 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 
 SECURE_REFERRER_POLICY = "same-origin"
+
+ADMIN_EMAIL = ["giliangegawin347@gmail.com", "admin@landmaster.us"]

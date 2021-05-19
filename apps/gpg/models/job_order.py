@@ -1,5 +1,6 @@
 from post_office import mail
 
+from django.conf import settings
 from django.db import models
 from django.utils.functional import cached_property
 from django.contrib.auth import get_user_model
@@ -161,7 +162,7 @@ class JobOrderGeneral(TimeStamped):
             self.client_file = self.get_account_files()
             mail.send(
                 "postmaster@landmaster.us",
-                bcc=["giliangegawin347@gmail.com", "admin@landmaster.us"],
+                bcc=settings.ADMIN_EMAIL,
                 template="job_order_create",
                 context={
                     "job_order": self
@@ -173,14 +174,6 @@ class JobOrderGeneral(TimeStamped):
             self.client_file = self.get_account_files()
             self.client_email = self.get_client_email()
             self.staff_email = self.get_staff_email()
-            mail.send(
-                "postmaster@landmaster.us",
-                bcc=["giliangegawin347@gmail.com", "admin@landmaster.us"],
-                template="job_order_create",
-                context={
-                    "job_order": self
-                }
-            )
             super(JobOrderGeneral, self).save(*args, **kwargs)
 
 
