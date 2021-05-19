@@ -73,11 +73,3 @@ class Command(BaseCommand):
                         - client_time_charge["total_due"],
                     )
 
-        # for i in account_balance_deficit:
-
-        #     if account_balance_deficit:
-        #         mail.send(
-        #             i.client.user.email,
-        #             template="account_balance_deficit",
-        #             context={"account_balance": i},
-        #         )
