@@ -51,6 +51,8 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "client",
+        "get_staff_initial_dd",
+        "get_staff_assigned_for_call_out",
         "apn",
         "initial_due_diligence_status",
         "initial_dd_date_complete",
@@ -118,6 +120,19 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
             },
         )
     )
+
+    def get_staff_initial_dd(self, obj):
+        return ", ".join(
+            [staff.staff_name for staff in obj.staff_initial_dd.all()]
+        )
+    
+    def get_staff_assigned_for_call_out(self, obj):
+        return ", ".join(
+            [staff.staff_name for staff in obj.staff_assigned_for_call_out.all()]
+        )
+    
+    get_staff_initial_dd.short_description = "Staffs initial Due diligence - assigned"
+    get_staff_assigned_for_call_out.short_description = "Staffs assigned for call out"
 
 
 admin.site.register(PhoneLineExtension, PhoneLineExtensionAdmin)
