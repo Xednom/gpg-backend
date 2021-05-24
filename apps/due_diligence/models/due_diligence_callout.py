@@ -18,6 +18,12 @@ class DueDiligenceStatus(models.TextChoices):
     processing = "processing", ("Processing")
     not_applicable = "not_applicable", ("Not Applicable")
     job_order_request = "job_request", ("Job order request")
+    tax_data_complete = "tax_data_complete", ("Tax Data- Complete")
+    zoning_data_complete = "zoning_data_complete", ("Zoning Data - Complete")
+    utilities_data_complete = "utilities_data_complete", ("Utilities Data - Complete")
+    tax_zoning_data_complete = "tax_zoning_data_complete", ("Tax/Zoning Data- Complete")
+    tax_utlities_data_complete = "tax_utlities_data_complete", ("Tax/Utilies Data - Complete ")
+    zoning_utilities_data_complete = "zoning_utilities_data_complete", ("Zoning/Utilities Data- Complete")
 
 
 class DueDiligenceCallOut(TimeStamped):
