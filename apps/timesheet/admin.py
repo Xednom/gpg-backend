@@ -35,7 +35,13 @@ class AccountBalanceAdmin(admin.ModelAdmin):
         "total_time_consumed",
         "account_charges",
         "account_balance",
+        "get_client_email"
     )
+
+    def get_client_email(self, obj):
+        return obj.client.user.email
+    
+    get_client_email.short_description = "Client email"
 
 
 def charge_approval(AccountChargeAdmin, request, queryset):
