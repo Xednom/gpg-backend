@@ -58,6 +58,7 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "initial_dd_date_complete",
         "call_out_status",
         "call_out_dd_date_complete",
+        "dd_link"
     )
 
     list_filter = ("initial_due_diligence_status", "call_out_status")
