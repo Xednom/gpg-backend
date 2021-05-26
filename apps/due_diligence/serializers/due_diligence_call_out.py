@@ -39,8 +39,10 @@ class CallOutSerializer(serializers.ModelSerializer):
             "dd_specialists_additional_info",
             "staff_initial_dd",
             "initial_due_diligence_status",
+            "initial_dd_quality_review_status",
             "initial_dd_date_complete",
             "staff_assigned_for_call_out",
             "call_out_status",
+            "call_out_dd_quality_review_status",
             "call_out_dd_date_complete",
         )
