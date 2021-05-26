@@ -159,6 +159,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "client",
+        "client_email",
         "get_staffs",
         "request_date",
         "due_date",
@@ -188,6 +189,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_display = (
         "ticket_number",
         "client",
+        "client_email",
         "get_staffs",
         "category",
         "deadline",
