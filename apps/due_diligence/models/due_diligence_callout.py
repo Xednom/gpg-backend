@@ -22,8 +22,23 @@ class DueDiligenceStatus(models.TextChoices):
     zoning_data_complete = "zoning_data_complete", ("Zoning Data - Complete")
     utilities_data_complete = "utilities_data_complete", ("Utilities Data - Complete")
     tax_zoning_data_complete = "tax_zoning_data_complete", ("Tax/Zoning Data- Complete")
-    tax_utlities_data_complete = "tax_utlities_data_complete", ("Tax/Utilies Data - Complete ")
-    zoning_utilities_data_complete = "zoning_utilities_data_complete", ("Zoning/Utilities Data- Complete")
+    tax_utlities_data_complete = "tax_utlities_data_complete", (
+        "Tax/Utilies Data - Complete "
+    )
+    zoning_utilities_data_complete = "zoning_utilities_data_complete", (
+        "Zoning/Utilities Data- Complete"
+    )
+
+
+class QualityReviewStatus(models.TextChoices):
+    assinged = "assigned", ("Assigned")
+    complete = "complete", ("Complete")
+    in_progress = "in_progress", ("In Progress")
+    for_verification = "for_verification", ("For Verification")
+    pending = "pending", ("Pending")
+    on_hold = "on_hold", ("On Hold")
+    cancelled = "cancelled", ("Cancelled")
+    for_qa_review = "for_qa_review", ("For QA review")
 
 
 class DueDiligenceCallOut(TimeStamped):
@@ -87,19 +102,29 @@ class DueDiligenceCallOut(TimeStamped):
     memo_call_notes = models.TextField(blank=True)
     dd_specialists_additional_info = models.TextField(blank=True)
     staff_initial_dd = models.ManyToManyField(
-        "authentication.Staff",
-        related_name="staff_initial_due_diligences"
+        "authentication.Staff", related_name="staff_initial_due_diligences"
     )
     initial_due_diligence_status = models.CharField(
         max_length=250, choices=DueDiligenceStatus.choices
     )
+    initial_dd_quality_review_status = models.CharField(
+        max_length=250,
+        choices=QualityReviewStatus.choices,
+        default=QualityReviewStatus.assinged,
+        blank=True,
+    )
     initial_dd_date_complete = models.DateField(blank=True, null=True)
     staff_assigned_for_call_out = models.ManyToManyField(
-        "authentication.Staff",
-        related_name="staff_assigned_call_out_due_diligences"
+        "authentication.Staff", related_name="staff_assigned_call_out_due_diligences"
     )
     call_out_status = models.CharField(
         max_length=250, choices=DueDiligenceStatus.choices
+    )
+    call_out_dd_quality_review_status = models.CharField(
+        max_length=250,
+        choices=QualityReviewStatus.choices,
+        default=QualityReviewStatus.assinged,
+        blank=True,
     )
     call_out_dd_date_complete = models.DateField(blank=True, null=True)
 
