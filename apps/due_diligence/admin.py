@@ -55,8 +55,10 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "get_staff_assigned_for_call_out",
         "apn",
         "initial_due_diligence_status",
+        "initial_dd_quality_review_status",
         "initial_dd_date_complete",
         "call_out_status",
+        "call_out_dd_quality_review_status",
         "call_out_dd_date_complete",
         "dd_link"
     )
