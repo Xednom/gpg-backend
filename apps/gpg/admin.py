@@ -167,6 +167,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "date_completed",
         "total_time_consumed",
         "status",
+        "url_of_the_completed_jo"
     )
     search_fields = (
         "ticket_number",
