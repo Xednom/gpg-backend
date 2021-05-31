@@ -20,6 +20,7 @@ class AccountChargeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccountCharge
         fields = (
+            "id",
             "ticket_number",
             "client",
             "client_code",
