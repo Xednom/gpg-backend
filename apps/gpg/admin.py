@@ -199,6 +199,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         "due_date",
         "date_completed",
         "status",
+        "url_of_the_completed_jo"
     )
     list_filter = (
         "client",
