@@ -48,6 +48,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
 class DueDiligenceCallOutAdmin(admin.ModelAdmin):
     model = DueDiligenceCallOut
     filter_horizontal = ("staff_initial_dd", "staff_assigned_for_call_out")
+    change_list_template = "admin/change_list_filter_confirm.html"
     list_display = (
         "ticket_number",
         "client",
@@ -63,7 +64,14 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "dd_link"
     )
 
-    list_filter = ("initial_due_diligence_status", "call_out_status")
+    list_filter = (
+        "client",
+        "staff_initial_dd",
+        "initial_due_diligence_status", 
+        "initial_dd_quality_review_status",
+        "call_out_status",
+        "call_out_dd_quality_review_status"
+    )
     search_fields = (
         "ticket_number",
         "client__user__first_name",
