@@ -69,6 +69,7 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "staff_initial_dd",
         "initial_due_diligence_status", 
         "initial_dd_quality_review_status",
+        "staff_assigned_for_call_out",
         "call_out_status",
         "call_out_dd_quality_review_status"
     )
