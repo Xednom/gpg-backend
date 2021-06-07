@@ -14,6 +14,7 @@ class AllocationOfficeChoices(models.TextChoices):
 
 class PhoneLineExtension(TimeStamped):
     user_id = models.CharField(max_length=250)
+    did = models.CharField(max_length=250, blank=True)
     allocated_extension_staff = models.ManyToManyField(
         Staff, related_name="allocated_extension_staffs"
     )
@@ -25,6 +26,8 @@ class PhoneLineExtension(TimeStamped):
         choices=AllocationOfficeChoices.choices,
         default=AllocationOfficeChoices.office_based,
     )
+    login_details = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
 
     class Meta:
         ordering = ["-created_at"]
