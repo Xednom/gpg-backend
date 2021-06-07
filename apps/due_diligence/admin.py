@@ -15,6 +15,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
     )
     search_fields = (
         "user_id",
+        "did",
         "code_name",
         "allocated_extension_staff__user__first_name",
         "allocated_extension_staff__user__last_name",
@@ -26,11 +27,14 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "user_id",
+                    "did",
                     "allocated_extension_staff",
                     "original_extension_owner",
                     "code_name",
                     "allocation_company",
-                    "allocation_office"
+                    "allocation_office",
+                    "login_details",
+                    "notes"
                 )
             },
         ),
