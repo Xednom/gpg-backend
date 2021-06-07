@@ -7,6 +7,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
     model = PhoneLineExtension
     list_display = (
         "user_id",
+        "did",
         "get_staffs",
         "original_extension_owner",
         "code_name",
