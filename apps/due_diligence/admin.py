@@ -65,7 +65,8 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "call_out_status",
         "call_out_dd_quality_review_status",
         "call_out_dd_date_complete",
-        "dd_link"
+        "dd_link",
+        "created_at"
     )
 
     list_filter = (
@@ -80,15 +81,15 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
     search_fields = (
         "ticket_number",
         "client__user__first_name",
-        "client__user__first_name",
+        "client__user__last_name",
         "apn",
-        "county__name",
-        "county__state__name",
+        "county",
         "staff_initial_dd__user__first_name",
         "staff_initial_dd__user__last_name",
         "staff_assigned_for_call_out__user__first_name",
         "staff_assigned_for_call_out__user__last_name",
     )
+    readonly_fields = ("created_at",)
     fieldsets = (
         (
             "Staff assigned and Status for Call outs",
@@ -102,6 +103,7 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
                     "call_out_status",
                     "call_out_dd_quality_review_status",
                     "call_out_dd_date_complete",
+                    "created_at",
                 )
             },
         ),
