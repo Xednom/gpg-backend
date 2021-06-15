@@ -10,7 +10,7 @@ __all__ = ("CommentSerializer", "JobOrderGeneralSerializer")
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField()
+    created_at = serializers.DateTimeField(required=False, allow_null=True)
     commenter = serializers.SerializerMethodField()
 
     class Meta:

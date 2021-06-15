@@ -138,7 +138,7 @@ class CategoryTypeSerializer(serializers.ModelSerializer):
 
 class ApnCommentSerializer(serializers.ModelSerializer):
     commenter = serializers.SerializerMethodField()
-    created_at = serializers.DateTimeField()
+    created_at = serializers.DateTimeField(required=False, allow_null=True)
 
     class Meta:
         model = CommentByApn
