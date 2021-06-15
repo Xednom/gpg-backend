@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from rest_framework import serializers
 
 from apps.authentication.models import Staff, Client
@@ -8,16 +10,13 @@ __all__ = ("CommentSerializer", "JobOrderGeneralSerializer")
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField()
     commenter = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
-        fields = (
-            "job_order",
-            "user",
-            "comment",
-            "commenter",
-        )
-    
+        fields = ("job_order", "user", "comment", "created_at")
+
     def get_commenter(self, instance):
         if instance.user.designation_category == "staff":
             return "Virtual Assistant"
@@ -27,10 +26,13 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
     job_order_comments = CommentSerializer(many=True, required=False, allow_null=True)
-    client = serializers.SlugRelatedField(slug_field="client_code", queryset=Client.objects.all())
+    client = serializers.SlugRelatedField(
+        slug_field="client_code", queryset=Client.objects.all()
+    )
     client_code = serializers.SerializerMethodField()
     client_name = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
+
     class Meta:
         model = JobOrderGeneral
         fields = (
@@ -56,21 +58,21 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "url_of_the_completed_jo",
             "job_order_comments",
         )
-    
+
     def get_client_code(self, instance):
         if instance.client is None:
             return "Management on process"
         else:
             return instance.client.client_code
-    
+
     def get_client_name(self, instance):
         if instance.client is None:
             return "Management on process"
         else:
             return instance.client.client_name
-    
+
     def get_status_(self, instance):
-        if instance.status == "na": 
+        if instance.status == "na":
             return "N/A"
         elif instance.status == "job_order_request":
             return "Request for job order"

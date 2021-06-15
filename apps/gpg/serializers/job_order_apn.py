@@ -25,27 +25,14 @@ __all__ = (
     "DeadlineSerializer",
     "StateSerializer",
     "CountySerializer",
-    "PropertyDetailFileSerializer"
+    "PropertyDetailFileSerializer",
 )
 
 
 class CommentByApnSerializer(serializers.ModelSerializer):
-    commenter = serializers.SerializerMethodField()
-
     class Meta:
         model = CommentByApn
-        fields = (
-            "property_details",
-            "user",
-            "comment",
-            "commenter",
-        )
-
-    def get_commenter(self, instance):
-        if instance.user.designation_category == "staff":
-            return "Virtual Assistant"
-        else:
-            return "Client"
+        fields = ("property_details", "user", "comment", "comment_created_at")
 
 
 class PropertyPriceSerializer(WritableNestedModelSerializer):
@@ -122,7 +109,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "notes_va_side",
             "notes_management_side",
             "property_price_statuses",
-            "property_detail_files"
+            "property_detail_files",
         )
 
     def get_client_(self, instance):
@@ -151,10 +138,17 @@ class CategoryTypeSerializer(serializers.ModelSerializer):
 
 class ApnCommentSerializer(serializers.ModelSerializer):
     commenter = serializers.SerializerMethodField()
+    created_at = serializers.DateTimeField()
 
     class Meta:
         model = CommentByApn
-        fields = ("job_order_category", "user", "comment", "commenter")
+        fields = (
+            "job_order_category",
+            "user",
+            "comment",
+            "commenter",
+            "created_at",
+        )
 
     def get_commenter(self, instance):
         if instance.user.designation_category == "staff":
@@ -222,13 +216,13 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "Client being process"
         else:
             return f"{instance.client.client_code}"
-    
+
     def get_property_detail_ticket(self, instance):
         if instance.property_detail:
             return instance.property_detail.ticket_number
-    
+
     def get_status_(self, instance):
-        if instance.status == "na": 
+        if instance.status == "na":
             return "N/A"
         elif instance.status == "job_order_request":
             return "Request for job order"
