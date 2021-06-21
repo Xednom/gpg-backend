@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
+from import_export.admin import ImportExportModelAdmin
+
 from apps.authentication.models import (
     User,
     Client,
@@ -25,7 +27,7 @@ class InternalFilesStaffAdmin(admin.TabularInline):
     readonly_fields = ("created_at",)
 
 
-class UserProfileAdmin(UserAdmin):
+class UserProfileAdmin(ImportExportModelAdmin):
     list_display = (
         "username",
         "email",
