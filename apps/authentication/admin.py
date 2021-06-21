@@ -27,7 +27,7 @@ class InternalFilesStaffAdmin(admin.TabularInline):
     readonly_fields = ("created_at",)
 
 
-class UserProfileAdmin(ImportExportModelAdmin):
+class UserProfileAdmin(UserAdmin):
     list_display = (
         "username",
         "email",
