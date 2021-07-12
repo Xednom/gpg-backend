@@ -30,7 +30,7 @@ class PaymentHistoryAdmin(ImportExportModelAdmin):
 
 class AccountBalanceAdmin(admin.ModelAdmin):
     model = AccountBalance
-    list_filter= ("client", ("date", DateRangeFilter))
+    list_filter= ("client",)
     list_display = (
         "client",
         "total_payment_made",
