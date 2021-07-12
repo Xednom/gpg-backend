@@ -11,12 +11,14 @@ from apps.timesheet.models import (
     StaffAccountBalance,
     PaymentPortal
 )
-from apps.timesheet.resources import AccountChargeResource
+from apps.timesheet.resources import AccountChargeResource, PaymentHistoryResource
 
 
-class PaymentHistoryAdmin(admin.ModelAdmin):
+class PaymentHistoryAdmin(ImportExportModelAdmin):
     model = PaymentHistory
-    list_filter = ("client",)
+    resource_class = PaymentHistoryResource
+    list_filter = (("date", DateRangeFilter),)
+    search_fields = ("client__user__first_name", "client__user__last_name")
     list_display = (
         "client",
         "date",
@@ -28,7 +30,7 @@ class PaymentHistoryAdmin(admin.ModelAdmin):
 
 class AccountBalanceAdmin(admin.ModelAdmin):
     model = AccountBalance
-    list_filter= ("client",)
+    list_filter= ("client", ("date", DateRangeFilter))
     list_display = (
         "client",
         "total_payment_made",

@@ -1,6 +1,6 @@
 from django.db import models
 from import_export import resources
-from apps.timesheet.models import AccountCharge
+from apps.timesheet.models import AccountCharge, PaymentHistory
 
 
 class AccountChargeResource(resources.ModelResource):
@@ -28,4 +28,18 @@ class AccountChargeResource(resources.ModelResource):
             "client_other_fee",
             "client_total_charge",
             "client_total_due"
+        )
+
+
+class PaymentHistoryResource(resources.ModelResource):
+
+    class Meta:
+        model = PaymentHistory
+        fields = (
+            "date",
+            "client__user",
+            "amount",
+            "transaction_number",
+            "payment_channel",
+            "notes"
         )
