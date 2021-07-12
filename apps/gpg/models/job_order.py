@@ -84,7 +84,7 @@ class JobOrderGeneral(TimeStamped):
         blank=True,
         null=True,
     )
-    client_file = models.CharField(max_length=500, blank=True)
+    client_file = models.TextField(blank=True)
     client_email = models.EmailField(blank=True)
     va_assigned = models.ManyToManyField(
         Staff,
