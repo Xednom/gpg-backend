@@ -149,10 +149,6 @@ class Client(TimeStamped):
         self.customer_id = self.create_customer_id()
         super().save(*args, **kwargs)
 
-    @property
-    def client_name(self):
-        return f"{self.user.user_full_name}"
-
 
 class Staff(TimeStamped):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)

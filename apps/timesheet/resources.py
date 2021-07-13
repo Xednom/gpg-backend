@@ -37,7 +37,8 @@ class PaymentHistoryResource(resources.ModelResource):
         model = PaymentHistory
         fields = (
             "date",
-            "client__user",
+            "client__user__first_name",
+            "client__user__last_name",
             "amount",
             "transaction_number",
             "payment_channel",
