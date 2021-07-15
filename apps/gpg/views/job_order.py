@@ -32,7 +32,7 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
             ).filter(client__user__in=client) or JobOrderGeneral.objects.select_related(
                 "client").filter(
                 va_assigned__user__in=staff
-            )
+            ).exclude(status="complete")
             return queryset
         else:
             queryset = JobOrderGeneral.objects.all()

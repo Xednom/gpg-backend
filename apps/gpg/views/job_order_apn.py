@@ -18,7 +18,7 @@ from apps.gpg.models import (
     Deadline,
     State,
     County,
-    PropertyDetailFile
+    PropertyDetailFile,
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
@@ -30,7 +30,7 @@ from apps.gpg.serializers import (
     DeadlineSerializer,
     StateSerializer,
     CountySerializer,
-    PropertyDetailFileSerializer
+    PropertyDetailFileSerializer,
 )
 
 User = get_user_model()
@@ -45,7 +45,7 @@ __all__ = (
     "DeadlineViewSet",
     "StateViewSet",
     "CountyViewSet",
-    "PropertyDetailFileViewSet"
+    "PropertyDetailFileViewSet",
 )
 
 
@@ -80,15 +80,13 @@ class PropertyDetailsViewSet(viewsets.ModelViewSet):
         property_detail = serializer.validated_data
         # Email notification will only send if two email are present
         if client_email and staff_email:
-            email = client_email + ' ' + staff_email
+            email = client_email + " " + staff_email
             emails = email.split()
             mail.send(
                 "postmaster@landmaster.us",
                 bcc=emails,
                 template="property_detail_update",
-                context={
-                    "property_detail": property_detail
-                 },
+                context={"property_detail": property_detail},
             )
         return serializer.save()
 
@@ -125,6 +123,8 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
                 "client", "deadline", "property_detail"
             ).filter(
                 staff__user__in=user
+            ).exclude(
+                status="complete"
             )
             return queryset
         elif current_user.is_superuser:
@@ -141,15 +141,13 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         staff_emails = staff_email.split()
         job_order_category = serializer.validated_data
         if client_email and staff_email:
-            emails = client_email + ' ' + staff_email
+            emails = client_email + " " + staff_email
             emails = emails.split()
             mail.send(
                 "postmaster@landmaster.us",
                 bcc=emails,
                 template="job_order_category_update",
-                context={
-                    "job_order_category": job_order_category
-                 },
+                context={"job_order_category": job_order_category},
             )
         return serializer.save()
 
@@ -177,15 +175,13 @@ class CreateJobOrderByApnComment(generics.CreateAPIView):
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
         if job_order.client_email and job_order.staff_email:
             staff_email = job_order.staff_email
-            emails = job_order.client_email + ' ' + staff_email
+            emails = job_order.client_email + " " + staff_email
             emails = emails.split()
             mail.send(
                 "postmaster@landmaster.us",
                 bcc=emails,
                 template="job_order_category_comment",
-                context={
-                    "job_order": job_order
-                 },
+                context={"job_order": job_order},
             )
         serializer.save(user=user, job_order_category=job_order)
 
