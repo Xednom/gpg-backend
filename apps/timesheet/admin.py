@@ -9,9 +9,13 @@ from apps.timesheet.models import (
     AccountCharge,
     StaffPaymentHistory,
     StaffAccountBalance,
-    PaymentPortal
+    PaymentPortal,
 )
-from apps.timesheet.resources import AccountChargeResource, PaymentHistoryResource
+from apps.timesheet.resources import (
+    AccountChargeResource,
+    PaymentHistoryResource,
+    AccountBalanceResource,
+)
 
 
 class PaymentHistoryAdmin(ImportExportModelAdmin):
@@ -28,28 +32,31 @@ class PaymentHistoryAdmin(ImportExportModelAdmin):
     )
 
 
-class AccountBalanceAdmin(admin.ModelAdmin):
+class AccountBalanceAdmin(ImportExportModelAdmin):
     model = AccountBalance
-    list_filter= ("client",)
+    resource_class = AccountBalanceResource
+    list_filter = ("client",)
+    search_fields = ("client__user_first_name",)
     list_display = (
         "client",
         "total_payment_made",
         "total_time_consumed",
         "account_charges",
         "account_balance",
-        "get_client_email"
+        "get_client_email",
     )
 
     def get_client_email(self, obj):
         return obj.client.user.email
-    
+
     get_client_email.short_description = "Client email"
 
 
 def charge_approval(AccountChargeAdmin, request, queryset):
     queryset.update(status="approved")
 
-charge_approval.short_description='Mark selected charges as Approved'
+
+charge_approval.short_description = "Mark selected charges as Approved"
 
 
 class AccountChargeAdmin(ImportExportModelAdmin):

@@ -1,6 +1,6 @@
 from django.db import models
 from import_export import resources
-from apps.timesheet.models import AccountCharge, PaymentHistory
+from apps.timesheet.models import AccountBalance, AccountCharge, PaymentHistory
 
 
 class AccountChargeResource(resources.ModelResource):
@@ -42,5 +42,18 @@ class PaymentHistoryResource(resources.ModelResource):
             "amount",
             "transaction_number",
             "payment_channel",
+            "notes"
+        )
+
+
+class AccountBalanceResource(resources.ModelResource):
+    class Meta:
+        modedl = AccountBalance
+        fields = (
+            "client",
+            "total_payment_made",
+            "total_time_consumed",
+            "account_charges",
+            "account_balance",
             "notes"
         )
