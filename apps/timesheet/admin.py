@@ -21,8 +21,12 @@ from apps.timesheet.resources import (
 class PaymentHistoryAdmin(ImportExportModelAdmin):
     model = PaymentHistory
     resource_class = PaymentHistoryResource
-    list_filter = (("date", DateRangeFilter),)
-    search_fields = ("client__user__first_name", "client__user__last_name")
+    list_filter = (("date", DateRangeFilter), "client", "payment_channel")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "transaction_number",
+    )
     list_display = (
         "client",
         "date",
