@@ -3,7 +3,14 @@ from rest_framework import viewsets, permissions, filters
 from djoser.email import ConfirmationEmail, PasswordResetEmail
 
 from .models import Staff, Client, InternalFiles, InternalFilesStaff
-from .serializers import StaffSerializer, ClientSerializer, ClientInternalFileSerializer, StaffInternalFileSerializer, ClientCodeSerializer
+from .serializers import (
+    StaffSerializer,
+    ClientSerializer,
+    ClientInternalFileSerializer,
+    StaffInternalFileSerializer,
+    ClientCodeSerializer,
+    StaffCodeSerializer,
+)
 
 User = get_user_model()
 
@@ -20,9 +27,7 @@ class StaffViewSet(viewsets.ModelViewSet):
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
     lookup_field = "user"
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Client.objects.all()
 
 
@@ -31,13 +36,18 @@ class ClientCodeViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Client.objects.all()
     filter_backends = [filters.SearchFilter]
-    search_fields = ['=client_code']
+    search_fields = ["=client_code"]
+
+
+class StaffCodeViewSet(viewsets.ModelViewSet):
+    serializer_class = StaffCodeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Staff.objects.all()
+
 
 class ClientFilesViewSet(viewsets.ModelViewSet):
     serializer_class = ClientInternalFileSerializer
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = InternalFiles.objects.all()
 
     def get_queryset(self):
@@ -51,9 +61,7 @@ class ClientFilesViewSet(viewsets.ModelViewSet):
 
 class StaffFilesViewSet(viewsets.ModelViewSet):
     serializer_class = StaffInternalFileSerializer
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = InternalFilesStaff.objects.all()
 
     def get_queryset(self):

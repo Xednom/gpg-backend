@@ -100,6 +100,12 @@ class ClientCodeSerializer(serializers.ModelSerializer):
         fields = ("client_code", "hourly_rate")
 
 
+class StaffCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = ("staff_id", "hourly_rate")
+
+
 class StaffSerializer(WritableNestedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         queryset=Staff.objects.all(), required=False, allow_null=True
