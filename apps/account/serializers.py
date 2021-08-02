@@ -5,14 +5,18 @@ from apps.account.models import LoginCredential, AccountFile
 
 
 class LoginCredentialSerializer(serializers.ModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
-    client_code = serializers.SerializerMethodField()
+    client = serializers.SlugRelatedField(
+        slug_field="client_code",
+        queryset=Client.objects.all(),
+        required=False,
+        allow_null=True,
+    )
+
     class Meta:
         model = LoginCredential
         fields = (
             "id",
             "client",
-            "client_code",
             "category",
             "url",
             "username",
@@ -20,13 +24,12 @@ class LoginCredentialSerializer(serializers.ModelSerializer):
             "notes",
             "staff",
         )
-    
-    def get_client_code(self, instance):
-        return f"{instance.client.client_code}"
 
 
 class AccountFileSerializer(serializers.ModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
+    client = serializers.PrimaryKeyRelatedField(
+        queryset=Client.objects.all(), required=False, allow_null=True
+    )
     client_code = serializers.SerializerMethodField()
 
     class Meta:
@@ -38,7 +41,7 @@ class AccountFileSerializer(serializers.ModelSerializer):
             "file_name",
             "url",
             "file_description",
-            "staff"
+            "staff",
         )
 
     def get_client_code(self, instance):
