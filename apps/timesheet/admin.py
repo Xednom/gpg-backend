@@ -137,7 +137,7 @@ class AccountChargeAdmin(ImportExportModelAdmin):
 
 class StaffPaymentHistoryAdmin(admin.ModelAdmin):
     model = StaffPaymentHistory
-    list_display = ("transaction_number", "date", "staff", "amount", "payment_channel")
+    list_display = ("transaction_number", "date", "staff", "amount", "payment_channel", "notes")
     list_filter = ("staff", ("date", DateRangeFilter))
     search_fields = (
         "transaction_number",
