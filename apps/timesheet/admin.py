@@ -33,6 +33,7 @@ class PaymentHistoryAdmin(ImportExportModelAdmin):
         "amount",
         "transaction_number",
         "payment_channel",
+        "notes"
     )
 
 
