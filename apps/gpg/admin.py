@@ -54,7 +54,15 @@ class PropertyDetailFileAdmin(admin.TabularInline):
 
 class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = PropertyDetail
-    list_display = ("apn", "client", "get_staffs", "county", "state", "property_status", "size")
+    list_display = (
+        "apn",
+        "client",
+        "get_staffs",
+        "county",
+        "state",
+        "property_status",
+        "size",
+    )
     list_filter = ("client", "staff", "county", "state", "property_status")
     search_fields = ("apn", "client__client_code", "county", "state", "property_owner")
     readonly_fields = ["client_email", "staff_email"]
@@ -108,7 +116,7 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
                 )
         else:
             return obj.client.client_code or obj.client.user
-    
+
     def get_staffs(self, obj):
         return ", ".join([staff.staff_name for staff in obj.staff.all()])
 
@@ -153,8 +161,16 @@ class PropertyDetailFileAdmin(admin.ModelAdmin):
     search_fields = ("property_detail__apn", "details")
 
 
+def status_complete(JobOrderGeneralAdmin, request, queryset):
+    queryset.update(status="closed")
+
+
+status_complete.short_description = "Mark selected Job Orders as Closed"
+
+
 class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = JobOrderGeneral
+    actions = [status_complete]
     readonly_fields = ["client_email", "staff_email", "client_file"]
     list_display = (
         "ticket_number",
@@ -167,7 +183,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
         "date_completed",
         "total_time_consumed",
         "status",
-        "url_of_the_completed_jo"
+        "url_of_the_completed_jo",
     )
     search_fields = (
         "ticket_number",
@@ -199,7 +215,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
         "due_date",
         "date_completed",
         "status",
-        "url_of_the_completed_jo"
+        "url_of_the_completed_jo",
     )
     list_filter = (
         "client",
