@@ -75,6 +75,11 @@ class JobOrderStatus(models.TextChoices):
     dd_call_out_processing = "dd_call_out_processing", ("DD Call Out Processing")
     dd_call_out_complete = "dd_call_out_complete", ("DD Call Out Complete")
     duplicate_request = "duplicate_request", ("Duplicate Request")
+    multiple_task = "multiple_task", ("Multiple Task")
+    va_assigned_multiple_task = "va_assigned_multiple_task", ("VA assigned Multiple Task")
+    va_processing_multiple_task = "va_processing_multiple_task", ("VA processing Multiple Task")
+    va_complete_multiple_task = "va_complete_multiple_task", ("VA Complete Multiple Task")
+    for_quality_review_multiple_task = "for_quality_review_multiple_task", ("For Quality Review Multiple Task")
 
 
 class JobOrderGeneral(TimeStamped):
