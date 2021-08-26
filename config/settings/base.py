@@ -175,15 +175,14 @@ DJOSER = {
 
 POST_OFFICE = {
     "BACKENDS": {
-        "default": "anymail.backends.mailgun.EmailBackend"
+        "default": "anymail.backends.sendinblue.EmailBackend"
     }
 }
 
 GRAPPELLI_ADMIN_TITLE = "G.P.G Corp. Management System"
 
 # Email sender credentials
-ANYMAIL_MAILGUN_API_KEY = env.str("ANYMAIL_MAILGUN_API_KEY")
-ANYMAIL_MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
+ANYMAIL_SENDINBLUE_API_KEY = env.str("ANYMAIL_SENDINBLUE_API_KEY")
 EMAIL_BACKEND = "post_office.EmailBackend"
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 # SERVER_EMAIL = "xednom@gmail.com"
