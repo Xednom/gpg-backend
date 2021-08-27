@@ -43,6 +43,9 @@ class StaffCategory(models.TextChoices):
     office_based = "office_based", ("Office Based")
     part_timers = "part_timers", ("Part-timers")
     home_based = "home_based", ("Home Based")
+    office_project_based_contract = "office_project_based_contract", ("Office Project Based Contract")
+    homebase_project_based_contract = "homebase_project_based_contract", ("Homebase - Project Based Contract")
+    part_time_job = "part_time_job", ("Part-time Job")
 
 
 class User(AbstractUser):
