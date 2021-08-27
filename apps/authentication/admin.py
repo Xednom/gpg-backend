@@ -139,8 +139,10 @@ class StaffProfileAdmin(admin.ModelAdmin):
         "date_of_birth",
         "phone_number",
         "date_hired_in_contract",
+        "hourly_rate",
         "staff_id",
         "company_id",
+        "status"
     )
     list_filter = ("user", "position", "status", "category")
     search_fields = ("user__first_name", "user__last_name", "user__username")
