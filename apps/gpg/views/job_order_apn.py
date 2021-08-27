@@ -119,18 +119,28 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
         if current_user:
             queryset = JobOrderCategory.objects.select_related(
                 "client", "deadline", "property_detail"
-            ).filter(client__user__in=user) or JobOrderCategory.objects.select_related(
+            ).prefetch_related("staff").filter(
+                client__user__in=user
+            ) or JobOrderCategory.objects.select_related(
                 "client", "deadline", "property_detail"
+            ).prefetch_related(
+                "staff"
             ).filter(
                 staff__user__in=user
             ).exclude(
                 status="complete"
+            ).exclude(
+                status="closed"
             )
             return queryset
         elif current_user.is_superuser:
-            queryset = JobOrderCategory.objects.select_related(
-                "client", "deadline", "property_detail"
-            ).all()
+            queryset = (
+                JobOrderCategory.objects.select_related(
+                    "client", "deadline", "property_detail"
+                )
+                .prefetch_related("staff")
+                .all()
+            )
             return queryset
 
     def perform_update(self, serializer):
