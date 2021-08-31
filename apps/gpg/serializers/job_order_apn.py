@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
-from apps.authentication.models import Client
+from apps.authentication.models import Client, Staff
 
 from apps.gpg.models import (
     JobOrderCategory,
@@ -152,10 +152,19 @@ class ApnCommentSerializer(serializers.ModelSerializer):
         )
 
     def get_commenter(self, instance):
+        get_staff_code = Staff.objects.select_related("user").filter(user=instance.user)
+        get_client_code = Client.objects.select_related("user").filter(
+            user=instance.user
+        )
+
         if instance.user.designation_category == "staff":
-            return "Virtual Assistant"
+            staff_code = [staff.staff_id for staff in get_staff_code]
+            staff_code = "".join(staff_code)
+            return staff_code
         else:
-            return "Client"
+            client_code = [client.client_code for client in get_client_code]
+            client_code = "".join(client_code)
+            return client_code
 
 
 class JobOrderCategorySerializer(serializers.ModelSerializer):

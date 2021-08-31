@@ -18,10 +18,19 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ("job_order", "user", "comment", "commenter", "created_at")
 
     def get_commenter(self, instance):
+        get_staff_code = Staff.objects.select_related("user").filter(user=instance.user)
+        get_client_code = Client.objects.select_related("user").filter(
+            user=instance.user
+        )
+
         if instance.user.designation_category == "staff":
-            return "Virtual Assistant"
-        else:
-            return "Client"
+            staff_code = [staff.staff_id for staff in get_staff_code]
+            staff_code = "".join(staff_code)
+            return staff_code
+        elif instance.user.designation_category != "staff":
+            client_code = [client.client_code for client in get_client_code]
+            client_code = "".join(client_code)
+            return client_code
 
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
