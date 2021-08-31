@@ -86,6 +86,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
         model = PropertyDetail
         fields = (
             "id",
+            "created_at",
             "ticket_number",
             "client",
             "client_code",
@@ -182,6 +183,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
         model = JobOrderCategory
         fields = (
             "id",
+            "created_at",
             "ticket_number",
             "property_detail",
             "property_detail_ticket",

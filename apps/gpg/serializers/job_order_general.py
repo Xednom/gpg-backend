@@ -37,6 +37,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
         model = JobOrderGeneral
         fields = (
             "id",
+            "created_at",
             "ticket_number",
             "client",
             "client_email",
