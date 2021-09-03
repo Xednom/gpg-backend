@@ -247,6 +247,8 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "On Hold"
         elif instance.status == "canceled":
             return "Canceled"
+        elif instance.status == "closed":
+            return "Closed"
         elif instance.status == "follow_up":
             return "Follow up"
         elif instance.status == "dispute":
@@ -269,6 +271,16 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             return "Request for Posting"
         elif instance.status == "mark_as_sold_request":
             return "Mark as Sold Request"
+        elif instance.status == "multiple_task":
+            return "Multiple task"
+        elif instance.status == "va_assigned_multiple_task":
+            return "VA assigned multiple task"
+        elif instance.status == "va_processing_multiple_task":
+            return "VA processing multiple task"
+        elif instance.status == "va_complete_multiple_task":
+            return "VA complete multiple task"
+        elif instance.status == "for_quality_review_multiple_task":
+            return "For quality review multiple task"
 
 
 class DeadlineSerializer(serializers.ModelSerializer):
