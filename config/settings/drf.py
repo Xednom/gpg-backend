@@ -11,7 +11,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.BrowsableAPIRenderer",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 50,
+    "PAGE_SIZE": 10000,
     "DATETIME_FORMAT": "%Y-%m-%d %H:%M",
     "DATE_FORMAT": "%Y-%m-%d",
 }
