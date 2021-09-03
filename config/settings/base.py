@@ -176,7 +176,8 @@ DJOSER = {
 POST_OFFICE = {
     "BACKENDS": {
         "default": "anymail.backends.sendinblue.EmailBackend"
-    }
+    },
+    "DEFAULT_PRIORITY": "now"
 }
 
 GRAPPELLI_ADMIN_TITLE = "G.P.G Corp. Management System"
