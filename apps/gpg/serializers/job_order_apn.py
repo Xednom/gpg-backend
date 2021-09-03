@@ -139,6 +139,7 @@ class CategoryTypeSerializer(serializers.ModelSerializer):
 
 class ApnCommentSerializer(serializers.ModelSerializer):
     commenter = serializers.SerializerMethodField()
+    user_type = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(required=False, allow_null=True)
 
     class Meta:
@@ -148,8 +149,17 @@ class ApnCommentSerializer(serializers.ModelSerializer):
             "user",
             "comment",
             "commenter",
+            "user_type",
             "created_at",
         )
+
+    def get_user_type(self, instance):
+        staff_user = "staff"
+        client_user = "client"
+        if instance.user.designation_category == "staff":
+            return staff_user
+        elif instance.user.designation_category != "staff":
+            return client_user
 
     def get_commenter(self, instance):
         get_staff_code = Staff.objects.select_related("user").filter(user=instance.user)

@@ -12,10 +12,26 @@ __all__ = ("CommentSerializer", "JobOrderGeneralSerializer")
 class CommentSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(required=False, allow_null=True)
     commenter = serializers.SerializerMethodField()
+    user_type = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ("job_order", "user", "comment", "commenter", "created_at")
+        fields = (
+            "job_order",
+            "user",
+            "comment",
+            "user_type",
+            "commenter",
+            "created_at",
+        )
+
+    def get_user_type(self, instance):
+        staff_user = "staff"
+        client_user = "client"
+        if instance.user.designation_category == "staff":
+            return staff_user
+        elif instance.user.designation_category != "staff":
+            return client_user
 
     def get_commenter(self, instance):
         get_staff_code = Staff.objects.select_related("user").filter(user=instance.user)
