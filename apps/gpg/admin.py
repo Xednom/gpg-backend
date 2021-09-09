@@ -20,14 +20,14 @@ class JobOrderComment(admin.TabularInline):
     model = Comment
     extra = 1
     fields = ("user", "comment", "created_at", "updated_at")
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("user", "created_at", "updated_at")
 
 
 class JobOrderCategoryComment(admin.TabularInline):
     model = CommentByApn
     extra = 1
     fields = ("user", "comment", "created_at", "updated_at")
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("user", "created_at", "updated_at")
 
 
 class CategoryTypeAdmin(admin.ModelAdmin):
