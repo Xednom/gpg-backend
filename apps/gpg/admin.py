@@ -196,6 +196,15 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_filter = ("client", "va_assigned", "job_title", "status")
     inlines = [JobOrderComment]
 
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for obj in formset.deleted_objects:
+            obj.delete()
+        for instance in instances:
+            instance.user = request.user
+            instance.save()
+        formset.save_m2m()
+
     def get_staffs(self, obj):
         return ", ".join([staff.staff_name for staff in obj.va_assigned.all()])
 
@@ -269,6 +278,15 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
             },
         ),
     )
+
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for obj in formset.deleted_objects:
+            obj.delete()
+        for instance in instances:
+            instance.user = request.user
+            instance.save()
+        formset.save_m2m()
 
     def get_staffs(self, obj):
         return ", ".join([staff.staff_name for staff in obj.staff.all()])
