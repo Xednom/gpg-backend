@@ -34,6 +34,11 @@ DEBUG_TOOLBAR_PANELS = (
     "debug_toolbar.panels.redirects.RedirectsPanel",
 )
 
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
+
 INTERNAL_IPS = [
     "127.0.0.1"
 ]
