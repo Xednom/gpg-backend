@@ -47,8 +47,6 @@ class AccountFileAdmin(ModelAdminMixin, admin.ModelAdmin):
                 "fields": (
                     "client",
                     "staff",
-                    "job_order",
-                    "job_order_category",
                     "file_name",
                     "url",
                     "file_description",
