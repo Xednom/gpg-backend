@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,6 +48,7 @@ LOCAL_APPS = [
     "apps.account",
     "apps.timesheet",
     "apps.due_diligence",
+    "apps.newsfeed",
 ]
 
 THIRD_PARTY_APPS = [
@@ -61,7 +62,10 @@ THIRD_PARTY_APPS = [
     "django_crontab",
     "djmoney",
     "import_export",
-    "rangefilter"
+    "rangefilter",
+    "ckeditor",
+    "tinymce",
+    "django_bleach",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -83,7 +87,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR/'templates')],
+        "DIRS": [os.path.join(BASE_DIR / "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -165,19 +169,17 @@ DJOSER = {
     "SERIALIZERS": {
         "user_create": "apps.authentication.serializers.UserRegistrationSerializer",
         "user": "apps.authentication.serializers.UserListSerializer",
-        "current_user": "apps.authentication.serializers.CurrentUserSerializer"
+        "current_user": "apps.authentication.serializers.CurrentUserSerializer",
     },
     "EMAIL": {
         "confirmation": "apps.authentication.views.GpgConfirmationEmail",
-        "password_reset": "apps.authentication.views.GpgPasswordResetEmail"
-    }
+        "password_reset": "apps.authentication.views.GpgPasswordResetEmail",
+    },
 }
 
 POST_OFFICE = {
-    "BACKENDS": {
-        "default": "anymail.backends.sendinblue.EmailBackend"
-    },
-    "DEFAULT_PRIORITY": "now"
+    "BACKENDS": {"default": "anymail.backends.sendinblue.EmailBackend"},
+    "DEFAULT_PRIORITY": "now",
 }
 
 GRAPPELLI_ADMIN_TITLE = "G.P.G Corp. Management System"
@@ -193,3 +195,107 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
+
+
+# Which HTML tags are allowed
+BLEACH_ALLOWED_TAGS = [
+    "p",
+    "b",
+    "i",
+    "u",
+    "em",
+    "a",
+    "ol",
+    "strong",
+    "blockquote",
+    "span",
+    "code",
+    "address",
+    "article",
+    "aside",
+    "footer",
+    "header",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "hgroup",
+    "main",
+    "nav",
+    "section",
+    "dd",
+    "div",
+    "dl",
+    "dt",
+    "figcaption",
+    "figure",
+    "hr",
+    "main",
+    "pre",
+    "a",
+    "abbr",
+    "b",
+    "bdi",
+    "bdo",
+    "br",
+    "cite",
+    "code",
+    "data",
+    "dfn",
+    "kbd",
+    "mark",
+    "q",
+    "rb",
+    "rp",
+    "rt",
+    "rtc",
+    "ruby",
+    "s",
+    "samp",
+    "small",
+    "sub",
+    "sup",
+    "time",
+    "u",
+    "var",
+    "wbr",
+    "caption",
+    "col",
+    "colgroup",
+    "table",
+    "tbody",
+    "td",
+    "tfoot",
+    "th",
+    "thead",
+    "tr",
+    "img",
+]
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ["href", "title", "style"]
+
+# Which CSS properties are allowed in 'style' attributes (assuming
+# style is an allowed attribute)
+BLEACH_ALLOWED_STYLES = [
+    "font-family",
+    "font-size",
+    "font-weight",
+    "text-decoration",
+    "font-variant",
+    "color",
+]
+
+BLEACH_ALLOWED_PROTOCOLS = ["http", "https", "data"]
+
+# Strip unknown tags if True, replace with HTML escaped characters if
+# False
+BLEACH_STRIP_TAGS = True
+
+# Strip comments, or leave them in.
+BLEACH_STRIP_COMMENTS = False
+
+MEDIA_ROOT = "media"
+MEDIA_URL = env.str("MEDIA_URL", "http://127.0.0.1:8000/media/")

@@ -17,11 +17,18 @@ from apps.gpg.models import (
 )
 
 
-class AccountFile(admin.TabularInline):
+class AccountFileInline(admin.TabularInline):
     model = AccountFile
     extra = 1
     fields = ("client", "file_name", "url", "file_description", "staff")
     readonly_fields = ("created_at", "updated_at")
+
+
+class JobOrderCategoryInline(admin.TabularInline):
+    model = JobOrderCategory
+    extra = 1
+    fields = ("staff",)
+    readonly_fields = ("client", "created_at", "updated_at")
 
 
 class JobOrderComment(admin.TabularInline):
@@ -110,7 +117,7 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
         ),
     )
     filter_horizontal = ("staff",)
-    inlines = [PropertyPriceAdmin, PropertyDetailFileAdmin]
+    inlines = [JobOrderCategoryInline, PropertyPriceAdmin, PropertyDetailFileAdmin]
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
@@ -202,7 +209,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
     filter_horizontal = ("va_assigned",)
     list_filter = ("client", "va_assigned", "job_title", "status")
-    inlines = [JobOrderComment, AccountFile]
+    inlines = [JobOrderComment, AccountFileInline]
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
@@ -252,7 +259,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
     readonly_fields = ["client_email", "staff_email", "client_file"]
     filter_horizontal = ("staff",)
-    inlines = [JobOrderCategoryComment, AccountFile]
+    inlines = [JobOrderCategoryComment, AccountFileInline]
     fieldsets = (
         (
             "Job Order by Category Information",

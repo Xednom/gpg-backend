@@ -45,6 +45,7 @@ Thumbs.db
 .coverage
 *.log
 static
+staticfiles
 .npm/
 media
 .pre-commit-config.yaml

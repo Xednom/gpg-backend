@@ -17,13 +17,19 @@ import debug_toolbar
 from django.contrib import admin
 from django.urls import include, path
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+MEDIA_URL = settings.MEDIA_URL.replace("http://127.0.0.1:8000", "")
+
 urlpatterns = [
     path("grappelli", include("grappelli.urls")),
     path("admin/", admin.site.urls),
     path("auth/", include("apps.authentication.urls")),
     path("api/v1/", include("apps.gpg.urls")),
+    path('tinymce/', include('tinymce.urls')),
     path("__debug__/", include(debug_toolbar.urls)),
-]
+] + static(MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_title = "G.P.G Corp Management System Admin site"
 admin.site.site_header = "G.P.G Corp. Management System"

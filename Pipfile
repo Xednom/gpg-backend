@@ -75,6 +75,7 @@ django-grappelli = "*"
 django-money = "*"
 django-import-export = "*"
 django-admin-rangefilter = "*"
+django-bleach = "*"
 
 [requires]
 python_version = "3.8"
