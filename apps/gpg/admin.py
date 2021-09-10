@@ -117,7 +117,7 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
         ),
     )
     filter_horizontal = ("staff",)
-    inlines = [JobOrderCategoryInline, PropertyPriceAdmin, PropertyDetailFileAdmin]
+    inlines = [PropertyPriceAdmin, PropertyDetailFileAdmin]
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
