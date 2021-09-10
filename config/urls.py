@@ -27,7 +27,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("apps.authentication.urls")),
     path("api/v1/", include("apps.gpg.urls")),
-    path('tinymce/', include('tinymce.urls')),
     path("__debug__/", include(debug_toolbar.urls)),
 ] + static(MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
