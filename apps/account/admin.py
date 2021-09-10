@@ -36,10 +36,26 @@ class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
 
 class AccountFileAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = AccountFile
-    list_display = ("client", "get_staffs", "file_name", "url")
+    list_display = ("client", "job_order", "job_order_category", "get_staffs", "file_name", "url")
     list_filter = ("staff", "client")
     filter_horizontal = ("staff",)
     search_fields = ("client__user__first_name", "client__user__last_name", "file_name")
+    fieldsets = (
+        (
+            "Account file Information",
+            {
+                "fields": (
+                    "client",
+                    "staff",
+                    "job_order",
+                    "job_order_category",
+                    "file_name",
+                    "url",
+                    "file_description",
+                )
+            },
+        ),
+    )
 
     def get_staffs(self, obj):
         return ", ".join([staff.staff_name for staff in obj.staff.all()])

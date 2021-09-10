@@ -33,6 +33,20 @@ class AccountFile(TimeStamped):
         blank=True,
         null=True,
     )
+    job_order = models.ForeignKey(
+        "gpg.JobOrderGeneral",
+        related_name="job_order_account_files",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    job_order_category = models.ForeignKey(
+        "gpg.JobOrderCategory",
+        related_name="job_order_category_account_files",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     file_name = models.CharField(max_length=250)
     url = models.CharField(max_length=500)
     file_description = models.TextField()

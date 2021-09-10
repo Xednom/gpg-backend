@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from apps.core.admin import ModelAdminMixin
+from apps.account.models import AccountFile
 from apps.gpg.models import (
     JobOrderGeneral,
     JobOrderCategory,
@@ -14,6 +15,13 @@ from apps.gpg.models import (
     County,
     PropertyDetailFile,
 )
+
+
+class AccountFile(admin.TabularInline):
+    model = AccountFile
+    extra = 1
+    fields = ("client", "file_name", "url", "file_description", "staff")
+    readonly_fields = ("created_at", "updated_at")
 
 
 class JobOrderComment(admin.TabularInline):
@@ -194,7 +202,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
     filter_horizontal = ("va_assigned",)
     list_filter = ("client", "va_assigned", "job_title", "status")
-    inlines = [JobOrderComment]
+    inlines = [JobOrderComment, AccountFile]
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
@@ -244,7 +252,7 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
     readonly_fields = ["client_email", "staff_email", "client_file"]
     filter_horizontal = ("staff",)
-    inlines = [JobOrderCategoryComment]
+    inlines = [JobOrderCategoryComment, AccountFile]
     fieldsets = (
         (
             "Job Order by Category Information",
