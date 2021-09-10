@@ -63,8 +63,6 @@ THIRD_PARTY_APPS = [
     "djmoney",
     "import_export",
     "rangefilter",
-    "ckeditor",
-    "tinymce",
     "django_bleach",
 ]
 
