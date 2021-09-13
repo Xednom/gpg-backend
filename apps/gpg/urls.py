@@ -19,6 +19,9 @@ from apps.timesheet.views import (
     PaymentPortalViewSet
 )
 from apps.due_diligence.views import PhoneLineExtViewSet, CallOutViewSet
+
+from apps.newsfeed.views import NewsFeedViewSet
+
 from . import views
 
 router = routers.DefaultRouter()
@@ -67,6 +70,7 @@ router.register(r"staff-payment-history", StaffPaymentHistoryViewSet, basename="
 router.register(r"payment-portal", PaymentPortalViewSet, basename="payment-portal")
 router.register(r"phone-line-extension", PhoneLineExtViewSet, basename="phone-line-extension")
 router.register(r"call-out", CallOutViewSet, basename="due-diligence-callout")
+router.register(r"newsfeed", NewsFeedViewSet, basename="news-feed-list")
 
 
 app_name = "gpg"
