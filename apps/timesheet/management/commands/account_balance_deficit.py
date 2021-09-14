@@ -15,9 +15,7 @@ class Command(BaseCommand):
     help = "Automatically create Account balance for every user in the system monthly."
 
     def handle(self, *args, **kwargs):
-        account_balance_deficit = AccountBalance.objects.filter(
-            account_balance__range=[0.00, 49.00]
-        ) or AccountBalance.objects.filter(account_balance__lte=0.00)
+        account_balance_deficit = AccountBalance.objects.filter(account_balance__lte=0.00)
         now = datetime.datetime.now()
         if account_balance_deficit:
             for i in account_balance_deficit:
