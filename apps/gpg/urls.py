@@ -20,7 +20,7 @@ from apps.timesheet.views import (
 )
 from apps.due_diligence.views import PhoneLineExtViewSet, CallOutViewSet
 
-from apps.newsfeed.views import NewsFeedViewSet
+from apps.newsfeed.views import NewsFeedViewSet, CreateNewsFeedComment
 
 from . import views
 
@@ -85,5 +85,10 @@ urlpatterns = [
         "job-order-category/<int:id>/comment/",
         views.CreateJobOrderByApnComment.as_view(),
         name="job-order-apn-comment",
+    ),
+    path(
+        "newsfeed/<int:id>/comment/",
+        CreateNewsFeedComment.as_view(),
+        name="newsfeed-comment",
     ),
 ]

@@ -1,1 +1,1 @@
-from .newsfeed import NewsFeedViewSet # noqa
+from .newsfeed import NewsFeedViewSet, CreateNewsFeedComment # noqa

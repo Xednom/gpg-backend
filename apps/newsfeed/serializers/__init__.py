@@ -1,1 +1,1 @@
-from .newsfeed import NewsFeedSerializer # noqa
+from .newsfeed import NewsFeedSerializer, NewsfeedCommentSerializer  # noqa

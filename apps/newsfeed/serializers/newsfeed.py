@@ -4,7 +4,7 @@ from apps.authentication.models import Staff, Client
 from apps.newsfeed.models import NewsFeed, NewsFeedComment
 
 
-__all__ = ("NewsFeedSerializer",)
+__all__ = ("NewsFeedSerializer", "NewsfeedCommentSerializer")
 
 
 class NewsfeedCommentSerializer(serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class NewsfeedCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsFeedComment
         fields = (
-            "job_order",
+            "newsfeed",
             "user",
             "comment",
             "user_type",
@@ -54,4 +54,4 @@ class NewsFeedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NewsFeed
-        fields = ("title", "body", "publish_to")
+        fields = ("id", "title", "body", "publish_to", "news_feed_comments")
