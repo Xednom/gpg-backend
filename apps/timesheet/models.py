@@ -51,6 +51,7 @@ class AccountBalance(TimeStamped):
         null=True,
     )
     notes = models.TextField(blank=True)
+    billing_status = models.BooleanField(default=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Account Balances"
