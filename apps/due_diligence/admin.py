@@ -55,6 +55,7 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
     filter_horizontal = ("staff_initial_dd", "staff_assigned_for_call_out")
     change_list_template = "admin/change_list_filter_confirm.html"
     list_display = (
+        "created_at",
         "ticket_number",
         "client",
         "get_staff_initial_dd",
