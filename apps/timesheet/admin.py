@@ -33,7 +33,7 @@ class PaymentHistoryAdmin(ImportExportModelAdmin):
         "amount",
         "transaction_number",
         "payment_channel",
-        "notes"
+        "notes",
     )
 
 
@@ -68,7 +68,8 @@ class AccountChargeAdmin(ImportExportModelAdmin):
     model = AccountCharge
     resource_class = AccountChargeResource
     actions = [charge_approval]
-    list_display = (
+    # excluded = ["client_hourly_rate"]
+    admin_list_display = (
         "ticket_number",
         "shift_date",
         "job_request",
@@ -86,13 +87,27 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         "staff_other_fee",
         "staff_total_due",
     )
+    normaluser_list_display = (
+        "ticket_number",
+        "shift_date",
+        "job_request",
+        "job_request_description",
+        "status",
+        "client",
+        "total_time",
+        "staff",
+        "staff_hourly_rate",
+        "staff_fee",
+        "staff_other_fee",
+        "staff_total_due",
+    )
     readonly_fields = (
         "client_total_due",
         "client_total_charge",
         "staff_total_due",
     )
     list_filter = ("client", "staff", "status", ("shift_date", DateRangeFilter))
-    fieldsets = (
+    admin_fieldsets = (
         (
             "Account Charge Information",
             {
@@ -133,11 +148,62 @@ class AccountChargeAdmin(ImportExportModelAdmin):
             },
         ),
     )
+    normaluser_fieldsets = (
+        (
+            "Account Charge Information",
+            {
+                "fields": (
+                    "ticket_number",
+                    "shift_date",
+                    "job_request",
+                    "job_request_description",
+                    "total_items",
+                    "total_time",
+                    "status",
+                    "notes",
+                )
+            },
+        ),
+        (
+            "Staff information",
+            {
+                "fields": (
+                    "staff",
+                    "staff_hourly_rate",
+                    "staff_fee",
+                    "staff_other_fee",
+                    "staff_total_due",
+                )
+            },
+        ),
+    )
 
+    def get_fieldsets(self, request, obj=None, **kwargs):
+        if request.user.is_superuser:
+            self.fieldsets = self.admin_fieldsets
+        else:
+            self.fieldsets = self.normaluser_fieldsets
+
+        return super(AccountChargeAdmin, self).get_fieldsets(request, obj, **kwargs)
+    
+    def get_list_display(self, request, obj=None, **kwargs):
+        if request.user.is_superuser:
+            self.list_display = self.admin_list_display
+        else:
+            self.fieldsets = self.normaluser_list_display
+
+        return super(AccountChargeAdmin, self).get_fieldsets(request, obj, **kwargs)
 
 class StaffPaymentHistoryAdmin(admin.ModelAdmin):
     model = StaffPaymentHistory
-    list_display = ("transaction_number", "date", "staff", "amount", "payment_channel", "notes")
+    list_display = (
+        "transaction_number",
+        "date",
+        "staff",
+        "amount",
+        "payment_channel",
+        "notes",
+    )
     list_filter = ("staff", ("date", DateRangeFilter))
     search_fields = (
         "transaction_number",
