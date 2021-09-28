@@ -190,9 +190,9 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         if request.user.is_superuser:
             self.list_display = self.admin_list_display
         else:
-            self.fieldsets = self.normaluser_list_display
+            self.list_display = self.normaluser_list_display
 
-        return super(AccountChargeAdmin, self).get_fieldsets(request, obj, **kwargs)
+        return super(AccountChargeAdmin, self).get_list_display(obj, **kwargs)
 
 class StaffPaymentHistoryAdmin(admin.ModelAdmin):
     model = StaffPaymentHistory
