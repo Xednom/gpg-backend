@@ -64,7 +64,7 @@ def charge_approval(AccountChargeAdmin, request, queryset):
 charge_approval.short_description = "Mark selected charges as Approved"
 
 
-class AccountChargeAdmin(ImportExportModelAdmin):
+class AccountChargeAdmin(admin.ModelAdmin):
     model = AccountCharge
     resource_class = AccountChargeResource
     actions = [charge_approval]
