@@ -297,3 +297,5 @@ BLEACH_STRIP_COMMENTS = False
 
 MEDIA_ROOT = "media"
 MEDIA_URL = env.str("MEDIA_URL", "http://127.0.0.1:8000/media/")
+
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = "delete"

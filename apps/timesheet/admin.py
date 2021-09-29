@@ -64,7 +64,7 @@ def charge_approval(AccountChargeAdmin, request, queryset):
 charge_approval.short_description = "Mark selected charges as Approved"
 
 
-class AccountChargeAdmin(admin.ModelAdmin):
+class AccountChargeAdmin(ImportExportModelAdmin):
     model = AccountCharge
     resource_class = AccountChargeResource
     actions = [charge_approval]
@@ -185,7 +185,7 @@ class AccountChargeAdmin(admin.ModelAdmin):
             self.fieldsets = self.normaluser_fieldsets
 
         return super(AccountChargeAdmin, self).get_fieldsets(request, obj, **kwargs)
-    
+
     def get_list_display(self, request, obj=None, **kwargs):
         if request.user.is_superuser:
             self.list_display = self.admin_list_display
@@ -193,6 +193,22 @@ class AccountChargeAdmin(admin.ModelAdmin):
             self.list_display = self.normaluser_list_display
 
         return super(AccountChargeAdmin, self).get_list_display(obj, **kwargs)
+
+    def get_export(self, request, queryset=None, *args, **kwargs):
+        # For example only export objects with ids in 1, 2, 3 and 4
+        if not request.user.is_superuser:
+            queryset = queryset and queryset.exclude(
+                "client",
+                "client_hourly_rate",
+                "client_other_fee",
+                "client_total_charge",
+                "client_total_due",
+            )
+            return super(AccountChargeAdmin, self).export(queryset, *args, **kwargs)
+        elif request.user.is_superuser:
+            queryset = queryset and queryset.all()
+            return super(AccountChargeAdmin, self).export(queryset, *args, **kwargs)
+
 
 class StaffPaymentHistoryAdmin(admin.ModelAdmin):
     model = StaffPaymentHistory
