@@ -176,6 +176,14 @@ class AccountChargeAdmin(ImportExportModelAdmin):
                 )
             },
         ),
+        (
+            "Client information",
+            {
+                "fields": {
+                    "client"
+                }
+            }
+        )
     )
 
     def get_fieldsets(self, request, obj=None, **kwargs):
@@ -198,7 +206,6 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         # For example only export objects with ids in 1, 2, 3 and 4
         if not request.user.is_superuser:
             queryset = queryset and queryset.exclude(
-                "client",
                 "client_hourly_rate",
                 "client_other_fee",
                 "client_total_charge",
