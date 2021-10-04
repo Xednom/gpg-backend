@@ -12,6 +12,7 @@ class AccountBalanceSerializer(serializers.ModelSerializer):
     account_charges = serializers.CharField()
     total_payment_made = serializers.CharField()
     account_balance = serializers.CharField()
+    account_balance_amount = serializers.SerializerMethodField()
     class Meta:
         model = AccountBalance
         fields = (
@@ -25,5 +26,9 @@ class AccountBalanceSerializer(serializers.ModelSerializer):
             "account_charges_currency",
             "account_balance",
             "account_balance_currency",
+            "account_balance_amount",
             "notes"
         )
+    
+    def get_account_balance_amount(self, instance):
+        return instance.account_balance.amount
