@@ -41,7 +41,7 @@ class AccountBalanceAdmin(ImportExportModelAdmin):
     model = AccountBalance
     resource_class = AccountBalanceResource
     list_filter = ("client",)
-    search_fields = ("client__user_first_name",)
+    search_fields = ("client__user__first_name", "client__user__last_name", "client__user__username")
     list_display = (
         "client",
         "total_payment_made",
