@@ -30,6 +30,69 @@ class DueDiligenceStatus(models.TextChoices):
     )
 
 
+class TaxDataStatus(models.TextChoices):
+    complete = "complete", ("Complete")
+    pending = "pending", ("Pending")
+    on_hold = "on_hold", ("On Hold")
+    cancelled = "cancelled", ("Cancelled")
+    for_follow_up = "for_follow_up", ("For Follow Up")
+    processing = "processing", ("Processing")
+    not_applicable = "not_applicable", ("Not Applicable")
+    job_order_request = "job_request", ("Job order request")
+    tax_data_complete = "tax_data_complete", ("Tax Data- Complete")
+    zoning_data_complete = "zoning_data_complete", ("Zoning Data - Complete")
+    utilities_data_complete = "utilities_data_complete", ("Utilities Data - Complete")
+    tax_zoning_data_complete = "tax_zoning_data_complete", ("Tax/Zoning Data- Complete")
+    tax_utlities_data_complete = "tax_utlities_data_complete", (
+        "Tax/Utilies Data - Complete "
+    )
+    zoning_utilities_data_complete = "zoning_utilities_data_complete", (
+        "Zoning/Utilities Data- Complete"
+    )
+
+
+class ZoningDataStatus(models.TextChoices):
+    complete = "complete", ("Complete")
+    pending = "pending", ("Pending")
+    on_hold = "on_hold", ("On Hold")
+    cancelled = "cancelled", ("Cancelled")
+    for_follow_up = "for_follow_up", ("For Follow Up")
+    processing = "processing", ("Processing")
+    not_applicable = "not_applicable", ("Not Applicable")
+    job_order_request = "job_request", ("Job order request")
+    tax_data_complete = "tax_data_complete", ("Tax Data- Complete")
+    zoning_data_complete = "zoning_data_complete", ("Zoning Data - Complete")
+    utilities_data_complete = "utilities_data_complete", ("Utilities Data - Complete")
+    tax_zoning_data_complete = "tax_zoning_data_complete", ("Tax/Zoning Data- Complete")
+    tax_utlities_data_complete = "tax_utlities_data_complete", (
+        "Tax/Utilies Data - Complete "
+    )
+    zoning_utilities_data_complete = "zoning_utilities_data_complete", (
+        "Zoning/Utilities Data- Complete"
+    )
+
+
+class UtilitiesDataStatus(models.TextChoices):
+    complete = "complete", ("Complete")
+    pending = "pending", ("Pending")
+    on_hold = "on_hold", ("On Hold")
+    cancelled = "cancelled", ("Cancelled")
+    for_follow_up = "for_follow_up", ("For Follow Up")
+    processing = "processing", ("Processing")
+    not_applicable = "not_applicable", ("Not Applicable")
+    job_order_request = "job_request", ("Job order request")
+    tax_data_complete = "tax_data_complete", ("Tax Data- Complete")
+    zoning_data_complete = "zoning_data_complete", ("Zoning Data - Complete")
+    utilities_data_complete = "utilities_data_complete", ("Utilities Data - Complete")
+    tax_zoning_data_complete = "tax_zoning_data_complete", ("Tax/Zoning Data- Complete")
+    tax_utlities_data_complete = "tax_utlities_data_complete", (
+        "Tax/Utilies Data - Complete "
+    )
+    zoning_utilities_data_complete = "zoning_utilities_data_complete", (
+        "Zoning/Utilities Data- Complete"
+    )
+
+
 class QualityReviewStatus(models.TextChoices):
     assinged = "assigned", ("Assigned")
     complete = "complete", ("Complete")
@@ -119,6 +182,24 @@ class DueDiligenceCallOut(TimeStamped):
     )
     call_out_status = models.CharField(
         max_length=250, choices=DueDiligenceStatus.choices
+    )
+    tax_data_status = models.CharField(
+        max_length=250,
+        choices=TaxDataStatus.choices,
+        default=TaxDataStatus.processing,
+        blank=True,
+    )
+    zoning_data_status = models.CharField(
+        max_length=250,
+        choices=ZoningDataStatus.choices,
+        default=ZoningDataStatus.processing,
+        blank=True,
+    )
+    utilities_data_status = models.CharField(
+        max_length=250,
+        choices=UtilitiesDataStatus.choices,
+        default=UtilitiesDataStatus.processing,
+        blank=True,
     )
     call_out_dd_quality_review_status = models.CharField(
         max_length=250,

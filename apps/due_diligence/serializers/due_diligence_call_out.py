@@ -43,6 +43,9 @@ class CallOutSerializer(serializers.ModelSerializer):
             "initial_dd_date_complete",
             "staff_assigned_for_call_out",
             "call_out_status",
+            "tax_data_status",
+            "zoning_data_status",
+            "utilities_data_status",
             "call_out_dd_quality_review_status",
             "call_out_dd_date_complete",
         )
