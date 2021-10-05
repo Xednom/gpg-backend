@@ -49,6 +49,7 @@ class AccountBalanceAdmin(ImportExportModelAdmin):
         "account_charges",
         "account_balance",
         "get_client_email",
+        "billing_status"
     )
 
     def get_client_email(self, obj):
