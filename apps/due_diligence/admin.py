@@ -66,6 +66,9 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "initial_dd_date_complete",
         "call_out_status",
         "call_out_dd_quality_review_status",
+        "tax_data_status",
+        "zoning_data_status",
+        "utilities_data_status",
         "call_out_dd_date_complete",
         "dd_link",
         "created_at"
@@ -104,6 +107,9 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
                     "staff_assigned_for_call_out",
                     "call_out_status",
                     "call_out_dd_quality_review_status",
+                    "tax_data_status",
+                    "zoning_data_status",
+                    "utilities_data_status",
                     "call_out_dd_date_complete",
                     "created_at",
                 )
