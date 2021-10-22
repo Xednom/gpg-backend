@@ -229,6 +229,7 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
 class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = JobOrderCategory
     list_display = (
+        "created_at",
         "ticket_number",
         "client",
         "client_email",
