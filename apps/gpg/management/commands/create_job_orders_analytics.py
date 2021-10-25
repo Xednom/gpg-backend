@@ -22,7 +22,6 @@ class Command(BaseCommand):
 
         today = datetime.datetime.now()
         month_year = str(calendar.month_abbr[today.month]) + "/" + str(today.year)
-        print(today.month)
         client_name = (
             JobOrderCategory.objects.all().values_list("client", flat=True).distinct()
         )
@@ -157,9 +156,9 @@ class Command(BaseCommand):
                     month="Dec",
                 )
 
-                job_count = JobOrderCategoryAnalytics.objects.create(
-                    month_year=month_year,
-                    client=i,
-                    job_count=job_count,
-                    month=str(calendar.month_abbr[today.month]),
-                )
+                # job_count = JobOrderCategoryAnalytics.objects.create(
+                #     month_year=month_year,
+                #     client=i,
+                #     job_count=job_count,
+                #     month=str(calendar.month_abbr[today.month]),
+                # )
