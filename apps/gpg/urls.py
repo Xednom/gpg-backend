@@ -40,6 +40,11 @@ router.register(
     basename="job-order-category",
 )
 router.register(
+    r"job-order-by-category-analytics",
+    views.JobOrderApnAnalyticsViewSet,
+    basename="job-order-category-analytics",
+)
+router.register(
     r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
 )
 router.register(

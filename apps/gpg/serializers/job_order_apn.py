@@ -13,6 +13,7 @@ from apps.gpg.models import (
     State,
     County,
     PropertyDetailFile,
+    JobOrderCategoryAnalytics,
 )
 
 __all__ = (
@@ -26,6 +27,7 @@ __all__ = (
     "StateSerializer",
     "CountySerializer",
     "PropertyDetailFileSerializer",
+    "JobOrderApnAnalyticsSerializer",
 )
 
 
@@ -316,3 +318,11 @@ class CountySerializer(serializers.ModelSerializer):
     class Meta:
         model = County
         fields = ("name", "state")
+
+
+class JobOrderApnAnalyticsSerializer(serializers.ModelSerializer):
+    client = serializers.CharField(source="client.user.user_full_name")
+
+    class Meta:
+        model = JobOrderCategoryAnalytics
+        fields = ("id", "month", "month_year", "client", "job_count")

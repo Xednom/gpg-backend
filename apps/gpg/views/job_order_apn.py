@@ -2,9 +2,15 @@ from django.conf import settings
 
 from post_office.models import EmailTemplate
 from post_office import mail
+
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
+
+from django_filters import CharFilter
+from django_filters import rest_framework as dfilters
+
 from rest_framework import viewsets, permissions, generics, filters, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
@@ -19,6 +25,7 @@ from apps.gpg.models import (
     State,
     County,
     PropertyDetailFile,
+    JobOrderCategoryAnalytics,
 )
 from apps.gpg.serializers import (
     PropertyDetailSerializer,
@@ -31,6 +38,7 @@ from apps.gpg.serializers import (
     StateSerializer,
     CountySerializer,
     PropertyDetailFileSerializer,
+    JobOrderApnAnalyticsSerializer,
 )
 
 User = get_user_model()
@@ -46,6 +54,7 @@ __all__ = (
     "StateViewSet",
     "CountyViewSet",
     "PropertyDetailFileViewSet",
+    "JobOrderApnAnalyticsViewSet",
 )
 
 
@@ -210,3 +219,28 @@ class CountyViewSet(viewsets.ModelViewSet):
     queryset = County.objects.select_related("state").all()
     filter_backends = [filters.SearchFilter]
     search_fields = ["state__name"]
+
+
+class JobOrderApnAnalyticsFilter(dfilters.FilterSet):
+    month = CharFilter(field_name="month", lookup_expr="icontains")
+    month_year = CharFilter(field_name="month_year", lookup_expr="icontains")
+
+    class Meta:
+        model = JobOrderCategoryAnalytics
+        fields = ("month", "month_year")
+
+
+class JobOrderApnAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = JobOrderApnAnalyticsSerializer
+    permission_clases = [permissions.IsAuthenticated]
+    filter_backends = [dfilters.DjangoFilterBackend]
+    filter_class = JobOrderApnAnalyticsFilter
+
+    def get_queryset(self):
+        current_user = self.request.user.id
+        user = User.objects.filter(id=current_user)
+        if current_user:
+            queryset = JobOrderCategoryAnalytics.objects.select_related(
+                "client"
+            ).filter(client__user__in=user)
+            return queryset

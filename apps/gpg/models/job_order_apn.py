@@ -18,12 +18,28 @@ __all__ = (
     "PropertyPrice",
     "CategoryType",
     "Deadline",
+    "JobOrderCategoryAnalytics",
     "JobOrderCategory",
     "CommentByApn",
     "State",
     "County",
-    "PropertyDetailFile"
+    "PropertyDetailFile",
 )
+
+
+class MonthChoices(models.TextChoices):
+    jan = "jan", ("Jan")
+    feb = "feb", ("Feb")
+    mar = "mar", ("Mar")
+    apr = "apr", ("Apr")
+    may = "may", ("May")
+    jun = "jun", ("Jun")
+    jul = "jul", ("Jul")
+    aug = "aug", ("Aug")
+    sep = "sep", ("Sep")
+    oct = "oct", ("Oct")
+    nov = "nov", ("Nov")
+    dec = "dec", ("Dec")
 
 
 class PropertyDetailStatus(models.TextChoices):
@@ -113,9 +129,7 @@ class PropertyDetail(TimeStamped):
         if self.staff:
             staffs = Staff.objects.all()
             for staff in staffs:
-                staff_emails = " ".join(
-                    staff.user.email for staff in self.staff.all()
-                )
+                staff_emails = " ".join(staff.user.email for staff in self.staff.all())
                 return staff_emails
 
     def save(self, *args, **kwargs):
@@ -183,6 +197,26 @@ class Deadline(TimeStamped):
 
     def __str__(self):
         return f"{self.deadline}"
+
+
+class JobOrderCategoryAnalytics(TimeStamped):
+    month = models.CharField(max_length=250, blank=True)
+    month_year = models.CharField(max_length=250, blank=True)
+    client = models.ForeignKey(
+        "authentication.Client",
+        related_name="client_job_order_category_analytics",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    job_count = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Job order Category Analytic"
+        verbose_name_plural = "Job order Category Analytics"
+
+    def __str__(self):
+        return f"Analytics of {self.client} for the month of {self.month}"
 
 
 class JobOrderCategory(TimeStamped):
@@ -266,14 +300,12 @@ class JobOrderCategory(TimeStamped):
         if self.staff:
             staffs = Staff.objects.all()
             for staff in staffs:
-                staff_emails = " ".join(
-                    staff.user.email for staff in self.staff.all()
-                )
+                staff_emails = " ".join(staff.user.email for staff in self.staff.all())
                 return staff_emails
-    
+
     def get_account_files(self):
         account_file = AccountFile.objects.filter(client=self.client)
-        account_files = ', '.join(i.url for i in account_file)
+        account_files = ", ".join(i.url for i in account_file)
         return account_files
 
     def save(self, *args, **kwargs):
@@ -284,9 +316,7 @@ class JobOrderCategory(TimeStamped):
                 "postmaster@landmaster.us",
                 bcc=settings.ADMIN_EMAIL,
                 template="job_order_category_create",
-                context={
-                    "job_order": self
-                }
+                context={"job_order": self},
             )
             super(JobOrderCategory, self).save(*args, **kwargs)
         elif self.id:
@@ -352,6 +382,8 @@ class PropertyDetailFile(TimeStamped):
         verbose_name = "Per APN file data"
         verbose_name_plural = "Per APN files data"
         ordering = ["created_at"]
-    
+
     def __str__(self):
-        return f"Property details #apn({self.property_detail}) file name({self.details})"
+        return (
+            f"Property details #apn({self.property_detail}) file name({self.details})"
+        )
