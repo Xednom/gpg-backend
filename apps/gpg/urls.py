@@ -45,6 +45,11 @@ router.register(
     basename="job-order-category-analytics",
 )
 router.register(
+    r"job-order-by-general-analytics",
+    views.JobOrderGeneralAnalyticsViewSet,
+    basename="job-order-general-analytics",
+)
+router.register(
     r"property-detail", views.PropertyDetailsViewSet, basename="property-details"
 )
 router.register(

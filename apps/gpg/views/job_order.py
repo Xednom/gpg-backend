@@ -3,13 +3,16 @@ from django.conf import settings
 from post_office.models import EmailTemplate
 from post_office import mail
 
+from django_filters import CharFilter
+from django_filters import rest_framework as dfilters
+
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, generics
 from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Client, Staff
-from apps.gpg.models import JobOrderGeneral, Comment
-from apps.gpg.serializers import JobOrderGeneralSerializer, CommentSerializer
+from apps.gpg.models import JobOrderGeneral, Comment, JobOrderGeneralAnalytics
+from apps.gpg.serializers import JobOrderGeneralSerializer, CommentSerializer, JobOrderGeneralAnalyticsSerializer
 
 User = get_user_model()
 
@@ -86,3 +89,28 @@ class CreateJobOrderComment(generics.CreateAPIView):
                 context={"job_order": job_order},
             )
         serializer.save(user=user, job_order=job_order)
+
+
+class JobOrderApnAnalyticsFilter(dfilters.FilterSet):
+    month = CharFilter(field_name="month", lookup_expr="icontains")
+    month_year = CharFilter(field_name="month_year", lookup_expr="icontains")
+
+    class Meta:
+        model = JobOrderGeneralAnalytics
+        fields = ("month", "month_year")
+
+
+class JobOrderGeneralAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = JobOrderGeneralAnalyticsSerializer
+    permission_clases = [permissions.IsAuthenticated]
+    filter_backends = [dfilters.DjangoFilterBackend]
+    filter_class = JobOrderApnAnalyticsFilter
+
+    def get_queryset(self):
+        current_user = self.request.user.id
+        user = User.objects.filter(id=current_user)
+        if current_user:
+            queryset = JobOrderGeneralAnalytics.objects.select_related(
+                "client"
+            ).filter(client__user__in=user)
+            return queryset

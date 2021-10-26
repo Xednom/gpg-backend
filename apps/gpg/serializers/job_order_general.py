@@ -6,7 +6,7 @@ from apps.authentication.models import Staff, Client
 from apps.gpg.models import JobOrderGeneral, Comment, JobOrderGeneralAnalytics
 
 
-__all__ = ("CommentSerializer", "JobOrderGeneralSerializer")
+__all__ = ("CommentSerializer", "JobOrderGeneralSerializer", "JobOrderGeneralAnalyticsSerializer")
 
 
 class CommentSerializer(serializers.ModelSerializer):
