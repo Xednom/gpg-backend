@@ -3,7 +3,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from apps.authentication.models import Staff, Client
-from apps.gpg.models import JobOrderGeneral, Comment
+from apps.gpg.models import JobOrderGeneral, Comment, JobOrderGeneralAnalytics
 
 
 __all__ = ("CommentSerializer", "JobOrderGeneralSerializer")
@@ -146,3 +146,11 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             return "VA complete multiple task"
         elif instance.status == "for_quality_review_multiple_task":
             return "For quality review multiple task"
+
+
+class JobOrderGeneralAnalyticsSerializer(serializers.ModelSerializer):
+    client = serializers.CharField(source="client.user.user_full_name")
+
+    class Meta:
+        model = JobOrderGeneralAnalytics
+        fields = ("id", "month", "month_year", "client", "job_count")

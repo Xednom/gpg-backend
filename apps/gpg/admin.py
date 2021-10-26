@@ -14,7 +14,8 @@ from apps.gpg.models import (
     State,
     County,
     PropertyDetailFile,
-    JobOrderCategoryAnalytics
+    JobOrderCategoryAnalytics,
+    JobOrderGeneralAnalytics
 )
 
 
@@ -333,3 +334,4 @@ admin.site.register(PropertyDetailFile, PropertyDetailFileAdmin)
 admin.site.register(State, StateAdmin)
 admin.site.register(County, CountyAdmin)
 admin.site.register(JobOrderCategoryAnalytics)
+admin.site.register(JobOrderGeneralAnalytics)

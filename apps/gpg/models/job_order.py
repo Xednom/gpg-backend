@@ -19,6 +19,7 @@ __all__ = (
     "JobOrderStatus",
     "JobOrderGeneral",
     "Comment",
+    "JobOrderGeneralAnalytics"
 )
 
 
@@ -196,3 +197,23 @@ class Comment(TimeStamped):
 
     class Meta:
         ordering = ["created_at"]
+
+
+class JobOrderGeneralAnalytics(TimeStamped):
+    month = models.CharField(max_length=250, blank=True)
+    month_year = models.CharField(max_length=250, blank=True)
+    client = models.ForeignKey(
+        "authentication.Client",
+        related_name="client_job_order_general_analytics",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    job_count = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Job order General Analytic"
+        verbose_name_plural = "Job order General Analytics"
+
+    def __str__(self):
+        return f"Analytics of {self.client} for the month of {self.month}"
