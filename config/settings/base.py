@@ -46,6 +46,7 @@ LOCAL_APPS = [
     "apps.core",
     "apps.gpg",
     "apps.account",
+    "apps.accounting",
     "apps.timesheet",
     "apps.due_diligence",
     "apps.newsfeed",

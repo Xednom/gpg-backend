@@ -1,6 +1,8 @@
 from django.conf import settings
 
 from django.contrib.auth import get_user_model
+
+from rest_framework.decorators import action
 from rest_framework import viewsets, permissions, generics, filters, status
 
 from apps.timesheet.models import PaymentHistory
@@ -24,3 +26,6 @@ class PaymentHistoryViewSet(viewsets.ModelViewSet):
                 client__user__in=user
             )
             return queryset
+
+    # @action(methods=["post"], detail=False, serializer_class=PaymentHistorySerializer)
+    # def checkout(self, *args, **kwargs):
