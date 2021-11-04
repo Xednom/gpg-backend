@@ -48,12 +48,14 @@ class PaymentHistoryResource(resources.ModelResource):
 
 class AccountBalanceResource(resources.ModelResource):
     class Meta:
-        modedl = AccountBalance
+        model = AccountBalance
         fields = (
-            "client",
+            "client__user__first_name",
+            "client__user__last_name",
             "total_payment_made",
             "total_time_consumed",
             "account_charges",
             "account_balance",
-            "notes"
+            "notes",
+            "billing_status",
         )
