@@ -181,6 +181,7 @@ class StaffPaymentHistory(TimeStamped):
     staff = models.ForeignKey(
         Staff, related_name="staff_payment_histories", on_delete=models.DO_NOTHING
     )
+    company_name = models.CharField(max_length=250, blank=True)
     amount = MoneyField(max_digits=19, decimal_places=2, default_currency="PHP")
     transaction_number = models.CharField(max_length=250, blank=True)
     payment_channel = models.CharField(max_length=250, blank=True)
@@ -190,7 +191,18 @@ class StaffPaymentHistory(TimeStamped):
         verbose_name_plural = "Staff payment histories"
 
     def __str__(self):
-        return f"{self.transaction_number}"
+        return f"{self.staff} {self.transaction_number}"
+
+    def get_company_name(self):
+        if self.staff:
+            company = self.staff.user.company_category
+        else:
+            company = None
+        return company
+
+    # def save(self, *args, **kwargs):
+    #     self.company_name = self.get_company_name()
+    #     super(StaffPaymentHistory, self).save(*args, **kwargs)
 
 
 class StaffAccountBalance(TimeStamped):
