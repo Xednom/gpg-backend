@@ -200,9 +200,9 @@ class StaffPaymentHistory(TimeStamped):
             company = None
         return company
 
-    # def save(self, *args, **kwargs):
-    #     self.company_name = self.get_company_name()
-    #     super(StaffPaymentHistory, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.company_name = self.get_company_name()
+        super(StaffPaymentHistory, self).save(*args, **kwargs)
 
 
 class StaffAccountBalance(TimeStamped):
