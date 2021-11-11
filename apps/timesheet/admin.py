@@ -224,6 +224,7 @@ class StaffPaymentHistoryAdmin(admin.ModelAdmin):
         "transaction_number",
         "date",
         "staff",
+        "company_name",
         "amount",
         "payment_channel",
         "notes",
