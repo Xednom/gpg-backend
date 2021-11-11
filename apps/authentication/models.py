@@ -31,6 +31,7 @@ class CompanyCategory(models.TextChoices):
     psalms_global = "psalms_global", ("Psalmsglobal.com")
     english_academy = "english_academy", ("English Academy")
     affiliate_partner = "affiliate_partner", ("Affiliate Partner")
+    litangs = "litangs", ("Litangs")
 
 
 class StaffStatus(models.TextChoices):
