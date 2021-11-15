@@ -15,6 +15,7 @@ from apps.timesheet.resources import (
     AccountChargeResource,
     PaymentHistoryResource,
     AccountBalanceResource,
+    StaffPaymentHistoryResource
 )
 
 
@@ -220,6 +221,7 @@ class AccountChargeAdmin(ImportExportModelAdmin):
 
 class StaffPaymentHistoryAdmin(ImportExportModelAdmin):
     model = StaffPaymentHistory
+    resource_class = StaffPaymentHistoryResource
     list_display = (
         "transaction_number",
         "date",

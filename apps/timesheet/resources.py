@@ -1,10 +1,14 @@
 from django.db import models
 from import_export import resources
-from apps.timesheet.models import AccountBalance, AccountCharge, PaymentHistory
+from apps.timesheet.models import (
+    AccountBalance,
+    AccountCharge,
+    PaymentHistory,
+    StaffPaymentHistory,
+)
 
 
 class AccountChargeResource(resources.ModelResource):
-    
     class Meta:
         model = AccountCharge
         fields = (
@@ -27,12 +31,11 @@ class AccountChargeResource(resources.ModelResource):
             "client_hourly_rate",
             "client_other_fee",
             "client_total_charge",
-            "client_total_due"
+            "client_total_due",
         )
 
 
 class PaymentHistoryResource(resources.ModelResource):
-
     class Meta:
         model = PaymentHistory
         fields = (
@@ -42,7 +45,7 @@ class PaymentHistoryResource(resources.ModelResource):
             "amount",
             "transaction_number",
             "payment_channel",
-            "notes"
+            "notes",
         )
 
 
@@ -58,4 +61,19 @@ class AccountBalanceResource(resources.ModelResource):
             "account_balance",
             "notes",
             "billing_status",
+        )
+
+
+class StaffPaymentHistoryResource(resources.ModelResource):
+    class Meta:
+        model = StaffPaymentHistory
+        fields = (
+            "date",
+            "staff__user__first_name",
+            "staff__user__last_name",
+            "company_name",
+            "amount",
+            "transaction_number",
+            "payment_channel",
+            "notes",
         )
