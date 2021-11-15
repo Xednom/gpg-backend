@@ -229,7 +229,7 @@ class StaffPaymentHistoryAdmin(admin.ModelAdmin):
         "payment_channel",
         "notes",
     )
-    list_filter = ("staff", ("date", DateRangeFilter))
+    list_filter = ("staff", ("date", DateRangeFilter), "company_name")
     search_fields = (
         "transaction_number",
         "staff__user__first_name",
