@@ -218,7 +218,7 @@ class AccountChargeAdmin(ImportExportModelAdmin):
             return super(AccountChargeAdmin, self).export(queryset, *args, **kwargs)
 
 
-class StaffPaymentHistoryAdmin(admin.ModelAdmin):
+class StaffPaymentHistoryAdmin(ImportExportModelAdmin):
     model = StaffPaymentHistory
     list_display = (
         "transaction_number",
