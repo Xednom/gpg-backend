@@ -24,6 +24,7 @@ class PaymentHistoryAdmin(ImportExportModelAdmin):
     resource_class = PaymentHistoryResource
     list_filter = (("date", DateRangeFilter), "client", "payment_channel")
     search_fields = (
+        "payment_id",
         "client__user__first_name",
         "client__user__last_name",
         "transaction_number",

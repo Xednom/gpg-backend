@@ -76,6 +76,7 @@ django-money = "*"
 django-import-export = "*"
 django-admin-rangefilter = "*"
 django-bleach = "*"
+paypal-checkout-serversdk = "*"
 
 [requires]
 python_version = "3.8"

@@ -1,3 +1,5 @@
+import uuid
+
 from djmoney.models.fields import MoneyField
 from django.db import models
 
@@ -16,6 +18,8 @@ class PaymentHistory(TimeStamped):
     client = models.ForeignKey(
         Client, related_name="client_payment_histories", on_delete=models.DO_NOTHING
     )
+    payment_id = models.CharField(max_length=255, blank=True)
+    client_name = models.CharField(max_length=255, blank=True)
     date = models.DateField()
     amount = MoneyField(max_digits=19, decimal_places=4, default_currency="USD")
     transaction_number = models.CharField(max_length=250)
@@ -27,6 +31,26 @@ class PaymentHistory(TimeStamped):
 
     def __str__(self):
         return f"{self.client}"
+    
+    def create_payment_id(self):
+        base_name = uuid.uuid4().hex
+
+        last_in = PaymentHistory.objects.all().order_by("id").last()
+
+        if not last_in:
+            payment_id = base_name
+            return payment_id
+
+        if self.id:
+            payment_id = self.payment_id
+            return payment_id
+
+        payment_id = base_name
+        return payment_id
+
+    # def save(self, *args, **kwargs):
+    #     self.payment_id = self.create_payment_id()
+    #     super(PaymentHistory, self).save(*args, **kwargs)
 
 
 class AccountBalance(TimeStamped):
