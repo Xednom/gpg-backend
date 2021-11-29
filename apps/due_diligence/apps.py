@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class DueDiligenceConfig(AppConfig):
-    name = 'due_diligence'
+    name = "apps.due_diligence"
