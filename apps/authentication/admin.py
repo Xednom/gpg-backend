@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from apps.authentication.resources import ClientResource
 
 from import_export.admin import ImportExportModelAdmin
 
@@ -75,8 +76,9 @@ class UserProfileAdmin(UserAdmin):
     )
 
 
-class ClientProfileAdmin(admin.ModelAdmin):
+class ClientProfileAdmin(ImportExportModelAdmin):
     model = Client
+    resource_class = ClientResource
     list_display = (
         "get_user",
         "client_code",
