@@ -7,3 +7,18 @@ class TimeStamped(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Company(TimeStamped):
+    name = models.CharField(max_length=250)
+    branch = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"{self.name} - {self.branch}"
+
+
+class Vendor(TimeStamped):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.name
