@@ -50,6 +50,7 @@ LOCAL_APPS = [
     "apps.timesheet",
     "apps.due_diligence",
     "apps.newsfeed",
+    "apps.operational_cost",
 ]
 
 THIRD_PARTY_APPS = [
@@ -306,4 +307,4 @@ PAYPAL_API_KEY_SECRET_SANDBOX = env.str("PAYPAL_API_KEY_SECRET_SANDBOX")
 PAYPAL_API_KEY_CLIENT_LIVE = env.str("PAYPAL_API_KEY_CLIENT_LIVE")
 PAYPAL_API_KEY_SECRET = env.str("PAYPAL_API_KEY_SECRET")
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
