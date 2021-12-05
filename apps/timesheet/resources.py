@@ -55,6 +55,7 @@ class AccountBalanceResource(resources.ModelResource):
         fields = (
             "client__user__first_name",
             "client__user__last_name",
+            "client__user__email",
             "total_payment_made",
             "total_time_consumed",
             "account_charges",
