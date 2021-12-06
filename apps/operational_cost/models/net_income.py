@@ -7,6 +7,7 @@ __all__ = ("NetIncome",)
 
 
 class NetIncome(TimeStamped):
+    month_year = models.CharField(max_length=15, blank=True)
     debit = models.DecimalField(max_digits=19, decimal_places=2)
     credit = models.DecimalField(max_digits=19, decimal_places=2)
     net_income = models.DecimalField(max_digits=19, decimal_places=2)

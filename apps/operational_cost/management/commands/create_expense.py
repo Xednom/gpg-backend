@@ -1,3 +1,6 @@
+import datetime
+import calendar
+
 from decimal import Decimal
 
 from django.core.management.base import BaseCommand
@@ -68,30 +71,34 @@ class Command(BaseCommand):
                 )
 
         # automation for Net Income
+        today = datetime.datetime.now()
+        month = str(calendar.month_abbr[today.month])
+        year = str(today.year)
+        month_year = str(calendar.month_abbr[today.month]) + "/" + str(today.year)
         net_income = NetIncome.objects.all()
-        debit = OperationalCost.objects.all().aggregate(debit=Sum("debit"))
-        credit = OperationalCost.objects.all().aggregate(credit=Sum("credit"))
-        total_net_income = debit["debit"] - credit["credit"]
-        net = NetIncome.objects.filter(id="1").exists()
+        debit = OperationalCost.objects.filter(month=month).aggregate(
+            debit=Sum("debit")
+        )
+        credit = OperationalCost.objects.filter(month=month).aggregate(
+            credit=Sum("credit")
+        )
+        debit = OperationalCost.objects.filter(month=month).aggregate(
+            debit=Sum("debit")
+        )
+        net = NetIncome.objects.filter(month_year=month_year).exists()
 
         if net:
             for i in net_income:
-                net = NetIncome.objects.filter(id=i.id).exists()
-                if net:
-                    NetIncome.objects.filter(id=i.id).update(
-                        debit=debit["debit"],
-                        credit=credit["credit"],
-                        net_income=total_net_income,
-                    )
-                else:
-                    NetIncome.objects.create(
-                        debit=debit["debit"],
-                        credit=credit["credit"],
-                        net_income=total_net_income,
-                    )
+                total_net_income = debit["debit"] - credit["credit"]
+                NetIncome.objects.filter(id=i.id, month_year=month_year).update(
+                    debit=debit["debit"],
+                    credit=credit["credit"],
+                    net_income=total_net_income,
+                )
         else:
             NetIncome.objects.create(
-                debit=debit["debit"],
-                credit=credit["credit"],
-                net_income=total_net_income,
+                month_year=month_year,
+                debit=0.00,
+                credit=0.00,
+                net_income=0.00,
             )
