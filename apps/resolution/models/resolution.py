@@ -46,3 +46,6 @@ class Resolution(TimeStamped):
         max_length=255, choices=StatusChoices.choices, default=StatusChoices.pending
     )
     additional_notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.client} - {self.category} - {self.description}"
