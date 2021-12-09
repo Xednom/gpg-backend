@@ -51,6 +51,7 @@ LOCAL_APPS = [
     "apps.due_diligence",
     "apps.newsfeed",
     "apps.operational_cost",
+    "apps.resolution",
 ]
 
 THIRD_PARTY_APPS = [
