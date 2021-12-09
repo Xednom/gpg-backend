@@ -1,1 +1,1 @@
-from .resolution import ResolutionViewSet  # noqa
+from .resolution import ResolutionViewSet, CategoryListView  # noqa

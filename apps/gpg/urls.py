@@ -7,7 +7,7 @@ from apps.authentication.views import (
     ClientFilesViewSet,
     StaffFilesViewSet,
     ClientCodeViewSet,
-    StaffCodeViewSet
+    StaffCodeViewSet,
 )
 from apps.account.views import LoginCredentialViewSet, AccountFileViewSet
 from apps.timesheet.views import (
@@ -16,11 +16,11 @@ from apps.timesheet.views import (
     PaymentHistoryViewSet,
     StaffAccountBalanceViewSet,
     StaffPaymentHistoryViewSet,
-    PaymentPortalViewSet
+    PaymentPortalViewSet,
 )
 from apps.due_diligence.views import PhoneLineExtViewSet, CallOutViewSet
 from apps.newsfeed.views import NewsFeedViewSet, CreateNewsFeedComment
-from apps.resolution.views import ResolutionViewSet
+from apps.resolution.views import ResolutionViewSet, CategoryListView
 
 from . import views
 
@@ -76,9 +76,15 @@ router.register(
     StaffAccountBalanceViewSet,
     basename="staff-account-balance",
 )
-router.register(r"staff-payment-history", StaffPaymentHistoryViewSet, basename="staff-payment-history")
+router.register(
+    r"staff-payment-history",
+    StaffPaymentHistoryViewSet,
+    basename="staff-payment-history",
+)
 router.register(r"payment-portal", PaymentPortalViewSet, basename="payment-portal")
-router.register(r"phone-line-extension", PhoneLineExtViewSet, basename="phone-line-extension")
+router.register(
+    r"phone-line-extension", PhoneLineExtViewSet, basename="phone-line-extension"
+)
 router.register(r"call-out", CallOutViewSet, basename="due-diligence-callout")
 router.register(r"newsfeed", NewsFeedViewSet, basename="news-feed-list")
 router.register(r"resolution", ResolutionViewSet, basename="resolution-list")
@@ -102,4 +108,5 @@ urlpatterns = [
         CreateNewsFeedComment.as_view(),
         name="newsfeed-comment",
     ),
+    path("category-list/", CategoryListView.as_view(), name="category-list"),
 ]

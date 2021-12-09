@@ -4,7 +4,13 @@ from apps.resolution.models import Resolution, Category
 from apps.authentication.models import Staff
 
 
-__all__ = ("ResolutionSerializer",)
+__all__ = ("ResolutionSerializer", "CategorySerializer")
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("id", "name")
 
 
 class ResolutionSerializer(serializers.ModelSerializer):

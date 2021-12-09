@@ -1,1 +1,1 @@
-from .resolution import ResolutionSerializer  # noqa
+from .resolution import ResolutionSerializer, CategorySerializer  # noqa
