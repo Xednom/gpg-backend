@@ -108,5 +108,5 @@ urlpatterns = [
         CreateNewsFeedComment.as_view(),
         name="newsfeed-comment",
     ),
-    path("category-list/", CategoryListView.as_view(), name="category-list"),
+    path("category/", CategoryListView.as_view(), name="category-list"),
 ]
