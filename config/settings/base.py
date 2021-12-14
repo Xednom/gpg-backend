@@ -52,6 +52,7 @@ LOCAL_APPS = [
     "apps.newsfeed",
     "apps.operational_cost",
     "apps.resolution",
+    "apps.task_designation",
 ]
 
 THIRD_PARTY_APPS = [
