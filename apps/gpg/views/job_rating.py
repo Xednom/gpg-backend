@@ -4,7 +4,12 @@ from rest_framework import viewsets, permissions, generics
 from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Client
-from apps.gpg.models import JobOrderGeneralRating, JobOrderCategoryRating
+from apps.gpg.models import (
+    JobOrderGeneralRating,
+    JobOrderCategoryRating,
+    JobOrderGeneral,
+    JobOrderCategory,
+)
 from apps.gpg.serializers import (
     JobOrderCategoryRatingSerializer,
     JobOrderGeneralRatingSerializer,
@@ -16,41 +21,29 @@ User = get_user_model()
 __all__ = ("JobOrderGeneralRatingView", "JobOrderCategoryRatingView")
 
 
-class JobOrderGeneralRatingView(generics.ListCreateAPIView):
+class JobOrderGeneralRatingView(generics.CreateAPIView):
     serializer_class = JobOrderGeneralRatingSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        job_order_id = self.kwargs.get("job_order_id")
-        job_order = get_object_or_404(JobOrderGeneralRating, id=job_order_id)
-        queryset = JobOrderGeneralRating.objects.select_related(
-            "job_order", "client"
-        ).filter(client=user, job_order=job_order)
-        return queryset
+    queryset = JobOrderGeneralRating.objects.select_related("client", "job_order").all()
 
     def perform_create(self, serializer):
         user = self.request.user
-        job_order_id = self.kwargs.get("job_order_id")
-        job_order = get_object_or_404(JobOrderGeneralRating, id=job_order_id)
-        serializer.save(client=user, job_order=job_order)
+        client = Client.objects.get(user=user)
+        job_order_id = self.kwargs.get("id")
+        job_order = get_object_or_404(JobOrderGeneral, id=job_order_id)
+        serializer.save(client=client, job_order=job_order)
 
 
-class JobOrderCategoryRatingView(generics.ListCreateAPIView):
+class JobOrderCategoryRatingView(generics.CreateAPIView):
     serializer_class = JobOrderCategoryRatingSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        job_order_id = self.kwargs.get("job_order_id")
-        job_order = get_object_or_404(JobOrderGeneralRating, id=job_order_id)
-        queryset = JobOrderGeneralRating.objects.select_related(
-            "job_order", "client"
-        ).filter(client=user, job_order=job_order)
-        return queryset
+    queryset = JobOrderCategoryRating.objects.select_related(
+        "client", "job_order"
+    ).all()
 
     def perform_create(self, serializer):
         user = self.request.user
+        client = Client.objects.get(user=user)
         job_order_id = self.kwargs.get("job_order_id")
-        job_order = get_object_or_404(JobOrderGeneralRating, id=job_order_id)
-        serializer.save(client=user, job_order=job_order)
+        job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
+        serializer.save(client=client, job_order=job_order)
