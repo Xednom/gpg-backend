@@ -42,7 +42,7 @@ class JobOrderCategoryRating(TimeStamped):
     """
 
     job_order = models.ForeignKey(
-        "gpg.JobOrderGeneral",
+        "gpg.JobOrderCategory",
         on_delete=models.CASCADE,
         related_name="job_category_ratings",
         null=True,

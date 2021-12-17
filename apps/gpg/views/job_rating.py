@@ -44,6 +44,6 @@ class JobOrderCategoryRatingView(generics.CreateAPIView):
     def perform_create(self, serializer):
         user = self.request.user
         client = Client.objects.get(user=user)
-        job_order_id = self.kwargs.get("job_order_id")
+        job_order_id = self.kwargs.get("id")
         job_order = get_object_or_404(JobOrderCategory, id=job_order_id)
         serializer.save(client=client, job_order=job_order)

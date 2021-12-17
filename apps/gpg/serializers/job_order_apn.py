@@ -14,6 +14,7 @@ from apps.gpg.models import (
     County,
     PropertyDetailFile,
     JobOrderCategoryAnalytics,
+    JobOrderCategoryRating,
 )
 
 __all__ = (
@@ -179,6 +180,18 @@ class ApnCommentSerializer(serializers.ModelSerializer):
             return client_code
 
 
+class JobOrderCategoryRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOrderCategoryRating
+        fields = (
+            "id",
+            "client",
+            "job_order",
+            "rating",
+            "comment",
+        )
+
+
 class JobOrderCategorySerializer(serializers.ModelSerializer):
     client = serializers.SlugRelatedField(
         slug_field="client_code", queryset=Client.objects.all()
@@ -194,6 +207,9 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     )
     deadline = serializers.SlugRelatedField(
         slug_field="deadline", queryset=Deadline.objects.all()
+    )
+    job_category_ratings = JobOrderCategoryRatingSerializer(
+        many=True, required=False, allow_null=True
     )
     property_detail_ticket = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
@@ -225,6 +241,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "notes_management",
             "total_time_consumed",
             "job_order_category_comments",
+            "job_category_ratings",
             "deadline",
         )
 
