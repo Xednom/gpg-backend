@@ -1,9 +1,14 @@
 from django.db import models
 
+from django.contrib.auth import get_user_model
+
 from apps.core.models import TimeStamped
 
 
-__all__ = ("Category", "Resolution")
+User = get_user_model()
+
+
+__all__ = ("Category", "Resolution", "ResolutionComment")
 
 
 class StatusChoices(models.TextChoices):
@@ -49,3 +54,21 @@ class Resolution(TimeStamped):
 
     def __str__(self):
         return f"{self.client} - {self.category} - {self.description}"
+
+
+class ResolutionComment(TimeStamped):
+    resolution = models.ForeignKey(
+        Resolution,
+        related_name="resolution_comments",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    comment = models.TextField()
+
+    class Meta:
+        ordering = ["created_at"]
+
+    def __str__(self):
+        return f"{self.resolution} - {self.comment}"

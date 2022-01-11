@@ -1,1 +1,1 @@
-from .resolution import Resolution, Category  # noqa
+from .resolution import Resolution, ResolutionComment, Category  # noqa
