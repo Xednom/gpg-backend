@@ -23,6 +23,7 @@ class ResolutionAdmin(admin.ModelAdmin):
         "assigned_to__first_name",
         "assigned_to__last_name",
     )
+    readonly_fields = ["date_submitted"]
     fieldsets = (
         (
             "Resolution data",
