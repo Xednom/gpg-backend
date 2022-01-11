@@ -104,6 +104,16 @@ urlpatterns = [
         name="job-order-apn-comment",
     ),
     path(
+        "job-order-general/<int:id>/rating/",
+        views.JobOrderGeneralRatingView.as_view(),
+        name="job-order-general-rating",
+    ),
+    path(
+        "job-order-category/<int:id>/rating/",
+        views.JobOrderCategoryRatingView.as_view(),
+        name="job-order-category-rating",
+    ),
+    path(
         "newsfeed/<int:id>/comment/",
         CreateNewsFeedComment.as_view(),
         name="newsfeed-comment",

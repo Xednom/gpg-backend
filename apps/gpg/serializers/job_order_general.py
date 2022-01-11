@@ -3,10 +3,31 @@ from django.conf import settings
 from rest_framework import serializers
 
 from apps.authentication.models import Staff, Client
-from apps.gpg.models import JobOrderGeneral, Comment, JobOrderGeneralAnalytics
+from apps.gpg.models import (
+    JobOrderGeneral,
+    Comment,
+    JobOrderGeneralAnalytics,
+    JobOrderGeneralRating,
+)
 
 
-__all__ = ("CommentSerializer", "JobOrderGeneralSerializer", "JobOrderGeneralAnalyticsSerializer")
+__all__ = (
+    "CommentSerializer",
+    "JobOrderGeneralSerializer",
+    "JobOrderGeneralAnalyticsSerializer",
+)
+
+
+class JobOrderGeneralRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOrderGeneralRating
+        fields = (
+            "id",
+            "client",
+            "job_order",
+            "rating",
+            "comment",
+        )
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -51,6 +72,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
     job_order_comments = CommentSerializer(many=True, required=False, allow_null=True)
+    job_general_ratings = JobOrderGeneralRatingSerializer(
+        many=True, required=False, allow_null=True
+    )
     client = serializers.SlugRelatedField(
         slug_field="client_code", queryset=Client.objects.all()
     )
@@ -83,6 +107,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "total_time_consumed",
             "url_of_the_completed_jo",
             "job_order_comments",
+            "job_general_ratings",
         )
 
     def get_client_code(self, instance):
