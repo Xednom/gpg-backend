@@ -81,6 +81,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     client_code = serializers.SerializerMethodField()
     client_name = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
+    job_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = JobOrderGeneral
@@ -108,6 +109,7 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "url_of_the_completed_jo",
             "job_order_comments",
             "job_general_ratings",
+            "job_rating"
         )
 
     def get_client_code(self, instance):
@@ -121,6 +123,14 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             return "Management on process"
         else:
             return instance.client.client_name
+    
+    def get_job_rating(self, instance):
+        get_job_category_rating = JobOrderGeneralRating.objects.select_related().filter(job_order=instance.id)
+        if instance.job_general_ratings:
+            job_rating = (rate.rating for rate in get_job_category_rating)
+            return job_rating
+        else:
+            return "No rating yet"
 
     def get_status_(self, instance):
         if instance.status == "na":
