@@ -53,6 +53,7 @@ LOCAL_APPS = [
     "apps.operational_cost",
     "apps.resolution",
     "apps.task_designation",
+    "apps.email_template",
 ]
 
 THIRD_PARTY_APPS = [

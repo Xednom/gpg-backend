@@ -13,6 +13,11 @@ class Company(TimeStamped):
     name = models.CharField(max_length=250)
     branch = models.CharField(max_length=250)
 
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
+
     def __str__(self):
         return f"{self.name} - {self.branch}"
 
