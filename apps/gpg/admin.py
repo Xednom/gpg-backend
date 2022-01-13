@@ -326,6 +326,66 @@ class CountyAdmin(admin.ModelAdmin):
     search_fields = ("name", "state__name")
 
 
+class JobOrderGeneralRatingAdmin(admin.ModelAdmin):
+    model = JobOrderGeneralRating
+    list_display = (
+        "job_order",
+        "client",
+        "rating",
+    )
+    list_filter = ("job_order", "client")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "job_order__ticket_number",
+        "job_order__job_title",
+    )
+    readonly_fields = ["job_order", "client", "rating", "comment"]
+    fieldsets = (
+        (
+            "Job order general rate",
+            {
+                "fields": (
+                    "job_order",
+                    "client",
+                    "rating",
+                    "comment",
+                )
+            },
+        ),
+    )
+
+
+class JobOrderCategoryRatingAdmin(admin.ModelAdmin):
+    model = JobOrderCategoryRating
+    list_display = (
+        "job_order",
+        "client",
+        "rating",
+    )
+    list_filter = ("job_order", "client")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "job_order__ticket_number",
+        "job_order__job_title",
+    )
+    readonly_fields = ["job_order", "client", "rating", "comment"]
+    fieldsets = (
+        (
+            "Job order general rate",
+            {
+                "fields": (
+                    "job_order",
+                    "client",
+                    "rating",
+                    "comment",
+                )
+            },
+        ),
+    )
+
+
 admin.site.register(JobOrderGeneral, JobOrderGeneralAdmin)
 admin.site.register(JobOrderCategory, JobOrderByCategoryAdmin)
 admin.site.register(PropertyDetail, PropertyDetailsAdmin)
@@ -337,5 +397,5 @@ admin.site.register(State, StateAdmin)
 admin.site.register(County, CountyAdmin)
 admin.site.register(JobOrderCategoryAnalytics)
 admin.site.register(JobOrderGeneralAnalytics)
-admin.site.register(JobOrderGeneralRating)
-admin.site.register(JobOrderCategoryRating)
+admin.site.register(JobOrderGeneralRating, JobOrderGeneralRatingAdmin)
+admin.site.register(JobOrderCategoryRating, JobOrderCategoryRatingAdmin)
