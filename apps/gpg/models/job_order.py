@@ -125,7 +125,7 @@ class JobOrderGeneral(TimeStamped):
         ordering = ["-id"]
 
     def __str__(self):
-        return f"Job Order general of {self.client.user.get_full_name()} - {self.id}"
+        return f"Job Order general of {self.job_title} - {self.id}"
 
     def create_ticket_number(self):
         ticket_code = ""
