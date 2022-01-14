@@ -4,3 +4,7 @@ from .job_rating import (
     JobOrderCategoryRatingSerializer,
     JobOrderGeneralRatingSerializer,
 )  # noqa
+from .agent_scoring import (
+    JobOrderGeneralAgentScoringSerializer,
+    JobOrderCategoryAgentScoringSerializer,
+) # noqa

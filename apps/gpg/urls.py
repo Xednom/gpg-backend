@@ -88,6 +88,16 @@ router.register(
 router.register(r"call-out", CallOutViewSet, basename="due-diligence-callout")
 router.register(r"newsfeed", NewsFeedViewSet, basename="news-feed-list")
 router.register(r"resolution", ResolutionViewSet, basename="resolution-list")
+router.register(
+    r"job-order-general-agent-scoring",
+    views.JobOrderGeneralAgentScoringViewSet,
+    basename="job-order-general-scoring",
+)
+router.register(
+    r"job-order-category-agent-scoring",
+    views.JobOrderCategoryAgentScoringViewSet,
+    basename="job-order-category-scoring",
+)
 
 
 app_name = "gpg"
