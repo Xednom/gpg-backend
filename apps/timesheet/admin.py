@@ -109,7 +109,7 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         "client_total_charge",
         "staff_total_due",
     )
-    list_filter = ("client", "staff", "status", ("shift_date", DateRangeFilter))
+    list_filter = ("client", "staff", "status", "staff_hourly_rate", "client_hourly_rate", ("shift_date", DateRangeFilter))
     admin_fieldsets = (
         (
             "Account Charge Information",
