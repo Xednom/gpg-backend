@@ -11,8 +11,10 @@ __all__ = ("JobOrderGeneralAgentScoring", "JobOrderCategoryAgentScoring")
 
 
 class JobOrderGeneralAgentScoring(TimeStamped):
-    staff = models.ForeignKey(
-        User, related_name="general_agent_scorings", on_delete=models.CASCADE
+    staff = models.ManyToManyField(
+        "authentication.Staff",
+        related_name="job_order_general_staff_scorings",
+        blank=True,
     )
     client = models.ForeignKey(
         "authentication.Client",
@@ -43,12 +45,14 @@ class JobOrderGeneralAgentScoring(TimeStamped):
 
 
 class JobOrderCategoryAgentScoring(TimeStamped):
-    staff = models.ForeignKey(
-        User, related_name="category_agent_scorings", on_delete=models.CASCADE
+    staff = models.ManyToManyField(
+        "authentication.Staff",
+        related_name="job_order_category_staff_scorings",
+        blank=True,
     )
     client = models.ForeignKey("authentication.Client", on_delete=models.CASCADE)
     job_order_category = models.ForeignKey(
-        "gpg.jobOrderCategory", on_delete=models.CASCADE, blank=True, null=True
+        "gpg.jobOrderCategory", related_name="job_order_category_scorings", on_delete=models.CASCADE, blank=True, null=True
     )
     accuracy = models.IntegerField()
     speed = models.IntegerField()

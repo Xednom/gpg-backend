@@ -15,7 +15,7 @@ from apps.gpg.models import (
     PropertyDetailFile,
     JobOrderCategoryAnalytics,
     JobOrderCategoryRating,
-    JobOrderCategoryRating
+    JobOrderCategoryAgentScoring,
 )
 
 __all__ = (
@@ -31,6 +31,30 @@ __all__ = (
     "PropertyDetailFileSerializer",
     "JobOrderApnAnalyticsSerializer",
 )
+
+
+class JobOrderCategoryAgentScoringSerializer(serializers.ModelSerializer):
+    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
+    job_order_category = serializers.SlugRelatedField(
+        slug_field="ticket_number", queryset=JobOrderCategory.objects.all()
+    )
+
+    class Meta:
+        model = JobOrderCategoryAgentScoring
+        fields = (
+            "id",
+            "staff",
+            "client",
+            "job_order_category",
+            "accuracy",
+            "speed",
+            "quality_of_work",
+            "delivered_on_time",
+            "delivery_note",
+            "job_completed",
+            "job_completed_note",
+            "satisfied",
+        )
 
 
 class CommentByApnSerializer(serializers.ModelSerializer):
@@ -212,6 +236,9 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     job_category_ratings = JobOrderCategoryRatingSerializer(
         many=True, required=False, allow_null=True
     )
+    job_order_category_scorings = JobOrderCategoryAgentScoringSerializer(
+        many=True, required=False, allow_null=True
+    )
     property_detail_ticket = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
     category_ = serializers.SerializerMethodField()
@@ -244,6 +271,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "total_time_consumed",
             "job_order_category_comments",
             "job_category_ratings",
+            "job_order_category_scorings",
             "job_rating",
             "deadline",
         )
@@ -263,9 +291,13 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     def get_property_detail_ticket(self, instance):
         if instance.property_detail:
             return instance.property_detail.ticket_number
-    
+
     def get_job_rating(self, instance):
-        get_job_category_rating = JobOrderCategoryRating.objects.select_related().filter(job_order=instance.id)
+        get_job_category_rating = (
+            JobOrderCategoryRating.objects.select_related().filter(
+                job_order=instance.id
+            )
+        )
         if instance.job_category_ratings:
             job_rating = (rate.rating for rate in get_job_category_rating)
             return job_rating

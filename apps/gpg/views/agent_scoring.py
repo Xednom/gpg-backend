@@ -15,7 +15,6 @@ __all__ = ("JobOrderGeneralAgentScoringViewSet", "JobOrderCategoryAgentScoringVi
 
 
 class JobOrderGeneralAgentScoringViewSet(viewsets.ModelViewSet):
-    queryset = JobOrderGeneralAgentScoring.objects.all()
     serializer_class = JobOrderGeneralAgentScoringSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -23,32 +22,31 @@ class JobOrderGeneralAgentScoringViewSet(viewsets.ModelViewSet):
         current_user = self.request.user
         user = User.objects.filter(username=current_user)
         queryset = JobOrderGeneralAgentScoring.objects.select_related(
-            "staff", "client", "job_order_general"
-        ).filter(
+            "client", "job_order_general"
+        ).prefetch_related("staff").filter(
             client__user__in=user
         ) or JobOrderGeneralAgentScoring.objects.select_related(
-            "staff", "client", "job_order_generalu"
-        ).filter(
+            "client", "job_order_generalu"
+        ).prefetch_related("staff").filter(
             staff__user__in=user
         )
         return queryset
 
 
 class JobOrderCategoryAgentScoringViewSet(viewsets.ModelViewSet):
-    queryset = JobOrderCategoryAgentScoring.objects.all()
     serializer_class = JobOrderCategoryAgentScoringSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         current_user = self.request.user
         user = User.objects.filter(username=current_user)
-        queryset = JobOrderGeneralAgentScoring.objects.select_related(
-            "staff", "client", "job_order_general"
-        ).filter(
+        queryset = JobOrderCategoryAgentScoring.objects.select_related(
+            "client", "job_order_category"
+        ).prefetch_related("staff").filter(
             client__user__in=user
-        ) or JobOrderGeneralAgentScoring.objects.select_related(
-            "staff", "client", "job_order_generalu"
-        ).filter(
+        ) or JobOrderCategoryAgentScoring.objects.select_related(
+            "client", "job_order_category"
+        ).prefetch_related("staff").filter(
             staff__user__in=user
         )
         return queryset

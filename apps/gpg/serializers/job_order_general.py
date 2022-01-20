@@ -8,6 +8,7 @@ from apps.gpg.models import (
     Comment,
     JobOrderGeneralAnalytics,
     JobOrderGeneralRating,
+    JobOrderGeneralAgentScoring,
 )
 
 
@@ -16,6 +17,30 @@ __all__ = (
     "JobOrderGeneralSerializer",
     "JobOrderGeneralAnalyticsSerializer",
 )
+
+
+class JobOrderGeneralAgentScoringSerializer(serializers.ModelSerializer):
+    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
+    job_order_general = serializers.SlugRelatedField(
+        slug_field="ticket_number", queryset=JobOrderGeneral.objects.all()
+    )
+
+    class Meta:
+        model = JobOrderGeneralAgentScoring
+        fields = (
+            "id",
+            "staff",
+            "client",
+            "job_order_general",
+            "accuracy",
+            "speed",
+            "quality_of_work",
+            "delivered_on_time",
+            "delivery_note",
+            "job_completed",
+            "job_completed_note",
+            "satisfied",
+        )
 
 
 class JobOrderGeneralRatingSerializer(serializers.ModelSerializer):
@@ -75,6 +100,9 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     job_general_ratings = JobOrderGeneralRatingSerializer(
         many=True, required=False, allow_null=True
     )
+    job_order_general_scorings = JobOrderGeneralAgentScoringSerializer(
+        many=True, required=False, allow_null=True
+    )
     client = serializers.SlugRelatedField(
         slug_field="client_code", queryset=Client.objects.all()
     )
@@ -109,7 +137,8 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "url_of_the_completed_jo",
             "job_order_comments",
             "job_general_ratings",
-            "job_rating"
+            "job_order_general_scorings",
+            "job_rating",
         )
 
     def get_client_code(self, instance):
@@ -123,9 +152,11 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             return "Management on process"
         else:
             return instance.client.client_name
-    
+
     def get_job_rating(self, instance):
-        get_job_category_rating = JobOrderGeneralRating.objects.select_related().filter(job_order=instance.id)
+        get_job_category_rating = JobOrderGeneralRating.objects.select_related().filter(
+            job_order=instance.id
+        )
         if instance.job_general_ratings:
             job_rating = (rate.rating for rate in get_job_category_rating)
             return job_rating

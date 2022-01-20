@@ -16,9 +16,6 @@ __all__ = (
 
 
 class JobOrderGeneralAgentScoringSerializer(serializers.ModelSerializer):
-    staff = serializers.SlugRelatedField(
-        slug_field="staff_id", queryset=Staff.objects.all()
-    )
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
     job_order_general = serializers.SlugRelatedField(
         slug_field="ticket_number", queryset=JobOrderGeneral.objects.all()
@@ -43,9 +40,6 @@ class JobOrderGeneralAgentScoringSerializer(serializers.ModelSerializer):
 
 
 class JobOrderCategoryAgentScoringSerializer(serializers.ModelSerializer):
-    staff = serializers.SlugRelatedField(
-        slug_field="staff_id", queryset=Staff.objects.all()
-    )
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
     job_order_category = serializers.SlugRelatedField(
         slug_field="ticket_number", queryset=JobOrderCategory.objects.all()
