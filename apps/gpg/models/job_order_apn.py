@@ -233,7 +233,7 @@ class JobOrderCategory(TimeStamped):
         blank=True,
         null=True,
     )
-    client_file = models.CharField(max_length=500, blank=True)
+    client_file = models.TextField(blank=True)
     client_email = models.EmailField(blank=True)
     staff = models.ManyToManyField(
         Staff,
