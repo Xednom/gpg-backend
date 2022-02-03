@@ -18,6 +18,8 @@ from apps.gpg.models import (
     JobOrderGeneralAnalytics,
     JobOrderGeneralRating,
     JobOrderCategoryRating,
+    JobOrderCategoryAgentScoring,
+    JobOrderGeneralAgentScoring
 )
 
 
@@ -399,3 +401,5 @@ admin.site.register(JobOrderCategoryAnalytics)
 admin.site.register(JobOrderGeneralAnalytics)
 admin.site.register(JobOrderGeneralRating, JobOrderGeneralRatingAdmin)
 admin.site.register(JobOrderCategoryRating, JobOrderCategoryRatingAdmin)
+admin.site.register(JobOrderGeneralAgentScoring)
+admin.site.register(JobOrderCategoryAgentScoring)
