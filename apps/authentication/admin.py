@@ -91,6 +91,9 @@ class ClientProfileAdmin(ImportExportModelAdmin):
     list_filter = (
         "affiliate_partner_code",
         "affiliate_partner_name",
+        "user__first_name",
+        "user__last_name",
+        "hourly_rate",
         "user",
     )
     search_fields = (
@@ -100,6 +103,7 @@ class ClientProfileAdmin(ImportExportModelAdmin):
         "user__username",
         "user__last_name",
         "client_code",
+        "customer_id",
     )
     fieldsets = (
         (
