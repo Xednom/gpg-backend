@@ -54,6 +54,7 @@ LOCAL_APPS = [
     "apps.resolution",
     "apps.task_designation",
     "apps.email_template",
+    "apps.gpg_notifications",
 ]
 
 THIRD_PARTY_APPS = [
@@ -69,6 +70,7 @@ THIRD_PARTY_APPS = [
     "import_export",
     "rangefilter",
     "django_bleach",
+    "notifications",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

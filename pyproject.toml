@@ -77,6 +77,7 @@ django-admin-rangefilter = "*"
 django-bleach = "*"
 paypal-checkout-serversdk = "*"
 pipenv-poetry-migrate = "*"
+django-notifications-hq = "^1.6.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
