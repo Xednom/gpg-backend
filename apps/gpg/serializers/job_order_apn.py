@@ -30,6 +30,7 @@ __all__ = (
     "CountySerializer",
     "PropertyDetailFileSerializer",
     "JobOrderApnAnalyticsSerializer",
+    "JobOrderCategoryNotifSerializer"
 )
 
 
@@ -214,6 +215,14 @@ class JobOrderCategoryRatingSerializer(serializers.ModelSerializer):
             "job_order",
             "rating",
             "comment",
+        )
+
+
+class JobOrderCategoryNotifSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOrderCategory
+        fields = (
+            "ticket_number",
         )
 
 

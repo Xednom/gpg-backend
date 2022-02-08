@@ -73,7 +73,7 @@ class User(AbstractUser):
 
 
 class Client(TimeStamped):
-    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, unique=True, related_name="user_clients", on_delete=models.CASCADE)
     client_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_name = models.CharField(max_length=250, blank=True)

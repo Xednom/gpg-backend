@@ -20,6 +20,7 @@ __all__ = (
     "CommentSerializer",
     "JobOrderGeneralSerializer",
     "JobOrderGeneralAnalyticsSerializer",
+    "JobOrderGeneralNotifSerializer"
 )
 
 
@@ -97,6 +98,14 @@ class CommentSerializer(serializers.ModelSerializer):
             client_code = [client.client_code for client in get_client_code]
             client_code = "".join(client_code)
             return client_code
+
+
+class JobOrderGeneralNotifSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOrderGeneral
+        fields = (
+            "ticket_number",
+        )
 
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
