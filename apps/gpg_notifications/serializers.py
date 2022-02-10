@@ -44,10 +44,12 @@ class GenericNotificationRelatedField(serializers.RelatedField):
 
 class NotificationSerializer(serializers.ModelSerializer):
     recipient = UserSerializer(read_only=True)
-    unread = serializers.BooleanField(read_only=True)
+    unread = serializers.BooleanField(required=False, allow_null=True)
     target = GenericNotificationRelatedField(read_only=True)
-    verb = serializers.CharField()
+    verb = serializers.CharField(required=False, allow_null=True)
     actor = UserSerializer(read_only=True)
+    actor_object_id = serializers.IntegerField(required=False, allow_null=True)
+    actor_content_type = serializers.CharField(required=False, allow_null=True)
     was_published = serializers.SerializerMethodField()
     staff = serializers.SerializerMethodField()
     client = serializers.SerializerMethodField()
