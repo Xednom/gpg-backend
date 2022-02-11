@@ -9,6 +9,8 @@ from apps.core.models import TimeStamped
 from apps.authentication.models import Client, Staff
 from apps.account.models import AccountFile
 
+from notifications.signals import notify
+
 User = get_user_model()
 
 
@@ -118,6 +120,7 @@ class JobOrderGeneral(TimeStamped):
         max_digits=10, decimal_places=2, blank=True, null=True
     )
     url_of_the_completed_jo = models.TextField(blank=True)
+    updated_by = models.ForeignKey("authentication.User", related_name="user_job_roders", on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name = "General Order Request"
@@ -125,7 +128,7 @@ class JobOrderGeneral(TimeStamped):
         ordering = ["-id"]
 
     def __str__(self):
-        return f"Job Order general of {self.job_title} - {self.id}"
+        return f"Job Order General request of {self.job_title} - #{self.ticket_number}"
 
     def create_ticket_number(self):
         ticket_code = ""
@@ -181,6 +184,11 @@ class JobOrderGeneral(TimeStamped):
             self.client_file = self.get_account_files()
             self.client_email = self.get_client_email()
             self.staff_email = self.get_staff_email()
+            client = [self.client.user]
+            staff = [staff.user for staff in self.va_assigned.all()]
+            recipient = client + staff
+            # print(recipient)
+            # notify.send(self.updated_by, recipient=recipient, verb="Your job order has been updated")
             super(JobOrderGeneral, self).save(*args, **kwargs)
 
 

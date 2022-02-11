@@ -14,6 +14,8 @@ from apps.authentication.models import Client, Staff
 from apps.gpg.models import JobOrderGeneral, Comment, JobOrderGeneralAnalytics
 from apps.gpg.serializers import JobOrderGeneralSerializer, CommentSerializer, JobOrderGeneralAnalyticsSerializer
 
+from notifications.signals import notify
+
 User = get_user_model()
 
 
@@ -50,13 +52,23 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
             queryset = JobOrderGeneral.objects.all()
             return queryset
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        user = User.objects.filter(id=self.request.user.id)
+        serializer.save(updated_by=user)
+
     def perform_update(self, serializer):
         instance = self.get_object()
-        ticket_number = instance.ticket_number
+        user = self.request.user
+        user = User.objects.filter(username=user).first()
+        id = self.kwargs.get("va_assigned.staff_id") or self.kwargs.get("client.customer_id")
         client_email = instance.client_email
         staff_email = instance.staff_email
         job_order = serializer.validated_data
-        staff_emails = staff_email.split()
+        client = [instance.client.user]
+        staff = [staff.user for staff in instance.va_assigned.all()]
+        recipient = client + staff
+        serializer.save(updated_by=user)
         if client_email and staff_email:
             emails = client_email + " " + staff_email
             emails = emails.split()
@@ -66,7 +78,7 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
                 template="job_order_general_update",
                 context={"job_order": job_order},
             )
-        return serializer.save()
+            notify.send(actor=id, sender=user, recipient=recipient, verb="updated", target=instance, action_object=instance)
 
 
 class CreateJobOrderComment(generics.CreateAPIView):

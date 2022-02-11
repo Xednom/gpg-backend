@@ -269,7 +269,7 @@ class JobOrderCategory(TimeStamped):
         ordering = ["-id"]
 
     def __str__(self):
-        return f"Job order by {self.category} - {self.ticket_number} {self.property_detail}"
+        return f"Job order request by APN {self.property_detail} - #{self.ticket_number}"
 
     def create_ticket_number(self):
         ticket_code = ""
