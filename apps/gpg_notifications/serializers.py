@@ -53,6 +53,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     was_published = serializers.SerializerMethodField()
     staff = serializers.SerializerMethodField()
     client = serializers.SerializerMethodField()
+    job_order = serializers.SerializerMethodField()
 
     class Meta:
         model = Notification
@@ -72,3 +73,11 @@ class NotificationSerializer(serializers.ModelSerializer):
         if published.days == 0:
             return "today"
         return published.days
+    
+    def get_job_order(self, instance):
+        if instance.target is not None:
+            if isinstance(instance.target, JobOrderGeneral):
+                return "general"
+            elif isinstance(instance.target, JobOrderCategory):
+                return "category"
+        return None
