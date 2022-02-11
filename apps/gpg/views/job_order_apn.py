@@ -14,6 +14,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
+from notifications.signals import notify
+
 from apps.authentication.models import Staff, Client, User
 from apps.gpg.models import (
     JobOrderCategory,
@@ -154,10 +156,15 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         instance = self.get_object()
+        user = self.request.user
+        user = User.objects.filter(username=user).first()
         ticket_number = instance.ticket_number
         client_email = instance.client_email
         staff_email = instance.staff_email
         staff_emails = staff_email.split()
+        client = [instance.client.user]
+        staff = [staff.user for staff in instance.staff.all()]
+        recipient = client + staff
         job_order_category = serializer.validated_data
         if client_email and staff_email:
             emails = client_email + " " + staff_email
@@ -168,6 +175,7 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
                 template="job_order_category_update",
                 context={"job_order_category": job_order_category},
             )
+        notify.send(actor=id, sender=user, recipient=recipient, verb="updated", target=instance, action_object=instance)
         return serializer.save()
 
 
