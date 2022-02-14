@@ -14,5 +14,5 @@ class AccountCredentialSerializer(serializers.ModelSerializer):
             "password",
             "notes",
             "granted_access_to",
-            "access_granted"
+            "access_granted",
         )

@@ -52,7 +52,11 @@ class JobOrderCategoryAgentScoring(TimeStamped):
     )
     client = models.ForeignKey("authentication.Client", on_delete=models.CASCADE)
     job_order_category = models.ForeignKey(
-        "gpg.jobOrderCategory", related_name="job_order_category_scorings", on_delete=models.CASCADE, blank=True, null=True
+        "gpg.jobOrderCategory",
+        related_name="job_order_category_scorings",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     accuracy = models.IntegerField()
     speed = models.IntegerField()

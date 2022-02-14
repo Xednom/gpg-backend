@@ -34,12 +34,9 @@ class EmailtemplateAdmin(admin.ModelAdmin):
         ),
         (
             "Important date",
-            {
-                "fields": (
-                    "created_at",
-                )
-            },
+            {"fields": ("created_at",)},
         ),
     )
+
 
 admin.site.register(EmailTemplate, EmailtemplateAdmin)

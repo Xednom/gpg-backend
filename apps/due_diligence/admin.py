@@ -12,7 +12,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
         "original_extension_owner",
         "code_name",
         "allocation_company",
-        "allocation_office"
+        "allocation_office",
     )
     search_fields = (
         "user_id",
@@ -35,7 +35,7 @@ class PhoneLineExtensionAdmin(admin.ModelAdmin):
                     "allocation_company",
                     "allocation_office",
                     "login_details",
-                    "notes"
+                    "notes",
                 )
             },
         ),
@@ -71,17 +71,17 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
         "utilities_data_status",
         "call_out_dd_date_complete",
         "dd_link",
-        "created_at"
+        "created_at",
     )
 
     list_filter = (
         "client",
         "staff_initial_dd",
-        "initial_due_diligence_status", 
+        "initial_due_diligence_status",
         "initial_dd_quality_review_status",
         "staff_assigned_for_call_out",
         "call_out_status",
-        "call_out_dd_quality_review_status"
+        "call_out_dd_quality_review_status",
     )
     search_fields = (
         "ticket_number",
@@ -146,19 +146,17 @@ class DueDiligenceCallOutAdmin(admin.ModelAdmin):
                     "waste_company_name_and_phone_number",
                 )
             },
-        )
+        ),
     )
 
     def get_staff_initial_dd(self, obj):
-        return ", ".join(
-            [staff.staff_name for staff in obj.staff_initial_dd.all()]
-        )
-    
+        return ", ".join([staff.staff_name for staff in obj.staff_initial_dd.all()])
+
     def get_staff_assigned_for_call_out(self, obj):
         return ", ".join(
             [staff.staff_name for staff in obj.staff_assigned_for_call_out.all()]
         )
-    
+
     get_staff_initial_dd.short_description = "Staffs initial Due diligence - assigned"
     get_staff_assigned_for_call_out.short_description = "Staffs assigned for call out"
 

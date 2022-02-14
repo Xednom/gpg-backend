@@ -9,7 +9,12 @@ class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_display = ("client", "get_staffs", "category", "url")
     list_filter = ("client", "staff")
     filter_horizontal = ("staff",)
-    search_fields = ("client__user__first_name", "client__user__last_name", "category", "username")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "category",
+        "username",
+    )
 
     fieldsets = (
         (

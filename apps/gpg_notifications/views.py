@@ -21,6 +21,6 @@ class NotificationViewSet(viewsets.ModelViewSet):
             .filter(recipient=user)
             .unread()
         )
-    
+
     def perform_update(self, serializer):
         serializer.save(unread=False)

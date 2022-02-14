@@ -6,9 +6,7 @@ CORS_ALLOWED_ORIGINS = ["https://gpg-staging.vercel.app"]
 
 MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
 
-INSTALLED_APPS += (
-    "debug_toolbar",
-)
+INSTALLED_APPS += ("debug_toolbar",)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
@@ -46,9 +44,7 @@ DATABASES = {
 
 # for management command;
 # see https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATIC_ROOT = (
-    os.path.join(BASE_DIR, 'staticfiles')
-)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 HTTP_PROTOCOL = "https://"
 

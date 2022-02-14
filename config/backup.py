@@ -8,18 +8,27 @@ FILE_PREFIX = "my_db_backup_"
 DAYS_TO_KEEP_BACKUP = 3
 FILE_SUFFIX_DATE_FORMAT = "%Y%m%d%H%M%S"
 USERNAME = "gpg"
-DBNAME = USERNAME+"$gpg_corp"
+DBNAME = USERNAME + "$gpg_corp"
 
 
 # get today's date and time
 timestamp = datetime.datetime.now().strftime(FILE_SUFFIX_DATE_FORMAT)
-backup_filename = BACKUP_DIR_NAME+"/"+FILE_PREFIX+timestamp+".sql"
+backup_filename = BACKUP_DIR_NAME + "/" + FILE_PREFIX + timestamp + ".sql"
 
-os.system("mysqldump -u "+USERNAME+" -h "+USERNAME+".mysql.pythonanywhere-services.com '"+DBNAME+"'  > "+backup_filename)
+os.system(
+    "mysqldump -u "
+    + USERNAME
+    + " -h "
+    + USERNAME
+    + ".mysql.pythonanywhere-services.com '"
+    + DBNAME
+    + "'  > "
+    + backup_filename
+)
 
 # creating zip file
-zip_filename = BACKUP_DIR_NAME+"/"+FILE_PREFIX+timestamp+".zip"
-with ZipFile(zip_filename, 'w') as zip:
+zip_filename = BACKUP_DIR_NAME + "/" + FILE_PREFIX + timestamp + ".zip"
+with ZipFile(zip_filename, "w") as zip:
     zip.write(backup_filename, os.path.basename(backup_filename))
 
 os.remove(backup_filename)
@@ -39,5 +48,5 @@ for f in list_files:
     if "zip" == f.split(".")[1]:
         suffix = filename[length:]
         if suffix < back_date:
-            print("Deleting file : "+f)
+            print("Deleting file : " + f)
             os.remove(BACKUP_DIR_NAME + "/" + f)

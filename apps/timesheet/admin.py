@@ -15,7 +15,7 @@ from apps.timesheet.resources import (
     AccountChargeResource,
     PaymentHistoryResource,
     AccountBalanceResource,
-    StaffPaymentHistoryResource
+    StaffPaymentHistoryResource,
 )
 
 
@@ -43,7 +43,11 @@ class AccountBalanceAdmin(ImportExportModelAdmin):
     model = AccountBalance
     resource_class = AccountBalanceResource
     list_filter = ("client",)
-    search_fields = ("client__user__first_name", "client__user__last_name", "client__user__username")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "client__user__username",
+    )
     list_display = (
         "client",
         "total_payment_made",
@@ -51,7 +55,7 @@ class AccountBalanceAdmin(ImportExportModelAdmin):
         "account_charges",
         "account_balance",
         "get_client_email",
-        "billing_status"
+        "billing_status",
     )
 
     def get_client_email(self, obj):
@@ -109,7 +113,14 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         "client_total_charge",
         "staff_total_due",
     )
-    list_filter = ("client", "staff", "status", "staff_hourly_rate", "client_hourly_rate", ("shift_date", DateRangeFilter))
+    list_filter = (
+        "client",
+        "staff",
+        "status",
+        "staff_hourly_rate",
+        "client_hourly_rate",
+        ("shift_date", DateRangeFilter),
+    )
     admin_fieldsets = (
         (
             "Account Charge Information",
@@ -179,14 +190,7 @@ class AccountChargeAdmin(ImportExportModelAdmin):
                 )
             },
         ),
-        (
-            "Client information",
-            {
-                "fields": {
-                    "client"
-                }
-            }
-        )
+        ("Client information", {"fields": {"client"}}),
     )
 
     def get_fieldsets(self, request, obj=None, **kwargs):

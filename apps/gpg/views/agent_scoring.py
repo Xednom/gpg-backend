@@ -27,7 +27,9 @@ class JobOrderGeneralAgentScoringViewSet(viewsets.ModelViewSet):
             client__user__in=user
         ) or JobOrderGeneralAgentScoring.objects.select_related(
             "client", "job_order_generalu"
-        ).prefetch_related("staff").filter(
+        ).prefetch_related(
+            "staff"
+        ).filter(
             staff__user__in=user
         )
         return queryset
@@ -46,7 +48,9 @@ class JobOrderCategoryAgentScoringViewSet(viewsets.ModelViewSet):
             client__user__in=user
         ) or JobOrderCategoryAgentScoring.objects.select_related(
             "client", "job_order_category"
-        ).prefetch_related("staff").filter(
+        ).prefetch_related(
+            "staff"
+        ).filter(
             staff__user__in=user
         )
         return queryset

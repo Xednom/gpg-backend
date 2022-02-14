@@ -148,7 +148,7 @@ class StaffProfileAdmin(admin.ModelAdmin):
         "hourly_rate",
         "staff_id",
         "company_id",
-        "status"
+        "status",
     )
     list_filter = ("user", "position", "status", "category")
     search_fields = ("user__first_name", "user__last_name", "user__username")

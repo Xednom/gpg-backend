@@ -7,12 +7,15 @@ __all__ = ("AccountBalanceSerializer",)
 
 
 class AccountBalanceSerializer(serializers.ModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), required=False, allow_null=True)
+    client = serializers.PrimaryKeyRelatedField(
+        queryset=Client.objects.all(), required=False, allow_null=True
+    )
     client_code = serializers.CharField(source="client.client_code")
     account_charges = serializers.CharField()
     total_payment_made = serializers.CharField()
     account_balance = serializers.CharField()
     account_balance_amount = serializers.SerializerMethodField()
+
     class Meta:
         model = AccountBalance
         fields = (
@@ -27,8 +30,8 @@ class AccountBalanceSerializer(serializers.ModelSerializer):
             "account_balance",
             "account_balance_currency",
             "account_balance_amount",
-            "notes"
+            "notes",
         )
-    
+
     def get_account_balance_amount(self, instance):
         return instance.account_balance.amount

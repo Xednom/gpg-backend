@@ -9,8 +9,4 @@ __all__ = ("PhoneLineExtSerializer",)
 class PhoneLineExtSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhoneLineExtension
-        fields = (
-            "id",
-            "user_id",
-            "code_name"
-        )
+        fields = ("id", "user_id", "code_name")

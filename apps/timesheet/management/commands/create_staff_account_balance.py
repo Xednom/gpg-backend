@@ -17,7 +17,11 @@ class Command(BaseCommand):
     help = "Automatically create Staff Account balance for every user in the system monthly(1st, 15th and 16th 30th-31st)."
 
     def handle(self, *args, **kwargs):
-        staff_name = AccountCharge.objects.filter(status="approved").values_list("staff", flat=True).distinct()
+        staff_name = (
+            AccountCharge.objects.filter(status="approved")
+            .values_list("staff", flat=True)
+            .distinct()
+        )
         staff = Staff.objects.filter(id__in=staff_name)
         staff_timesheet = Staff.objects.filter(id__in=staff_name).exists()
         current_time = datetime.date.today()
@@ -81,38 +85,38 @@ class Command(BaseCommand):
                 elif every_31st == current_time:
                     if staff_payment_16th_and_31st["total_payment"] == None:
                         StaffAccountBalance.objects.create(
-                        date=day_16th_and_31st,
-                        staff=i,
-                        payment_made=Decimal(0.00),
-                        amount_due=staff_time_charge_16th_and_31st["total_charge"],
-                        account_balance=Decimal(0.00)
-                        - staff_time_charge_16th_and_31st["total_charge"],
-                    )
+                            date=day_16th_and_31st,
+                            staff=i,
+                            payment_made=Decimal(0.00),
+                            amount_due=staff_time_charge_16th_and_31st["total_charge"],
+                            account_balance=Decimal(0.00)
+                            - staff_time_charge_16th_and_31st["total_charge"],
+                        )
                     else:
                         StaffAccountBalance.objects.create(
-                        date=day_16th_and_31st,
-                        staff=i,
-                        payment_made=staff_payment_16th_and_31st["total_payment"],
-                        amount_due=staff_time_charge_16th_and_31st["total_charge"],
-                        account_balance=staff_payment_16th_and_31st["total_payment"]
-                        - staff_time_charge_16th_and_31st["total_charge"],
-                    )
+                            date=day_16th_and_31st,
+                            staff=i,
+                            payment_made=staff_payment_16th_and_31st["total_payment"],
+                            amount_due=staff_time_charge_16th_and_31st["total_charge"],
+                            account_balance=staff_payment_16th_and_31st["total_payment"]
+                            - staff_time_charge_16th_and_31st["total_charge"],
+                        )
                 elif every_30th == current_time:
                     if staff_payment_16th_and_30th["total_payment"] == None:
                         StaffAccountBalance.objects.create(
-                        date=day_16th_and_30th,
-                        staff=i,
-                        payment_made=Decimal(0.00),
-                        amount_due=staff_time_charge_16th_and_31st["total_charge"],
-                        account_balance=Decimal(0.00)
-                        - staff_time_charge_16th_and_31st["total_charge"],
-                   )
+                            date=day_16th_and_30th,
+                            staff=i,
+                            payment_made=Decimal(0.00),
+                            amount_due=staff_time_charge_16th_and_31st["total_charge"],
+                            account_balance=Decimal(0.00)
+                            - staff_time_charge_16th_and_31st["total_charge"],
+                        )
                     else:
                         StaffAccountBalance.objects.create(
-                        date=day_16th_and_30th,
-                        staff=i,
-                        payment_made=staff_payment_16th_and_30th["total_payment"],
-                        amount_due=staff_time_charge_16th_and_31st["total_charge"],
-                        account_balance=staff_payment_16th_and_30th["total_payment"]
-                        - staff_time_charge_16th_and_31st["total_charge"],
-                   )
+                            date=day_16th_and_30th,
+                            staff=i,
+                            payment_made=staff_payment_16th_and_30th["total_payment"],
+                            amount_due=staff_time_charge_16th_and_31st["total_charge"],
+                            account_balance=staff_payment_16th_and_30th["total_payment"]
+                            - staff_time_charge_16th_and_31st["total_charge"],
+                        )

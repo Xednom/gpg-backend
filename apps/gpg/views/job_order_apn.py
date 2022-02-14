@@ -175,7 +175,14 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
                 template="job_order_category_update",
                 context={"job_order_category": job_order_category},
             )
-        notify.send(actor=id, sender=user, recipient=recipient, verb="updated", target=instance, action_object=instance)
+        notify.send(
+            actor=id,
+            sender=user,
+            recipient=recipient,
+            verb="updated",
+            target=instance,
+            action_object=instance,
+        )
         return serializer.save()
 
 

@@ -20,7 +20,7 @@ class NewsFeedAdmin(admin.ModelAdmin):
             "grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js",
             "grappelli/tinymce_setup/tinymce_setup.js",
         )
-    
+
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
         for obj in formset.deleted_objects:

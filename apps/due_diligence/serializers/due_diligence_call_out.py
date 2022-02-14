@@ -6,7 +6,10 @@ __all__ = ("CallOutSerializer",)
 
 
 class CallOutSerializer(serializers.ModelSerializer):
-    client_code = serializers.CharField(source="client.client_code", required=False, allow_null=True)
+    client_code = serializers.CharField(
+        source="client.client_code", required=False, allow_null=True
+    )
+
     class Meta:
         model = DueDiligenceCallOut
         fields = (

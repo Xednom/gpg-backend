@@ -23,7 +23,9 @@ class AccountChargeViewSet(viewsets.ModelViewSet):
         if current_user:
             queryset = AccountCharge.objects.select_related("client", "staff").filter(
                 client__user__in=user
-            ).exclude(status="submitted") or AccountCharge.objects.select_related("client", "staff").filter(
+            ).exclude(status="submitted") or AccountCharge.objects.select_related(
+                "client", "staff"
+            ).filter(
                 staff__user__in=user
             )
             return queryset

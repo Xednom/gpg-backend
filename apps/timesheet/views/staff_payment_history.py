@@ -9,7 +9,7 @@ from apps.timesheet.serializers import StaffPaymentHistorySerializer
 User = get_user_model()
 
 
-__all__=("StaffPaymentHistoryViewSet",)
+__all__ = ("StaffPaymentHistoryViewSet",)
 
 
 class StaffPaymentHistoryViewSet(viewsets.ModelViewSet):
