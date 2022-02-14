@@ -8,7 +8,10 @@ from rest_framework import serializers
 from apps.authentication.models import Client, Staff
 from apps.authentication.serializers import ClientCodeSerializer, StaffCodeSerializer
 from apps.gpg.models import JobOrderGeneral, JobOrderCategory
-from apps.gpg.serializers import JobOrderGeneralNotifSerializer, JobOrderCategoryNotifSerializer
+from apps.gpg.serializers import (
+    JobOrderGeneralNotifSerializer,
+    JobOrderCategoryNotifSerializer,
+)
 
 User = get_user_model()
 
@@ -16,6 +19,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     user_clients = ClientCodeSerializer(read_only=True)
     staff = StaffCodeSerializer(read_only=True)
+
     class Meta:
         model = get_user_model()
         fields = (
@@ -60,11 +64,17 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_staff(self, instance):
-        staff = [staff.staff_id for staff in Staff.objects.filter(user__username=instance.actor.username)]
+        staff = [
+            staff.staff_id
+            for staff in Staff.objects.filter(user__username=instance.actor.username)
+        ]
         return "".join(staff)
-    
+
     def get_client(self, instance):
-        client = [client.client_code for client in Client.objects.filter(user__username=instance.actor.username)]
+        client = [
+            client.client_code
+            for client in Client.objects.filter(user__username=instance.actor.username)
+        ]
         return "".join(client)
 
     def get_was_published(self, instance):
@@ -73,7 +83,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         if published.days == 0:
             return "today"
         return published.days
-    
+
     def get_job_order(self, instance):
         if instance.target is not None:
             if isinstance(instance.target, JobOrderGeneral):

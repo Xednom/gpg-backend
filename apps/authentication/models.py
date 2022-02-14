@@ -44,8 +44,12 @@ class StaffCategory(models.TextChoices):
     office_based = "office_based", ("Office Based")
     part_timers = "part_timers", ("Part-timers")
     home_based = "home_based", ("Home Based")
-    office_project_based_contract = "office_project_based_contract", ("Office Project Based Contract")
-    homebase_project_based_contract = "homebase_project_based_contract", ("Homebase - Project Based Contract")
+    office_project_based_contract = "office_project_based_contract", (
+        "Office Project Based Contract"
+    )
+    homebase_project_based_contract = "homebase_project_based_contract", (
+        "Homebase - Project Based Contract"
+    )
     part_time_job = "part_time_job", ("Part-time Job")
 
 
@@ -73,7 +77,9 @@ class User(AbstractUser):
 
 
 class Client(TimeStamped):
-    user = models.OneToOneField(User, unique=True, related_name="user_clients", on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, unique=True, related_name="user_clients", on_delete=models.CASCADE
+    )
     client_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_code = models.CharField(max_length=250, blank=True)
     affiliate_partner_name = models.CharField(max_length=250, blank=True)

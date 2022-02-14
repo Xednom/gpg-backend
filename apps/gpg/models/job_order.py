@@ -21,7 +21,7 @@ __all__ = (
     "JobOrderStatus",
     "JobOrderGeneral",
     "Comment",
-    "JobOrderGeneralAnalytics"
+    "JobOrderGeneralAnalytics",
 )
 
 
@@ -79,10 +79,18 @@ class JobOrderStatus(models.TextChoices):
     dd_call_out_complete = "dd_call_out_complete", ("DD Call Out Complete")
     duplicate_request = "duplicate_request", ("Duplicate Request")
     multiple_task = "multiple_task", ("Multiple Task")
-    va_assigned_multiple_task = "va_assigned_multiple_task", ("VA assigned Multiple Task")
-    va_processing_multiple_task = "va_processing_multiple_task", ("VA processing Multiple Task")
-    va_complete_multiple_task = "va_complete_multiple_task", ("VA Complete Multiple Task")
-    for_quality_review_multiple_task = "for_quality_review_multiple_task", ("For Quality Review Multiple Task")
+    va_assigned_multiple_task = "va_assigned_multiple_task", (
+        "VA assigned Multiple Task"
+    )
+    va_processing_multiple_task = "va_processing_multiple_task", (
+        "VA processing Multiple Task"
+    )
+    va_complete_multiple_task = "va_complete_multiple_task", (
+        "VA Complete Multiple Task"
+    )
+    for_quality_review_multiple_task = "for_quality_review_multiple_task", (
+        "For Quality Review Multiple Task"
+    )
 
 
 class JobOrderGeneral(TimeStamped):
@@ -96,9 +104,7 @@ class JobOrderGeneral(TimeStamped):
     client_file = models.TextField(blank=True)
     client_email = models.EmailField(blank=True)
     va_assigned = models.ManyToManyField(
-        Staff,
-        related_name="vas_job_orders",
-        blank=True
+        Staff, related_name="vas_job_orders", blank=True
     )
     staff_email = models.TextField(blank=True)
     ticket_number = models.CharField(max_length=100, blank=True)
@@ -120,7 +126,13 @@ class JobOrderGeneral(TimeStamped):
         max_digits=10, decimal_places=2, blank=True, null=True
     )
     url_of_the_completed_jo = models.TextField(blank=True)
-    updated_by = models.ForeignKey("authentication.User", related_name="user_job_roders", on_delete=models.SET_NULL, blank=True, null=True)
+    updated_by = models.ForeignKey(
+        "authentication.User",
+        related_name="user_job_roders",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "General Order Request"
@@ -147,7 +159,7 @@ class JobOrderGeneral(TimeStamped):
         in_int = int(in_id)
         ticket_code = "JO000" + str(int(in_int) + 1)
         return ticket_code
-    
+
     def get_client_email(self):
         if self.client:
             email = self.client.user.email
@@ -158,12 +170,14 @@ class JobOrderGeneral(TimeStamped):
     def get_staff_email(self):
         if self.va_assigned:
             current_staff = self.va_assigned.through.objects.all()
-            staff_emails = ' '.join(staff.user.email for staff in self.va_assigned.all())
+            staff_emails = " ".join(
+                staff.user.email for staff in self.va_assigned.all()
+            )
         return staff_emails
-    
+
     def get_account_files(self):
         account_file = AccountFile.objects.filter(client=self.client)
-        account_files = ', '.join(i.url for i in account_file)
+        account_files = ", ".join(i.url for i in account_file)
         return account_files
 
     def save(self, *args, **kwargs):
@@ -174,9 +188,7 @@ class JobOrderGeneral(TimeStamped):
                 "postmaster@landmaster.us",
                 bcc=settings.ADMIN_EMAIL,
                 template="job_order_create",
-                context={
-                    "job_order": self
-                }
+                context={"job_order": self},
             )
             super(JobOrderGeneral, self).save(*args, **kwargs)
         elif self.id:

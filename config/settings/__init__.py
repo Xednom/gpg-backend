@@ -10,7 +10,7 @@ BASE_DIR = base()
 
 env = environ.Env()
 if os.path.exists(base(".env")):
-    env.read_env(base('.env'))
+    env.read_env(base(".env"))
     print(f'Loading env file: f{base(".env")}')
 
 if os.getenv("DJANGO_SETTINGS_MODULE") == "config.settings":
@@ -38,4 +38,6 @@ TESTING = any(t in "".join(sys.argv) for t in tests) or env.bool(
 # If running tests this defaults to True
 MANAGED = TESTING or env.bool("MANAGED", default=False)
 if TESTING:
-    include(optional("tests.py"),)
+    include(
+        optional("tests.py"),
+    )

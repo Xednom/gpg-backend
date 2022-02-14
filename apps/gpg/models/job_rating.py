@@ -62,7 +62,6 @@ class JobOrderCategoryRating(TimeStamped):
         verbose_name = "Job Category Rating"
         verbose_name_plural = "Job Category Ratings"
         ordering = ["-created_at"]
-    
+
     def __str__(self):
         return f"{self.job_order} - {self.rating}"
-

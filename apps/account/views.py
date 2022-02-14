@@ -18,13 +18,9 @@ class LoginCredentialViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=current_user)
 
         if current_user:
-            queryset = LoginCredential.objects.prefetch_related(
-                "staff"
-            ).filter(
+            queryset = LoginCredential.objects.prefetch_related("staff").filter(
                 staff__user__in=user
-            ) or LoginCredential.objects.select_related(
-                "client"
-            ).filter(
+            ) or LoginCredential.objects.select_related("client").filter(
                 client__user__in=user
             )
             return queryset
@@ -40,15 +36,11 @@ class AccountFileViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         current_user = self.request.user
         user = User.objects.filter(username=current_user)
-        
+
         if current_user:
-            queryset = AccountFile.objects.prefetch_related(
-                "staff"
-            ).filter(
+            queryset = AccountFile.objects.prefetch_related("staff").filter(
                 staff__user__in=user
-            ) or AccountFile.objects.select_related(
-                "client"
-            ).filter(
+            ) or AccountFile.objects.select_related("client").filter(
                 client__user__in=user
             )
             return queryset

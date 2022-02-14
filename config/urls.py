@@ -31,7 +31,10 @@ urlpatterns = [
     path("api/v1/", include("apps.gpg.urls")),
     path("api/v1/", include("apps.gpg_notifications.urls")),
     path("__debug__/", include(debug_toolbar.urls)),
-    path("inbox/notifications/", include(notifications.urls, namespace='hq-notifications')),
+    path(
+        "inbox/notifications/",
+        include(notifications.urls, namespace="hq-notifications"),
+    ),
 ] + static(MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_title = "G.P.G Corp Management System Admin site"

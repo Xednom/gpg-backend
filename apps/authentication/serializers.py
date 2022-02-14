@@ -75,7 +75,9 @@ class ClientSerializer(WritableNestedModelSerializer):
     client_files = ClientInternalFileSerializer(
         many=True, allow_null=True, required=False
     )
-    client_hourly_rate = serializers.CharField(source="hourly_rate", required=False, allow_null=True)
+    client_hourly_rate = serializers.CharField(
+        source="hourly_rate", required=False, allow_null=True
+    )
 
     class Meta:
         model = Client

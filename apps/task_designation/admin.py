@@ -6,7 +6,7 @@ from apps.task_designation.models import TaskDesignation, AssignmentNote
 class AssignmentNoteInline(admin.TabularInline):
     model = AssignmentNote
     extra = 1
-    readonly_fields = ('created_at', 'updated_at')
+    readonly_fields = ("created_at", "updated_at")
 
 
 class TaskDesignationAdmin(admin.ModelAdmin):
@@ -32,11 +32,7 @@ class TaskDesignationAdmin(admin.ModelAdmin):
         ),
         (
             "Other details",
-            {
-                "fields": (
-                    "managers_note",
-                )
-            },
+            {"fields": ("managers_note",)},
         ),
     )
     inlines = [AssignmentNoteInline]

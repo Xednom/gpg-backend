@@ -8,7 +8,9 @@ __all__ = ("StaffPaymentHistorySerializer",)
 
 
 class StaffPaymentHistorySerializer(serializers.ModelSerializer):
-    staff = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all(), required=False, allow_null=True)
+    staff = serializers.PrimaryKeyRelatedField(
+        queryset=Staff.objects.all(), required=False, allow_null=True
+    )
     amount_w_currency = serializers.SerializerMethodField()
 
     class Meta:
@@ -22,7 +24,7 @@ class StaffPaymentHistorySerializer(serializers.ModelSerializer):
             "amount_w_currency",
             "transaction_number",
             "payment_channel",
-            "notes"
+            "notes",
         )
 
     def get_amount_w_currency(self, instance):

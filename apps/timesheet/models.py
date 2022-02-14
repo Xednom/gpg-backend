@@ -31,7 +31,7 @@ class PaymentHistory(TimeStamped):
 
     def __str__(self):
         return f"{self.client}"
-    
+
     def create_payment_id(self):
         base_name = uuid.uuid4().hex
 

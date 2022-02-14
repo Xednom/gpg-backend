@@ -9,7 +9,7 @@ from apps.timesheet.serializers import StaffAccountBalanceSerializer
 User = get_user_model()
 
 
-__all__=("StaffAccountBalanceViewSet",)
+__all__ = ("StaffAccountBalanceViewSet",)
 
 
 class StaffAccountBalanceViewSet(viewsets.ModelViewSet):

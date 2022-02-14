@@ -20,7 +20,7 @@ __all__ = (
     "CommentSerializer",
     "JobOrderGeneralSerializer",
     "JobOrderGeneralAnalyticsSerializer",
-    "JobOrderGeneralNotifSerializer"
+    "JobOrderGeneralNotifSerializer",
 )
 
 
@@ -103,9 +103,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class JobOrderGeneralNotifSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobOrderGeneral
-        fields = (
-            "ticket_number",
-        )
+        fields = ("ticket_number",)
 
 
 class JobOrderGeneralSerializer(serializers.ModelSerializer):
@@ -123,7 +121,9 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     client_name = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
     job_rating = serializers.SerializerMethodField()
-    updated_by = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False, allow_null=True)
+    updated_by = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), required=False, allow_null=True
+    )
 
     class Meta:
         model = JobOrderGeneral

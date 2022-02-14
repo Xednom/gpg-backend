@@ -12,7 +12,11 @@ from rest_framework.generics import get_object_or_404
 
 from apps.authentication.models import Client, Staff
 from apps.gpg.models import JobOrderGeneral, Comment, JobOrderGeneralAnalytics
-from apps.gpg.serializers import JobOrderGeneralSerializer, CommentSerializer, JobOrderGeneralAnalyticsSerializer
+from apps.gpg.serializers import (
+    JobOrderGeneralSerializer,
+    CommentSerializer,
+    JobOrderGeneralAnalyticsSerializer,
+)
 
 from notifications.signals import notify
 
@@ -61,7 +65,9 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         user = self.request.user
         user = User.objects.filter(username=user).first()
-        id = self.kwargs.get("va_assigned.staff_id") or self.kwargs.get("client.customer_id")
+        id = self.kwargs.get("va_assigned.staff_id") or self.kwargs.get(
+            "client.customer_id"
+        )
         client_email = instance.client_email
         staff_email = instance.staff_email
         job_order = serializer.validated_data
@@ -78,7 +84,14 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
                 template="job_order_general_update",
                 context={"job_order": job_order},
             )
-            notify.send(actor=id, sender=user, recipient=recipient, verb="updated", target=instance, action_object=instance)
+            notify.send(
+                actor=id,
+                sender=user,
+                recipient=recipient,
+                verb="updated",
+                target=instance,
+                action_object=instance,
+            )
 
 
 class CreateJobOrderComment(generics.CreateAPIView):
@@ -122,7 +135,7 @@ class JobOrderGeneralAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
         current_user = self.request.user.id
         user = User.objects.filter(id=current_user)
         if current_user:
-            queryset = JobOrderGeneralAnalytics.objects.select_related(
-                "client"
-            ).filter(client__user__in=user)
+            queryset = JobOrderGeneralAnalytics.objects.select_related("client").filter(
+                client__user__in=user
+            )
             return queryset
