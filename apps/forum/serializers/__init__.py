@@ -1,1 +1,1 @@
-from .thread import ThreadSerializer, CommentSerializer, ReplySerializer # noqa
+from .thread import ThreadSerializer, CommentSerializer, ReplySerializer  # noqa

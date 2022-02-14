@@ -27,13 +27,13 @@ class ThreadViewSet(viewsets.ModelViewSet):
         staff = staffs.all()
 
         if current_user:
-            queryset = Thread.objects.select_related(
+            queryset = Thread.objects.select_related("author").prefetch_related(
+                "staff_carbon_copy", "client_carbon_copy"
+            ).filter(author__in=client) or Thread.objects.select_related(
                 "author"
-            ).prefetch_related("staff_carbon_copy", "client_carbon_copy").filter(
-                author__in=client
-            ) or Thread.objects.select_related(
-                "author"
-            ).prefetch_related("staff_carbon_copy", "client_carbon_copy").filter(
+            ).prefetch_related(
+                "staff_carbon_copy", "client_carbon_copy"
+            ).filter(
                 author__username__in=staff
             ).exclude(
                 is_active=False

@@ -10,7 +10,6 @@ User = get_user_model()
 __all__ = ("ThreadSerializer", "CommentSerializer", "ReplySerializer")
 
 
-
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     thread = serializers.PrimaryKeyRelatedField(queryset=Thread.objects.all())
@@ -28,7 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class ThreadSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     thread_comments = CommentSerializer(many=True, required=False, allow_null=True)
-    
+
     class Meta:
         model = Thread
         fields = (
@@ -39,7 +38,7 @@ class ThreadSerializer(serializers.ModelSerializer):
             "staff_carbon_copy",
             "client_carbon_copy",
             "is_active",
-            "thread_comments"
+            "thread_comments",
         )
 
 

@@ -1,1 +1,1 @@
-from .thread import ThreadViewSet # noqa
+from .thread import ThreadViewSet  # noqa
