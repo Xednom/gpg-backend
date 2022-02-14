@@ -56,11 +56,6 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
             queryset = JobOrderGeneral.objects.all()
             return queryset
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        user = User.objects.filter(id=self.request.user.id)
-        serializer.save(updated_by=user)
-
     def perform_update(self, serializer):
         instance = self.get_object()
         user = self.request.user
@@ -74,7 +69,6 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
         client = [instance.client.user]
         staff = [staff.user for staff in instance.va_assigned.all()]
         recipient = client + staff
-        serializer.save(updated_by=user)
         if client_email and staff_email:
             emails = client_email + " " + staff_email
             emails = emails.split()
