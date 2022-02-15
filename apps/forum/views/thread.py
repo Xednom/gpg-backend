@@ -21,7 +21,7 @@ class ThreadViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         current_user = self.request.user
-        
+
         if current_user:
             queryset = Thread.objects.select_related("author").prefetch_related(
                 "staff_carbon_copy", "client_carbon_copy"

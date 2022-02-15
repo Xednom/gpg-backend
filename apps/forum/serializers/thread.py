@@ -42,7 +42,7 @@ class ThreadSerializer(serializers.ModelSerializer):
             "thread_comments",
             "author_name",
         )
-    
+
     def get_author_name(self, instance):
         return f"{instance.author.first_name} {instance.author.last_name}"
 
