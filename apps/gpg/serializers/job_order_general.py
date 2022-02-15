@@ -121,9 +121,6 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
     client_name = serializers.SerializerMethodField()
     status_ = serializers.SerializerMethodField()
     job_rating = serializers.SerializerMethodField()
-    updated_by = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), required=False, allow_null=True
-    )
 
     class Meta:
         model = JobOrderGeneral
@@ -153,7 +150,6 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "job_general_ratings",
             "job_order_general_scorings",
             "job_rating",
-            "updated_by",
         )
 
     def get_client_code(self, instance):
