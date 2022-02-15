@@ -27,6 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class ThreadSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     thread_comments = CommentSerializer(many=True, required=False, allow_null=True)
+    author_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Thread
@@ -39,7 +40,11 @@ class ThreadSerializer(serializers.ModelSerializer):
             "client_carbon_copy",
             "is_active",
             "thread_comments",
+            "author_name",
         )
+    
+    def get_author_name(self, instance):
+        return f"{instance.author.first_name} {instance.author.last_name}"
 
 
 class ReplySerializer(serializers.ModelSerializer):

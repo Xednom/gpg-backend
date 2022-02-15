@@ -21,24 +21,15 @@ class ThreadViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         current_user = self.request.user
-        clients = User.objects.filter(username=current_user)
-        staffs = User.objects.filter(username=current_user)
-        client = clients.all()
-        staff = staffs.all()
-
+        
         if current_user:
             queryset = Thread.objects.select_related("author").prefetch_related(
                 "staff_carbon_copy", "client_carbon_copy"
-            ).filter(author__in=client) or Thread.objects.select_related(
+            ).filter(author=current_user) or Thread.objects.select_related(
                 "author"
             ).prefetch_related(
                 "staff_carbon_copy", "client_carbon_copy"
             ).filter(
-                author__username__in=staff
-            ).exclude(
-                is_active=False
+                author=current_user
             )
-            return queryset
-        else:
-            queryset = Thread.objects.all()
             return queryset
