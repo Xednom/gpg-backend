@@ -443,6 +443,17 @@ exchange = ["certifi"]
 test = ["pytest (>=3.1.0)", "pytest-django", "pytest-pythonpath", "pytest-cov", "mixer"]
 
 [[package]]
+name = "django-mysql"
+version = "4.5.0"
+description = "Django-MySQL extends Django's built-in MySQL and MariaDB support their specific features not available on other databases."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "django-notifications-hq"
 version = "1.6.0"
 description = "GitHub notifications alike app for Django."
@@ -1382,7 +1393,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ee29d9c4e79406d2193981b8ff015a97b97f8717d95ca0a64490bcf7587b388d"
+content-hash = "c30edaeb798e0de2c1e696e479ed91fd7aecf51fe6beb0b61f03a5c12ecceb7d"
 
 [metadata.files]
 appdirs = [
@@ -1579,6 +1590,10 @@ django-model-utils = [
 django-money = [
     {file = "django-money-2.1.tar.gz", hash = "sha256:10a292fe2d8411a10f89a9df894161d07cf58fd32805543114d1711b33196cca"},
     {file = "django_money-2.1-py3-none-any.whl", hash = "sha256:a48f385ea528aac62d90de8c149e3587b158543cf062a9db504b98e7e5c875ed"},
+]
+django-mysql = [
+    {file = "django-mysql-4.5.0.tar.gz", hash = "sha256:a68dffbffb656206ad2118e6972f5ee71b506bf18ec2f1e5885482d1d675dcbb"},
+    {file = "django_mysql-4.5.0-py3-none-any.whl", hash = "sha256:3656c1649bdc8a39afe6347a8ebe02ce69eeb30595ceaa994f994c0b81a42013"},
 ]
 django-notifications-hq = [
     {file = "django-notifications-hq-1.6.0.tar.gz", hash = "sha256:debeb71b7076b08487b40bf07664d1cc43b9977c4480bbc969b30236dda7a461"},
