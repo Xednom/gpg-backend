@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 
 from rest_framework import viewsets, permissions, generics
@@ -30,6 +31,7 @@ class ThreadViewSet(viewsets.ModelViewSet):
             ).prefetch_related(
                 "staff_carbon_copy", "client_carbon_copy"
             ).filter(
-                author=current_user
+                Q(staff_carbon_copy__user=current_user)
+                or Q(client_carbon_copy__user=current_user)
             )
             return queryset
