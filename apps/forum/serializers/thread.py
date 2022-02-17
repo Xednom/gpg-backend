@@ -1,13 +1,27 @@
 from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
+from apps.authentication.models import Client, Staff
 from apps.forum.models import Thread, Comment, Reply
 
 User = get_user_model()
 
 
 __all__ = ("ThreadSerializer", "CommentSerializer", "ReplySerializer")
+
+
+class StaffCarbonCopySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = ("staff_id",)
+
+
+class ClientCarbonCopySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = ("client_code",)
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -24,7 +38,7 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 
-class ThreadSerializer(serializers.ModelSerializer):
+class ThreadSerializer(WritableNestedModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     thread_comments = CommentSerializer(many=True, required=False, allow_null=True)
     author_name = serializers.SerializerMethodField()
