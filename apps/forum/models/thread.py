@@ -42,7 +42,7 @@ class Comment(TimeStamped):
     comment = models.TextField()
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-id"]
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 
