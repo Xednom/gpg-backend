@@ -30,6 +30,7 @@ urlpatterns = [
     path("auth/", include("apps.authentication.urls")),
     path("api/v1/", include("apps.gpg.urls")),
     path("api/v1/", include("apps.gpg_notifications.urls")),
+    path("api/v1/", include("apps.forum.urls")),
     path("__debug__/", include(debug_toolbar.urls)),
     path(
         "inbox/notifications/",

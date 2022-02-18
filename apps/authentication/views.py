@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, generics
 from djoser.email import ConfirmationEmail, PasswordResetEmail
 
 from .models import Staff, Client, InternalFiles, InternalFilesStaff
@@ -39,8 +39,8 @@ class ClientCodeViewSet(viewsets.ModelViewSet):
     search_fields = ["=client_code"]
 
 
-class StaffCodeViewSet(viewsets.ModelViewSet):
-    serializer_class = StaffCodeSerializer
+class StaffViewSet(viewsets.ModelViewSet):
+    serializer_class = StaffSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Staff.objects.all()
 
@@ -71,6 +71,12 @@ class StaffFilesViewSet(viewsets.ModelViewSet):
         if current_user:
             qs = InternalFilesStaff.objects.filter(staff__user=current_user)
             return qs
+
+
+class StaffCodeList(generics.ListAPIView):
+    serializer_class = StaffCodeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Staff.objects.all()
 
 
 class GpgConfirmationEmail(ConfirmationEmail):

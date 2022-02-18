@@ -55,6 +55,7 @@ LOCAL_APPS = [
     "apps.task_designation",
     "apps.email_template",
     "apps.gpg_notifications",
+    "apps.forum",
 ]
 
 THIRD_PARTY_APPS = [
