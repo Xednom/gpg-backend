@@ -24,7 +24,7 @@ class Thread(TimeStamped):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-id"]
         verbose_name = "Thread"
         verbose_name_plural = "Threads"
 

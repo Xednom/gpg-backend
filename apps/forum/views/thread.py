@@ -30,13 +30,13 @@ class ThreadViewSet(viewsets.ModelViewSet):
             queryset = (
                 Thread.objects.select_related("author")
                 .prefetch_related("staff_carbon_copy", "client_carbon_copy")
-                .filter(Q(author=current_user) and Q(client_carbon_copy__in=client))
+                .filter(Q(author=current_user) | Q(client_carbon_copy__in=client))
             )
         elif staff:
             queryset = (
                 Thread.objects.select_related("author")
                 .prefetch_related("staff_carbon_copy", "client_carbon_copy")
-                .filter(Q(author=current_user) and Q(staff_carbon_copy__in=staff))
+                .filter(Q(author=current_user) | Q(staff_carbon_copy__in=staff))
             )
         return queryset
 
