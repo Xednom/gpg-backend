@@ -102,18 +102,13 @@ class ClientCodeSerializer(serializers.ModelSerializer):
         fields = ("id", "client_code", "hourly_rate")
 
 
-class StaffSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Staff
-        fields = ("staff_id", "hourly_rate")
-
-
 class StaffCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
         fields = (
             "id",
             "staff_id",
+            "hourly_rate"
         )
 
 

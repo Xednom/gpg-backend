@@ -8,6 +8,7 @@ from apps.authentication.views import (
     StaffFilesViewSet,
     ClientCodeViewSet,
     StaffCodeList,
+    StaffCodeViewSet
 )
 from apps.account.views import LoginCredentialViewSet, AccountFileViewSet
 from apps.timesheet.views import (
@@ -28,7 +29,7 @@ router = routers.DefaultRouter()
 router.register(r"staff", StaffViewSet, basename="staff-list")
 router.register(r"client", ClientViewSet, basename="client-list")
 router.register(r"client-code", ClientCodeViewSet, basename="client-code-list")
-router.register(r"staff-code", StaffViewSet, basename="staff-code-list")
+router.register(r"staff-code", StaffCodeViewSet, basename="staff-code-list")
 router.register(r"client-files", ClientFilesViewSet, basename="client-files-list")
 router.register(r"staff-files", StaffFilesViewSet, basename="staff-files-list")
 router.register(
