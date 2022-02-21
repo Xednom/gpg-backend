@@ -39,8 +39,8 @@ class ClientCodeViewSet(viewsets.ModelViewSet):
     search_fields = ["=client_code"]
 
 
-class StaffViewSet(viewsets.ModelViewSet):
-    serializer_class = StaffSerializer
+class StaffCodeViewSet(viewsets.ModelViewSet):
+    serializer_class = StaffCodeSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Staff.objects.all()
 
