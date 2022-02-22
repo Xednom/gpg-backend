@@ -234,9 +234,10 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         slug_field="category", queryset=CategoryType.objects.all()
     )
-    property_detail = serializers.SlugRelatedField(
-        slug_field="apn", queryset=PropertyDetail.objects.all()
+    property_detail = serializers.PrimaryKeyRelatedField(
+        queryset=PropertyDetail.objects.all(), required=False, allow_null=True
     )
+    property_detail__apn = serializers.CharField(source="property_detail.apn", required=False, read_only=True)
     deadline = serializers.SlugRelatedField(
         slug_field="deadline", queryset=Deadline.objects.all()
     )
@@ -259,6 +260,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "created_at",
             "ticket_number",
             "property_detail",
+            "property_detail__apn",
             "property_detail_ticket",
             "client",
             "client_email",
