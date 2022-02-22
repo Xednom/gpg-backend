@@ -8,7 +8,7 @@ from apps.authentication.views import (
     StaffFilesViewSet,
     ClientCodeViewSet,
     StaffCodeList,
-    StaffCodeViewSet
+    StaffCodeViewSet,
 )
 from apps.account.views import LoginCredentialViewSet, AccountFileViewSet
 from apps.timesheet.views import (
