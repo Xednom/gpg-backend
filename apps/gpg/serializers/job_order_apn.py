@@ -237,7 +237,9 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
     property_detail = serializers.PrimaryKeyRelatedField(
         queryset=PropertyDetail.objects.all(), required=False, allow_null=True
     )
-    property_detail__apn = serializers.CharField(source="property_detail.apn", required=False, read_only=True)
+    property_detail__apn = serializers.CharField(
+        source="property_detail.apn", required=False, read_only=True
+    )
     deadline = serializers.SlugRelatedField(
         slug_field="deadline", queryset=Deadline.objects.all()
     )

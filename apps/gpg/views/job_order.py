@@ -86,6 +86,7 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
                 target=instance,
                 action_object=instance,
             )
+        return serializer.save()
 
 
 class CreateJobOrderComment(generics.CreateAPIView):
