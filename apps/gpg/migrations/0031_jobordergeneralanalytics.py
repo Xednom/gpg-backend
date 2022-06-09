@@ -7,25 +7,42 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0012_auto_20211021_2214'),
-        ('gpg', '0030_auto_20211022_1954'),
+        ("authentication", "0012_auto_20211021_2214"),
+        ("gpg", "0030_auto_20211022_1954"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='JobOrderGeneralAnalytics',
+            name="JobOrderGeneralAnalytics",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('month', models.CharField(blank=True, max_length=250)),
-                ('month_year', models.CharField(blank=True, max_length=250)),
-                ('job_count', models.IntegerField(default=0)),
-                ('client', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='client_job_order_general_analytics', to='authentication.client')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("month", models.CharField(blank=True, max_length=250)),
+                ("month_year", models.CharField(blank=True, max_length=250)),
+                ("job_count", models.IntegerField(default=0)),
+                (
+                    "client",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="client_job_order_general_analytics",
+                        to="authentication.client",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Job order General Analytic',
-                'verbose_name_plural': 'Job order General Analytics',
+                "verbose_name": "Job order General Analytic",
+                "verbose_name_plural": "Job order General Analytics",
             },
         ),
     ]

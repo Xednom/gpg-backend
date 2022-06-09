@@ -6,13 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0005_auto_20210415_0947'),
+        ("gpg", "0005_auto_20210415_0947"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='propertydetail',
-            name='property_status',
-            field=models.CharField(blank=True, choices=[('sold', 'Sold'), ('available', 'Available'), ('in_escrow', 'In Escrow'), ('in_contract', 'In Contract'), ('ready_to_purchase', 'Ready to Purchase'), ('ready_for_contract', 'Ready for Contract'), ('canceled_transaction', 'Canceled Transaction'), ('interested_to_purchase', 'Interested to purchase'), ('need_of_research', 'In need of research'), ('not_applicable', 'Not applicable')], max_length=25),
+            model_name="propertydetail",
+            name="property_status",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("sold", "Sold"),
+                    ("available", "Available"),
+                    ("in_escrow", "In Escrow"),
+                    ("in_contract", "In Contract"),
+                    ("ready_to_purchase", "Ready to Purchase"),
+                    ("ready_for_contract", "Ready for Contract"),
+                    ("canceled_transaction", "Canceled Transaction"),
+                    ("interested_to_purchase", "Interested to purchase"),
+                    ("need_of_research", "In need of research"),
+                    ("not_applicable", "Not applicable"),
+                ],
+                max_length=25,
+            ),
         ),
     ]

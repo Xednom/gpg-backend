@@ -7,23 +7,33 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0013_auto_20211111_2146'),
-        ('gpg', '0035_auto_20220117_1555'),
+        ("authentication", "0013_auto_20211111_2146"),
+        ("gpg", "0035_auto_20220117_1555"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobordercategoryagentscoring',
-            name='job_order_category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='job_order_category_scorings', to='gpg.jobordercategory'),
+            model_name="jobordercategoryagentscoring",
+            name="job_order_category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="job_order_category_scorings",
+                to="gpg.jobordercategory",
+            ),
         ),
         migrations.RemoveField(
-            model_name='jobordercategoryagentscoring',
-            name='staff',
+            model_name="jobordercategoryagentscoring",
+            name="staff",
         ),
         migrations.AddField(
-            model_name='jobordercategoryagentscoring',
-            name='staff',
-            field=models.ManyToManyField(blank=True, related_name='job_order_category_staff_scorings', to='authentication.Staff'),
+            model_name="jobordercategoryagentscoring",
+            name="staff",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="job_order_category_staff_scorings",
+                to="authentication.Staff",
+            ),
         ),
     ]

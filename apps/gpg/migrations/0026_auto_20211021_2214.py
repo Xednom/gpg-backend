@@ -6,68 +6,68 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0025_auto_20210910_1141'),
+        ("gpg", "0025_auto_20210910_1141"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='accountcredential',
-            name='created_at',
+            model_name="accountcredential",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='categorytype',
-            name='created_at',
+            model_name="categorytype",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='created_at',
+            model_name="comment",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='commentbyapn',
-            name='created_at',
+            model_name="commentbyapn",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='county',
-            name='created_at',
+            model_name="county",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='deadline',
-            name='created_at',
+            model_name="deadline",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='jobordercategory',
-            name='created_at',
+            model_name="jobordercategory",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='jobordergeneral',
-            name='created_at',
+            model_name="jobordergeneral",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='propertydetail',
-            name='created_at',
+            model_name="propertydetail",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='propertydetailfile',
-            name='created_at',
+            model_name="propertydetailfile",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='propertyprice',
-            name='created_at',
+            model_name="propertyprice",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='state',
-            name='created_at',
+            model_name="state",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
     ]

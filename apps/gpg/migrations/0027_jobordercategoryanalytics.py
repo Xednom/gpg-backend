@@ -7,23 +7,59 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0012_auto_20211021_2214'),
-        ('gpg', '0026_auto_20211021_2214'),
+        ("authentication", "0012_auto_20211021_2214"),
+        ("gpg", "0026_auto_20211021_2214"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='JobOrderCategoryAnalytics',
+            name="JobOrderCategoryAnalytics",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('date', models.CharField(choices=[('jan', 'January'), ('fed', 'Feduary'), ('mar', 'March'), ('apr', 'April'), ('may', 'May'), ('jun', 'June'), ('jul', 'July'), ('aug', 'August'), ('sep', 'September'), ('oct', 'October'), ('nov', 'November'), ('dec', 'December')], max_length=250)),
-                ('job_count', models.IntegerField(default=0)),
-                ('client', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='client_job_order_category_analytics', to='authentication.client')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "date",
+                    models.CharField(
+                        choices=[
+                            ("jan", "January"),
+                            ("fed", "Feduary"),
+                            ("mar", "March"),
+                            ("apr", "April"),
+                            ("may", "May"),
+                            ("jun", "June"),
+                            ("jul", "July"),
+                            ("aug", "August"),
+                            ("sep", "September"),
+                            ("oct", "October"),
+                            ("nov", "November"),
+                            ("dec", "December"),
+                        ],
+                        max_length=250,
+                    ),
+                ),
+                ("job_count", models.IntegerField(default=0)),
+                (
+                    "client",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="client_job_order_category_analytics",
+                        to="authentication.client",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

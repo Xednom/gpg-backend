@@ -6,17 +6,36 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0028_auto_20211022_1925'),
+        ("gpg", "0028_auto_20211022_1925"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='jobordercategoryanalytics',
-            options={'verbose_name': 'Job order Category Analytic', 'verbose_name_plural': 'Job order Category Analytics'},
+            name="jobordercategoryanalytics",
+            options={
+                "verbose_name": "Job order Category Analytic",
+                "verbose_name_plural": "Job order Category Analytics",
+            },
         ),
         migrations.AlterField(
-            model_name='jobordercategoryanalytics',
-            name='month',
-            field=models.CharField(choices=[('jan', 'Jan'), ('feb', 'Feb'), ('mar', 'Mar'), ('apr', 'Apr'), ('may', 'May'), ('jun', 'Jun'), ('jul', 'Jul'), ('aug', 'Aug'), ('sep', 'Sep'), ('oct', 'Oct'), ('nov', 'Nov'), ('dec', 'Dec')], max_length=250),
+            model_name="jobordercategoryanalytics",
+            name="month",
+            field=models.CharField(
+                choices=[
+                    ("jan", "Jan"),
+                    ("feb", "Feb"),
+                    ("mar", "Mar"),
+                    ("apr", "Apr"),
+                    ("may", "May"),
+                    ("jun", "Jun"),
+                    ("jul", "Jul"),
+                    ("aug", "Aug"),
+                    ("sep", "Sep"),
+                    ("oct", "Oct"),
+                    ("nov", "Nov"),
+                    ("dec", "Dec"),
+                ],
+                max_length=250,
+            ),
         ),
     ]

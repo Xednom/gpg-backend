@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0036_auto_20220117_1906'),
+        ("gpg", "0036_auto_20220117_1906"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobordercategory',
-            name='client_file',
+            model_name="jobordercategory",
+            name="client_file",
             field=models.TextField(blank=True),
         ),
     ]

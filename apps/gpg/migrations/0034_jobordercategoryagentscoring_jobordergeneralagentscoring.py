@@ -9,53 +9,125 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('authentication', '0013_auto_20211111_2146'),
-        ('gpg', '0033_alter_jobordercategoryrating_job_order'),
+        ("authentication", "0013_auto_20211111_2146"),
+        ("gpg", "0033_alter_jobordercategoryrating_job_order"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='JobOrderGeneralAgentScoring',
+            name="JobOrderGeneralAgentScoring",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('accuracy', models.IntegerField()),
-                ('speed', models.IntegerField()),
-                ('quality_of_work', models.IntegerField()),
-                ('delivered_on_time', models.BooleanField(default=False)),
-                ('delivery_note', models.TextField(blank=True)),
-                ('job_completed', models.BooleanField(default=False)),
-                ('job_completed_note', models.TextField(blank=True, help_text='Was the job completed based on your instruction or expectations?')),
-                ('satisfied', models.BooleanField(default=False)),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='client_agent_scorings', to='authentication.client')),
-                ('job_order_general', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='job_order_general_scorings', to='gpg.jobordergeneral')),
-                ('staff', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='general_agent_scorings', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("accuracy", models.IntegerField()),
+                ("speed", models.IntegerField()),
+                ("quality_of_work", models.IntegerField()),
+                ("delivered_on_time", models.BooleanField(default=False)),
+                ("delivery_note", models.TextField(blank=True)),
+                ("job_completed", models.BooleanField(default=False)),
+                (
+                    "job_completed_note",
+                    models.TextField(
+                        blank=True,
+                        help_text="Was the job completed based on your instruction or expectations?",
+                    ),
+                ),
+                ("satisfied", models.BooleanField(default=False)),
+                (
+                    "client",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="client_agent_scorings",
+                        to="authentication.client",
+                    ),
+                ),
+                (
+                    "job_order_general",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="job_order_general_scorings",
+                        to="gpg.jobordergeneral",
+                    ),
+                ),
+                (
+                    "staff",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="general_agent_scorings",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='JobOrderCategoryAgentScoring',
+            name="JobOrderCategoryAgentScoring",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('accuracy', models.IntegerField()),
-                ('speed', models.IntegerField()),
-                ('quality_of_work', models.IntegerField()),
-                ('delivered_on_time', models.BooleanField(default=False)),
-                ('delivery_note', models.TextField(blank=True)),
-                ('job_completed', models.BooleanField(default=False)),
-                ('job_completed_note', models.TextField(blank=True, help_text='Was the job completed based on your instruction or expectations?')),
-                ('satisfied', models.BooleanField(default=False)),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='authentication.client')),
-                ('job_order_category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='gpg.jobordercategory')),
-                ('staff', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='category_agent_scorings', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("accuracy", models.IntegerField()),
+                ("speed", models.IntegerField()),
+                ("quality_of_work", models.IntegerField()),
+                ("delivered_on_time", models.BooleanField(default=False)),
+                ("delivery_note", models.TextField(blank=True)),
+                ("job_completed", models.BooleanField(default=False)),
+                (
+                    "job_completed_note",
+                    models.TextField(
+                        blank=True,
+                        help_text="Was the job completed based on your instruction or expectations?",
+                    ),
+                ),
+                ("satisfied", models.BooleanField(default=False)),
+                (
+                    "client",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="authentication.client",
+                    ),
+                ),
+                (
+                    "job_order_category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="gpg.jobordercategory",
+                    ),
+                ),
+                (
+                    "staff",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="category_agent_scorings",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

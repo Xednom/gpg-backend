@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0020_auto_20210512_0855'),
+        ("gpg", "0020_auto_20210512_0855"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='propertydetail',
-            options={'verbose_name': 'APN Inventory list', 'verbose_name_plural': 'APN Inventory lists'},
+            name="propertydetail",
+            options={
+                "verbose_name": "APN Inventory list",
+                "verbose_name_plural": "APN Inventory lists",
+            },
         ),
     ]

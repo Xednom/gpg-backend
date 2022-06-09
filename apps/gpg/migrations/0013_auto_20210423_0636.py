@@ -6,16 +6,19 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0012_jobordergeneral_url_of_the_completed_jo'),
+        ("gpg", "0012_jobordergeneral_url_of_the_completed_jo"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='jobordercategory',
-            options={'ordering': ['-id'], 'verbose_name_plural': 'Job Order Categories'},
+            name="jobordercategory",
+            options={
+                "ordering": ["-id"],
+                "verbose_name_plural": "Job Order Categories",
+            },
         ),
         migrations.AlterModelOptions(
-            name='jobordergeneral',
-            options={'ordering': ['-id']},
+            name="jobordergeneral",
+            options={"ordering": ["-id"]},
         ),
     ]

@@ -6,7 +6,10 @@ from .models import Resolution, Category, ResolutionComment
 class ResolutionCommentSection(admin.TabularInline):
     model = ResolutionComment
     extra = 1
-    fields = ("user", "comment",)
+    fields = (
+        "user",
+        "comment",
+    )
     readonly_fields = ("user",)
 
 

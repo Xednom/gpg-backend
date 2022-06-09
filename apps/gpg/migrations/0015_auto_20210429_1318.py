@@ -6,49 +6,99 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0014_auto_20210423_0817'),
+        ("gpg", "0014_auto_20210423_0817"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='categorytype',
-            options={'ordering': ['category'], 'verbose_name': 'Job Order Category', 'verbose_name_plural': 'Job Order Categories'},
+            name="categorytype",
+            options={
+                "ordering": ["category"],
+                "verbose_name": "Job Order Category",
+                "verbose_name_plural": "Job Order Categories",
+            },
         ),
         migrations.AlterModelOptions(
-            name='county',
-            options={'verbose_name': 'List of County in USA', 'verbose_name_plural': 'List of Counties in USA'},
+            name="county",
+            options={
+                "verbose_name": "List of County in USA",
+                "verbose_name_plural": "List of Counties in USA",
+            },
         ),
         migrations.AlterModelOptions(
-            name='deadline',
-            options={'ordering': ['deadline'], 'verbose_name': 'Deadline Category', 'verbose_name_plural': 'Deadline Categories'},
+            name="deadline",
+            options={
+                "ordering": ["deadline"],
+                "verbose_name": "Deadline Category",
+                "verbose_name_plural": "Deadline Categories",
+            },
         ),
         migrations.AlterModelOptions(
-            name='jobordercategory',
-            options={'ordering': ['-id'], 'verbose_name': 'Job Order Request by APN', 'verbose_name_plural': 'Job Order Request by APNs'},
+            name="jobordercategory",
+            options={
+                "ordering": ["-id"],
+                "verbose_name": "Job Order Request by APN",
+                "verbose_name_plural": "Job Order Request by APNs",
+            },
         ),
         migrations.AlterModelOptions(
-            name='jobordergeneral',
-            options={'ordering': ['-id'], 'verbose_name': 'General Order Request', 'verbose_name_plural': 'General Order Requests'},
+            name="jobordergeneral",
+            options={
+                "ordering": ["-id"],
+                "verbose_name": "General Order Request",
+                "verbose_name_plural": "General Order Requests",
+            },
         ),
         migrations.AlterModelOptions(
-            name='propertydetail',
-            options={'verbose_name': 'APN Invetory list', 'verbose_name_plural': 'APN Invetory lists'},
+            name="propertydetail",
+            options={
+                "verbose_name": "APN Invetory list",
+                "verbose_name_plural": "APN Invetory lists",
+            },
         ),
         migrations.AlterModelOptions(
-            name='propertydetailfile',
-            options={'ordering': ['created_at'], 'verbose_name': 'Per APN file data', 'verbose_name_plural': 'Per APN files data'},
+            name="propertydetailfile",
+            options={
+                "ordering": ["created_at"],
+                "verbose_name": "Per APN file data",
+                "verbose_name_plural": "Per APN files data",
+            },
         ),
         migrations.AlterModelOptions(
-            name='propertyprice',
-            options={'verbose_name': 'APN Pricing Term', 'verbose_name_plural': 'APN Pricing Terms'},
+            name="propertyprice",
+            options={
+                "verbose_name": "APN Pricing Term",
+                "verbose_name_plural": "APN Pricing Terms",
+            },
         ),
         migrations.AlterModelOptions(
-            name='state',
-            options={'ordering': ['name'], 'verbose_name': 'List of State in USA', 'verbose_name_plural': 'List of States in USA'},
+            name="state",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "List of State in USA",
+                "verbose_name_plural": "List of States in USA",
+            },
         ),
         migrations.AlterField(
-            model_name='propertydetail',
-            name='property_status',
-            field=models.CharField(blank=True, choices=[('sold', 'Sold'), ('sold_in_cash', 'Sold in Cash'), ('sold_in_terms', 'Sold in Terms'), ('available', 'Available'), ('in_escrow', 'In Escrow'), ('in_contract', 'In Contract'), ('ready_to_purchase', 'Ready to Purchase'), ('ready_for_contract', 'Ready for Contract'), ('canceled_transaction', 'Canceled Transaction'), ('interested_to_purchase', 'Interested to purchase'), ('need_of_research', 'In need of research'), ('not_applicable', 'Not applicable')], max_length=25),
+            model_name="propertydetail",
+            name="property_status",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("sold", "Sold"),
+                    ("sold_in_cash", "Sold in Cash"),
+                    ("sold_in_terms", "Sold in Terms"),
+                    ("available", "Available"),
+                    ("in_escrow", "In Escrow"),
+                    ("in_contract", "In Contract"),
+                    ("ready_to_purchase", "Ready to Purchase"),
+                    ("ready_for_contract", "Ready for Contract"),
+                    ("canceled_transaction", "Canceled Transaction"),
+                    ("interested_to_purchase", "Interested to purchase"),
+                    ("need_of_research", "In need of research"),
+                    ("not_applicable", "Not applicable"),
+                ],
+                max_length=25,
+            ),
         ),
     ]
