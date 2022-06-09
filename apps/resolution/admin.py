@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import Resolution, Category
+from .models import Resolution, Category, ResolutionComment
+
+
+class ResolutionCommentSection(admin.TabularInline):
+    model = ResolutionComment
+    extra = 1
+    fields = ("user", "comment",)
+    readonly_fields = ("user",)
 
 
 class ResolutionAdmin(admin.ModelAdmin):
@@ -48,6 +55,16 @@ class ResolutionAdmin(admin.ModelAdmin):
             },
         ),
     )
+    inlines = [ResolutionCommentSection]
+
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for obj in formset.deleted_objects:
+            obj.delete()
+        for instance in instances:
+            instance.user = request.user
+            instance.save()
+        formset.save_m2m()
 
 
 # Register your models here.
