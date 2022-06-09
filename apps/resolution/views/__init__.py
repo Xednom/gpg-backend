@@ -1,1 +1,5 @@
-from .resolution import ResolutionViewSet, CategoryListView  # noqa
+from .resolution import (
+    ResolutionViewSet,
+    CategoryListView,
+    CreateResolutionComment,
+)  # noqa
