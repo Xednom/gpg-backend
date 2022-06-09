@@ -9,13 +9,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('gpg', '0038_alter_jobordergeneral_staff_email'),
+        ("gpg", "0038_alter_jobordergeneral_staff_email"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='jobordergeneral',
-            name='updated_by',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_updated_job_roders', to=settings.AUTH_USER_MODEL),
+            model_name="jobordergeneral",
+            name="updated_by",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="user_updated_job_roders",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

@@ -25,10 +25,46 @@ class ResolutionCommentSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True,
     )
+    created_at = serializers.DateField(required=False, allow_null=True)
+    commenter = serializers.SerializerMethodField()
+    user_type = serializers.SerializerMethodField()
 
     class Meta:
         model = ResolutionComment
-        fields = ("id", "resolution", "user", "comment", "created_at")
+        fields = (
+            "id",
+            "resolution",
+            "user",
+            "comment",
+            "created_at",
+            "commenter",
+            "user_type",
+        )
+
+    def get_user_type(self, instance):
+        staff_user = "staff"
+        client_user = "client"
+        if instance.user:
+            if instance.user.designation_category == "staff":
+                return staff_user
+            elif instance.user.designation_category != "staff":
+                return client_user
+
+    def get_commenter(self, instance):
+        get_staff_code = Staff.objects.select_related("user").filter(user=instance.user)
+        get_client_code = Client.objects.select_related("user").filter(
+            user=instance.user
+        )
+
+        if instance.user:
+            if instance.user.designation_category == "staff":
+                staff_code = [staff.staff_id for staff in get_staff_code]
+                staff_code = "".join(staff_code)
+                return staff_code
+            elif instance.user.designation_category != "staff":
+                client_code = [client.client_code for client in get_client_code]
+                client_code = "".join(client_code)
+                return client_code
 
 
 class ResolutionSerializer(serializers.ModelSerializer):

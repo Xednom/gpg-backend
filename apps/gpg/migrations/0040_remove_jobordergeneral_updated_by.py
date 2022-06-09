@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0039_jobordergeneral_updated_by'),
+        ("gpg", "0039_jobordergeneral_updated_by"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='jobordergeneral',
-            name='updated_by',
+            model_name="jobordergeneral",
+            name="updated_by",
         ),
     ]

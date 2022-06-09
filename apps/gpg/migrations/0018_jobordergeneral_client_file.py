@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0017_jobordergeneral_management_notes'),
+        ("gpg", "0017_jobordergeneral_management_notes"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='jobordergeneral',
-            name='client_file',
+            model_name="jobordergeneral",
+            name="client_file",
             field=models.CharField(blank=True, max_length=500),
         ),
     ]

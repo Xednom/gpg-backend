@@ -10,65 +10,169 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('authentication', '0001_initial'),
+        ("authentication", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='JobOrderGeneral',
+            name="JobOrderGeneral",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('ticket_number', models.CharField(blank=True, max_length=100)),
-                ('request_date', models.DateField()),
-                ('due_date', models.DateField()),
-                ('job_title', models.CharField(max_length=250)),
-                ('job_description', models.TextField()),
-                ('client_notes', models.TextField(blank=True)),
-                ('va_notes', models.TextField(blank=True)),
-                ('status', models.CharField(blank=True, choices=[('na', 'N/A'), ('request_for_job_order', 'Request for job order'), ('va_processing', 'VA Processing'), ('management_processing', 'Management Processing'), ('verified_job_order', 'Verified Job Order'), ('on_hold', 'On Hold'), ('canceled', 'Canceled'), ('follow_up', 'Follow up'), ('dispute', 'Dispute'), ('complete', 'Complete')], default='na', max_length=100)),
-                ('date_completed', models.DateField(blank=True, null=True)),
-                ('total_time_consumed', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
-                ('client', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='clients_job_orders', to='authentication.client')),
-                ('va_assigned', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='vas_job_orders', to='authentication.staff')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("ticket_number", models.CharField(blank=True, max_length=100)),
+                ("request_date", models.DateField()),
+                ("due_date", models.DateField()),
+                ("job_title", models.CharField(max_length=250)),
+                ("job_description", models.TextField()),
+                ("client_notes", models.TextField(blank=True)),
+                ("va_notes", models.TextField(blank=True)),
+                (
+                    "status",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("na", "N/A"),
+                            ("request_for_job_order", "Request for job order"),
+                            ("va_processing", "VA Processing"),
+                            ("management_processing", "Management Processing"),
+                            ("verified_job_order", "Verified Job Order"),
+                            ("on_hold", "On Hold"),
+                            ("canceled", "Canceled"),
+                            ("follow_up", "Follow up"),
+                            ("dispute", "Dispute"),
+                            ("complete", "Complete"),
+                        ],
+                        default="na",
+                        max_length=100,
+                    ),
+                ),
+                ("date_completed", models.DateField(blank=True, null=True)),
+                (
+                    "total_time_consumed",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=10, null=True
+                    ),
+                ),
+                (
+                    "client",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="clients_job_orders",
+                        to="authentication.client",
+                    ),
+                ),
+                (
+                    "va_assigned",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="vas_job_orders",
+                        to="authentication.staff",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('comment', models.TextField()),
-                ('job_order', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='job_order_comments', to='gpg.jobordergeneral')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("comment", models.TextField()),
+                (
+                    "job_order",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="job_order_comments",
+                        to="gpg.jobordergeneral",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-created_at'],
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='AccountCredential',
+            name="AccountCredential",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('category', models.CharField(max_length=250)),
-                ('url', models.URLField()),
-                ('username', models.CharField(max_length=250)),
-                ('password', models.CharField(max_length=250)),
-                ('notes', models.TextField(blank=True)),
-                ('access_granted', models.CharField(choices=[('yes', 'Yes'), ('no', 'No'), ('na', 'N/A')], default='no', max_length=10)),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='client_accounts', to='authentication.client')),
-                ('granted_access_to', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='staff_access', to='authentication.staff')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("category", models.CharField(max_length=250)),
+                ("url", models.URLField()),
+                ("username", models.CharField(max_length=250)),
+                ("password", models.CharField(max_length=250)),
+                ("notes", models.TextField(blank=True)),
+                (
+                    "access_granted",
+                    models.CharField(
+                        choices=[("yes", "Yes"), ("no", "No"), ("na", "N/A")],
+                        default="no",
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "client",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="client_accounts",
+                        to="authentication.client",
+                    ),
+                ),
+                (
+                    "granted_access_to",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="staff_access",
+                        to="authentication.staff",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

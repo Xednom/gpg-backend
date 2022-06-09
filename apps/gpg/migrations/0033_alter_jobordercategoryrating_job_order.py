@@ -7,13 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0032_jobordercategoryrating_jobordergeneralrating'),
+        ("gpg", "0032_jobordercategoryrating_jobordergeneralrating"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobordercategoryrating',
-            name='job_order',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='job_category_ratings', to='gpg.jobordercategory'),
+            model_name="jobordercategoryrating",
+            name="job_order",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="job_category_ratings",
+                to="gpg.jobordercategory",
+            ),
         ),
     ]

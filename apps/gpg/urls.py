@@ -21,7 +21,11 @@ from apps.timesheet.views import (
 )
 from apps.due_diligence.views import PhoneLineExtViewSet, CallOutViewSet
 from apps.newsfeed.views import NewsFeedViewSet, CreateNewsFeedComment
-from apps.resolution.views import ResolutionViewSet, CategoryListView
+from apps.resolution.views import (
+    ResolutionViewSet,
+    CategoryListView,
+    CreateResolutionComment,
+)
 
 from . import views
 
@@ -128,6 +132,11 @@ urlpatterns = [
         "newsfeed/<int:id>/comment/",
         CreateNewsFeedComment.as_view(),
         name="newsfeed-comment",
+    ),
+    path(
+        "resolution/<int:id>/comment/",
+        CreateResolutionComment.as_view(),
+        name="resolution-comment",
     ),
     path("category/", CategoryListView.as_view(), name="category-list"),
     path("staff-info/", StaffCodeList.as_view(), name="staff-info"),

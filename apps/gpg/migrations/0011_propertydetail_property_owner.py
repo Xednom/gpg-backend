@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0010_auto_20210421_0949'),
+        ("gpg", "0010_auto_20210421_0949"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='propertydetail',
-            name='property_owner',
+            model_name="propertydetail",
+            name="property_owner",
             field=models.CharField(blank=True, max_length=250),
         ),
     ]
