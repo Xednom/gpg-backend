@@ -47,7 +47,7 @@ class Comment(TimeStamped):
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return self.content
+        return f"{self.author} - {self.thread}"
 
 
 class Reply(TimeStamped):
