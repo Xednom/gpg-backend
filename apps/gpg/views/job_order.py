@@ -50,7 +50,7 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
                 status="complete"
             ).exclude(
                 status="closed"
-            )
+            ).exclude(status="canceled")
             return queryset
         else:
             queryset = JobOrderGeneral.objects.all()

@@ -142,6 +142,8 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
                 status="complete"
             ).exclude(
                 status="closed"
+            ).exclude(
+                status="canceled"
             )
             return queryset
         elif current_user.is_superuser:
