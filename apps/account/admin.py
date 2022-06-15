@@ -3,6 +3,9 @@ from apps.core.admin import ModelAdminMixin
 
 from .models import LoginCredential, AccountFile
 
+from import_export.admin import ImportExportModelAdmin
+from apps.account.resources import AccountFileResource
+
 
 class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = LoginCredential
@@ -39,8 +42,9 @@ class LoginCredentialAdmin(ModelAdminMixin, admin.ModelAdmin):
     get_staffs.short_description = "Staffs"
 
 
-class AccountFileAdmin(ModelAdminMixin, admin.ModelAdmin):
+class AccountFileAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     model = AccountFile
+    resource_class = AccountFileResource
     list_display = ("client", "get_staffs", "file_name", "url")
     list_filter = ("staff", "client")
     filter_horizontal = ("staff",)
