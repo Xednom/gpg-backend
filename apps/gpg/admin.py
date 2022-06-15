@@ -331,8 +331,11 @@ class CountyAdmin(admin.ModelAdmin):
 class JobOrderGeneralRatingAdmin(admin.ModelAdmin):
     model = JobOrderGeneralRating
     list_display = (
+        "created_at",
         "job_order",
+        "get_staffs",
         "client",
+        "comment",
         "rating",
     )
     list_filter = ("job_order", "client")
@@ -356,6 +359,13 @@ class JobOrderGeneralRatingAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def get_staffs(self, obj):
+        return ", ".join(
+            [staff.staff_name for staff in obj.job_order.va_assigned.all()]
+        )
+
+    get_staffs.short_description = "Staffs"
 
 
 class JobOrderCategoryRatingAdmin(admin.ModelAdmin):
@@ -363,6 +373,7 @@ class JobOrderCategoryRatingAdmin(admin.ModelAdmin):
     list_display = (
         "job_order",
         "client",
+        "get_staffs",
         "rating",
     )
     list_filter = ("job_order", "client")
@@ -375,7 +386,7 @@ class JobOrderCategoryRatingAdmin(admin.ModelAdmin):
     readonly_fields = ["job_order", "client", "rating", "comment"]
     fieldsets = (
         (
-            "Job order general rate",
+            "Job order category rate",
             {
                 "fields": (
                     "job_order",
@@ -386,6 +397,11 @@ class JobOrderCategoryRatingAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def get_staffs(self, obj):
+        return ", ".join([staff.staff_name for staff in obj.job_order.staff.all()])
+
+    get_staffs.short_description = "Staffs"
 
 
 admin.site.register(JobOrderGeneral, JobOrderGeneralAdmin)
