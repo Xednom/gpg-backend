@@ -404,6 +404,104 @@ class JobOrderCategoryRatingAdmin(admin.ModelAdmin):
     get_staffs.short_description = "Staffs"
 
 
+class JobOrderGeneralAgentScoringAdmin(admin.ModelAdmin):
+    model = JobOrderGeneralAgentScoring
+    list_display = (
+        "client",
+        "get_staffs",
+        "accuracy",
+        "speed",
+        "quality_of_work",
+        "job_completed_note",
+    )
+    list_filter = ("job_order_general", "client")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "staff__user__first_name",
+        "staff__user__last_name",
+        "job_order_general__ticket_number",
+        "job_order_general__job_title",
+    )
+    readonly_fields = ["job_order_general", "client", "quality_of_work", "satisfied"]
+    fieldsets = (
+        (
+            "Job order category score",
+            {
+                "fields": (
+                    "staff",
+                    "client",
+                    "job_order_general",
+                    "accuracy",
+                    "speed",
+                    "quality_of_work",
+                    "delivered_on_time",
+                    "delivery_note",
+                    "job_completed",
+                    "job_completed_note",
+                    "satisfied",
+                )
+            },
+        ),
+    )
+
+    def get_staffs(self, obj):
+        return ", ".join(
+            [staff.staff_name for staff in obj.job_order_general.va_assigned.all()]
+        )
+
+    get_staffs.short_description = "Staffs"
+
+
+class JobOrderCategoryAgentScoringAdmin(admin.ModelAdmin):
+    model = JobOrderCategoryAgentScoring
+    list_display = (
+        "client",
+        "get_staffs",
+        "accuracy",
+        "speed",
+        "quality_of_work",
+        "job_completed_note",
+    )
+    list_filter = ("job_order_category", "client")
+    search_fields = (
+        "client__user__first_name",
+        "client__user__last_name",
+        "staff__user__first_name",
+        "staff__user__last_name",
+        "job_order_category__ticket_number",
+        "job_order_category__job_title",
+    )
+    readonly_fields = ["job_order_category", "client", "quality_of_work", "satisfied"]
+    fieldsets = (
+        (
+            "Job order category score",
+            {
+                "fields": (
+                    "staff",
+                    "client",
+                    "job_order_category",
+                    "accuracy",
+                    "speed",
+                    "quality_of_work",
+                    "delivered_on_time",
+                    "delivery_note",
+                    "job_completed",
+                    "job_completed_note",
+                    "satisfied",
+                )
+            },
+        ),
+    )
+
+    def get_staffs(self, obj):
+        return ", ".join(
+            [staff.staff_name for staff in obj.job_order_category.staff.all()]
+        )
+
+    get_staffs.short_description = "Staffs"
+
+
 admin.site.register(JobOrderGeneral, JobOrderGeneralAdmin)
 admin.site.register(JobOrderCategory, JobOrderByCategoryAdmin)
 admin.site.register(PropertyDetail, PropertyDetailsAdmin)
@@ -417,5 +515,5 @@ admin.site.register(JobOrderCategoryAnalytics)
 admin.site.register(JobOrderGeneralAnalytics)
 admin.site.register(JobOrderGeneralRating, JobOrderGeneralRatingAdmin)
 admin.site.register(JobOrderCategoryRating, JobOrderCategoryRatingAdmin)
-admin.site.register(JobOrderGeneralAgentScoring)
-admin.site.register(JobOrderCategoryAgentScoring)
+admin.site.register(JobOrderGeneralAgentScoring, JobOrderGeneralAgentScoringAdmin)
+admin.site.register(JobOrderCategoryAgentScoring, JobOrderCategoryAgentScoringAdmin)
