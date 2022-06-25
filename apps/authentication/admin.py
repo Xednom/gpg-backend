@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from apps.authentication.resources import ClientResource
+from apps.authentication.resources import ClientResource, UserResource
 
 from import_export.admin import ImportExportModelAdmin
 
@@ -28,7 +28,8 @@ class InternalFilesStaffAdmin(admin.TabularInline):
     readonly_fields = ("created_at",)
 
 
-class UserProfileAdmin(UserAdmin):
+class UserProfileAdmin(ImportExportModelAdmin):
+    resource_class = UserResource
     list_display = (
         "username",
         "email",

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.forms import CharField
 
 from post_office.models import EmailTemplate
 from post_office import mail
@@ -50,6 +51,8 @@ class JobOrderGeneralViewSet(viewsets.ModelViewSet):
                 status="complete"
             ).exclude(
                 status="closed"
+            ).exclude(
+                status="canceled"
             )
             return queryset
         else:
@@ -114,10 +117,11 @@ class CreateJobOrderComment(generics.CreateAPIView):
 class JobOrderApnAnalyticsFilter(dfilters.FilterSet):
     month = CharFilter(field_name="month", lookup_expr="icontains")
     month_year = CharFilter(field_name="month_year", lookup_expr="icontains")
+    client = CharFilter(field_name="client__user__first_name", lookup_expr="icontains")
 
     class Meta:
         model = JobOrderGeneralAnalytics
-        fields = ("month", "month_year")
+        fields = ("month", "month_year", "client")
 
 
 class JobOrderGeneralAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):

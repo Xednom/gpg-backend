@@ -89,6 +89,8 @@ class ThreadSerializer(WritableNestedModelSerializer):
             "is_active",
             "thread_comments",
             "author_username",
+            "status",
+            "created_at",
         )
 
     def get_author_username(self, instance):

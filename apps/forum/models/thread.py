@@ -7,6 +7,13 @@ from apps.core.models import TimeStamped
 __all__ = ("Thread", "Comment", "Reply")
 
 
+class Status(models.TextChoices):
+    active = "active", ("Active")
+    closed = "closed", ("Closed")
+    on_hold = "on_hold", ("On Hold")
+    canceled = "canceled", ("Canceled")
+
+
 class Thread(TimeStamped):
     title = models.CharField(max_length=250)
     content = models.TextField()
@@ -22,6 +29,9 @@ class Thread(TimeStamped):
         blank=True,
     )
     is_active = models.BooleanField(default=True)
+    status = models.CharField(
+        max_length=250, choices=Status.choices, default=Status.active
+    )
 
     class Meta:
         ordering = ["-id"]
@@ -47,7 +57,7 @@ class Comment(TimeStamped):
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return self.content
+        return f"{self.author} - {self.thread}"
 
 
 class Reply(TimeStamped):
