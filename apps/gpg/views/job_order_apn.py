@@ -241,10 +241,11 @@ class CountyViewSet(viewsets.ModelViewSet):
 class JobOrderApnAnalyticsFilter(dfilters.FilterSet):
     month = CharFilter(field_name="month", lookup_expr="icontains")
     month_year = CharFilter(field_name="month_year", lookup_expr="icontains")
+    client = CharFilter(field_name="client__user__first_name", lookup_expr="icontains")
 
     class Meta:
         model = JobOrderCategoryAnalytics
-        fields = ("month", "month_year")
+        fields = ("month", "month_year", "client")
 
 
 class JobOrderApnAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
