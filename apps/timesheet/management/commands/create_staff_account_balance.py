@@ -42,7 +42,7 @@ class Command(BaseCommand):
 
         for i in staff:
             if staff_timesheet:
-                staff_balance = StaffAccountBalance.objects.filter(staff=i).exists()
+                staff_charge = AccountCharge.objects.filter(staff=i).exists()
                 staff_balance_first_half_month = StaffAccountBalance.objects.filter(
                     staff=i, date=day_1st_and_15th
                 ).exists()
@@ -81,7 +81,7 @@ class Command(BaseCommand):
 
             # StaffAccountBalance.objects.all().delete()
 
-            if staff_balance:
+            if staff_charge:
                 if (
                     staff_payment_1st_and_15th["total_payment"] is None
                     and staff_time_charge_1st_and_15th["total_charge"] is None
