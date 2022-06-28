@@ -8,7 +8,7 @@ __all__ = ("NewsFeedSerializer", "NewsfeedCommentSerializer")
 
 
 class NewsfeedCommentSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(required=False, allow_null=True)
+    created_at = serializers.DateField(required=False, allow_null=True)
     commenter = serializers.SerializerMethodField()
     user_type = serializers.SerializerMethodField()
 
