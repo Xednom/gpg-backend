@@ -32,12 +32,12 @@ class NewsFeedViewSet(viewsets.ModelViewSet):
         if clients:
             newsfeed = NewsFeed.objects.filter(
                 Q(publish_to="client") | Q(publish_to="both")
-            )
+            ).order_by("-created_at")
             return newsfeed
         elif staffs:
             newsfeed = NewsFeed.objects.filter(
                 Q(publish_to="staff") | Q(publish_to="both")
-            )
+            ).order_by("-created_at")
             return newsfeed
 
 
