@@ -28,8 +28,8 @@ class InternalFilesStaffAdmin(admin.TabularInline):
     readonly_fields = ("created_at",)
 
 
-class UserProfileAdmin(ImportExportModelAdmin):
-    resource_class = UserResource
+class UserProfileAdmin(UserAdmin):
+    # resource_class = UserResource
     list_display = (
         "username",
         "email",
@@ -47,6 +47,7 @@ class UserProfileAdmin(ImportExportModelAdmin):
         "is_active",
         "groups",
     )
+    search_fields = ("username", "email", "first_name", "last_name")
     UserAdmin.fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
