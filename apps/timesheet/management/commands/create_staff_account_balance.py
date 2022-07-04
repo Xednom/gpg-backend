@@ -41,8 +41,6 @@ class Command(BaseCommand):
         day_1st_and_15th = str(every_1st) + " " + str(every_15th)
         day_16th_and_30th = str(every_16th) + " " + str(every_30th)
         day_16th_and_31st = str(every_16th) + " " + str(every_31st)
-        print(current_day)
-        print(current_date)
 
         for i in staff:
             if staff_timesheet:
@@ -123,7 +121,6 @@ class Command(BaseCommand):
             #             notes="this is system generated",
             #         )
             # print(today > every_1st and today < every_15th)
-            print(staff_balance_16th_and_31st)
             if staff_charge:
                 if staff_balance_1st_and_15th:
                     if (
