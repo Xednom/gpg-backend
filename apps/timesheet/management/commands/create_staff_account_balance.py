@@ -47,7 +47,18 @@ class Command(BaseCommand):
         for i in staff:
             if staff_timesheet:
                 staff_charge = AccountCharge.objects.filter(staff=i).exists()
-                staff_balance = StaffAccountBalance.objects.filter(staff=i).exists()
+                staff_balance_1st_and_15th = StaffAccountBalance.objects.filter(
+                    staff=i, date=day_1st_and_15th
+                ).exists()
+                staff_balance_16th_and_30th = StaffAccountBalance.objects.filter(
+                    staff=i, date=day_16th_and_30th
+                ).exists()
+                staff_balance_16th_and_31st = StaffAccountBalance.objects.filter(
+                    staff=i, date=day_16th_and_31st
+                ).exists()
+                staff_balance = StaffAccountBalance.objects.filter(
+                    staff=i, date=day_1st_and_15th
+                ).exists()
                 staff_name = AccountCharge.objects.filter(staff=staff_charge)
                 staff_balance_first_half_month = StaffAccountBalance.objects.filter(
                     staff=i, date=day_1st_and_15th
@@ -111,13 +122,15 @@ class Command(BaseCommand):
             #             account_balance=0.00 - 0.00,
             #             notes="this is system generated",
             #         )
+            # print(today > every_1st and today < every_15th)
+            print(staff_balance_16th_and_31st)
             if staff_charge:
-                if staff_balance:
+                if staff_balance_1st_and_15th:
                     if (
                         staff_payment_1st_and_15th["total_payment"] is not None
                         and staff_time_charge_1st_and_15th["total_charge"] is not None
                     ):
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.filter(
                                 staff=i, date=day_1st_and_15th
                             ).update(
@@ -134,8 +147,22 @@ class Command(BaseCommand):
                                 ]
                                 - staff_time_charge_1st_and_15th["total_charge"],
                             )
+                    if (
+                        staff_payment_1st_and_15th["total_payment"] is None
+                        and staff_time_charge_1st_and_15th["total_charge"] is None
+                    ):
+                        if today > every_1st and today < every_15th:
+                            StaffAccountBalance.objects.filter(
+                                staff=i, date=day_1st_and_15th
+                            ).update(
+                                date=day_1st_and_15th,
+                                staff=i,
+                                payment_made=Decimal(0.00),
+                                amount_due=0.00,
+                                account_balance=0.00 - 0.00,
+                            )
                     elif staff_payment_1st_and_15th["total_payment"] is None:
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.filter(
                                 staff=i, date=day_1st_and_15th
                             ).update(
@@ -149,7 +176,7 @@ class Command(BaseCommand):
                                 - staff_time_charge_1st_and_15th["total_charge"],
                             )
                     elif staff_time_charge_1st_and_15th["total_charge"] is None:
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.filter(
                                 staff=i, date=day_1st_and_15th
                             ).update(
@@ -170,7 +197,7 @@ class Command(BaseCommand):
                         staff_payment_1st_and_15th["total_payment"] is None
                         and staff_time_charge_1st_and_15th["total_charge"] is None
                     ):
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.filter(
                                 staff=i, date=day_1st_and_15th
                             ).update(
@@ -180,6 +207,7 @@ class Command(BaseCommand):
                                 amount_due=Decimal(0.00),
                                 account_balance=Decimal(0.00),
                             )
+                elif staff_balance_16th_and_31st:
                     if (
                         staff_payment_16th_and_31st["total_payment"] is not None
                         and staff_time_charge_16th_and_31st["total_charge"] is not None
@@ -256,7 +284,7 @@ class Command(BaseCommand):
                         staff_payment_1st_and_15th["total_payment"] is None
                         and staff_time_charge_1st_and_15th["total_charge"] is None
                     ):
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.create(
                                 date=day_1st_and_15th,
                                 staff=i,
@@ -266,7 +294,7 @@ class Command(BaseCommand):
                                 notes="this is system generated",
                             )
                     elif staff_payment_1st_and_15th["total_payment"] is None:
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.create(
                                 date=day_1st_and_15th,
                                 staff=i,
@@ -278,7 +306,7 @@ class Command(BaseCommand):
                                 notes="this is system generated",
                             )
                     elif staff_time_charge_1st_and_15th["total_charge"] is None:
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.create(
                                 date=day_1st_and_15th,
                                 staff=i,
@@ -292,7 +320,7 @@ class Command(BaseCommand):
                         staff_payment_1st_and_15th["total_payment"] is not None
                         and staff_time_charge_1st_and_15th["total_charge"] is not None
                     ):
-                        if today < every_15th and today > every_1st:
+                        if today > every_1st and today < every_15th:
                             StaffAccountBalance.objects.create(
                                 date=day_1st_and_15th,
                                 staff=i,
