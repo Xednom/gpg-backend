@@ -16,7 +16,7 @@ from apps.operational_cost.models import (
 
 
 class Command(BaseCommand):
-    help = "Create expense"
+    help = "A command that creates expense"
 
     def handle(self, *args, **options):
         company_name = (
@@ -86,15 +86,23 @@ class Command(BaseCommand):
             debit=Sum("debit")
         )
         net = NetIncome.objects.filter(month_year=month_year).exists()
-
+        total_net_income = ""
         if net:
             for i in net_income:
-                total_net_income = debit["debit"] - credit["credit"]
-                NetIncome.objects.filter(id=i.id, month_year=month_year).update(
-                    debit=debit["debit"],
-                    credit=credit["credit"],
-                    net_income=total_net_income,
-                )
+                if debit["debit"] is None and credit["credit"] is None:
+                    total_net_income = 0.00 - 0.00
+                elif debit["debit"] is None:
+                    total_net_income = 0.00 - credit["credit"]
+                elif credit["credit"] is None:
+                    total_net_income = debit["debit"] - 0.00
+                if debit["debit"] is not None and credit["credit"] is not None:
+                    total_net_income = debit["debit"] - credit["credit"]
+
+                    NetIncome.objects.filter(id=i.id, month_year=month_year).update(
+                        debit=debit["debit"],
+                        credit=credit["credit"],
+                        net_income=total_net_income,
+                    )
         else:
             NetIncome.objects.create(
                 month_year=month_year,
