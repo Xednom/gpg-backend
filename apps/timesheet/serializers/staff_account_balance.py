@@ -52,11 +52,14 @@ class StaffAccountBalanceSerializer(serializers.ModelSerializer):
             return f"{instance.amount_due}"
 
     def get_total_time_of_work(self, instance):
-        current_month = datetime.date.today().month
+        current_month = instance.created_at.month
+        current_year = instance.created_at.year
         staff_total_time = ""
         if instance.staff:
             staff_total_time = AccountCharge.objects.filter(
-                staff=instance.staff, created_at__month=current_month
+                staff=instance.staff,
+                created_at__month=current_month,
+                created_at__year=current_year,
             ).aggregate(total_time=Sum("total_time"))
             if staff_total_time["total_time"] is not None:
                 staff_total_time = staff_total_time["total_time"]
@@ -65,11 +68,14 @@ class StaffAccountBalanceSerializer(serializers.ModelSerializer):
                 return " - "
 
     def get_account_payable(self, instance):
-        current_month = datetime.date.today().month
+        current_year = instance.created_at.year
+        current_month = instance.created_at.month
         account_payable = ""
         if instance.staff:
             staff_charge = AccountCharge.objects.filter(
-                staff=instance.staff, created_at__month=current_month
+                staff=instance.staff,
+                created_at__month=current_month,
+                created_at__year=current_year,
             ).aggregate(total_charge=Sum("staff_total_due"))
             staff_payment_history = StaffPaymentHistory.objects.filter(
                 staff=instance.staff
@@ -82,9 +88,11 @@ class StaffAccountBalanceSerializer(serializers.ModelSerializer):
             return " - "
 
     def get_timesheet(self, instance):
-        current_month = datetime.date.today().month
         if instance.staff:
             staff_charge = AccountCharge.objects.filter(
-                staff=instance.staff, created_at__month=current_month
+                staff=instance.staff,
+                created_at__month=instance.created_at.month,
+                created_at__year=instance.created_at.year,
             ).aggregate(total_charge=Sum("staff_total_due"))
+            print(staff_charge["total_charge"])
             return staff_charge["total_charge"]
