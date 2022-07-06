@@ -356,7 +356,7 @@ class Command(BaseCommand):
                                 ],
                                 account_balance=Decimal(0.00)
                                 - staff_time_charge_16th_and_31st["total_charge"],
-                                notes="hehehe",
+                                notes="this is system generated",
                             )
                     elif staff_time_charge_16th_and_31st["total_charge"] is None:
                         if today > every_16th and today < every_31st:
