@@ -228,6 +228,7 @@ class StaffPaymentHistoryAdmin(ImportExportModelAdmin):
     model = StaffPaymentHistory
     resource_class = StaffPaymentHistoryResource
     list_display = (
+        "created_at",
         "transaction_number",
         "date",
         "staff",
