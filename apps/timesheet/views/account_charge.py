@@ -31,5 +31,6 @@ class AccountChargeViewSet(viewsets.ModelViewSet):
             ).filter(
                 staff__user__in=user,
                 shift_date__month=today.month,
+                shift_date__year=today.year,
             )
             return queryset
