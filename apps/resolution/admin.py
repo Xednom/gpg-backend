@@ -24,7 +24,7 @@ class ResolutionAdmin(admin.ModelAdmin):
         "status",
         "additional_notes",
     )
-    list_filter = ("assigned_to", "client")
+    list_filter = ("assigned_to", "client", "status")
     search_fields = (
         "client__username",
         "client__first_name",

@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 
 from django.contrib.auth import get_user_model
@@ -19,6 +21,7 @@ class AccountChargeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         current_user = self.request.user
         user = User.objects.filter(username=current_user)
+        today = datetime.date.today()
 
         if current_user:
             queryset = AccountCharge.objects.select_related("client", "staff").filter(
@@ -26,6 +29,8 @@ class AccountChargeViewSet(viewsets.ModelViewSet):
             ).exclude(status="submitted") or AccountCharge.objects.select_related(
                 "client", "staff"
             ).filter(
-                staff__user__in=user
+                staff__user__in=user,
+                shift_date__month=today.month,
+                shift_date__year=today.year,
             )
             return queryset
