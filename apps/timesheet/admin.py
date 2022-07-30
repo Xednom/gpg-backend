@@ -65,7 +65,11 @@ class AccountBalanceAdmin(ImportExportModelAdmin):
 
 
 def charge_approval(AccountChargeAdmin, request, queryset):
-    queryset.update(status="approved")
+    for charge in queryset:
+        if charge.client.hourly_rate.amount == 0.00:
+            queryset.update(status="submitted")
+        else:
+            queryset.update(status="approved")
 
 
 charge_approval.short_description = "Mark selected charges as Approved"
@@ -192,6 +196,13 @@ class AccountChargeAdmin(ImportExportModelAdmin):
         ),
         ("Client information", {"fields": {"client"}}),
     )
+
+    def save(self, request, obj, form, change):
+        if obj.client_hourly_rate == 0:
+            # don't save status if client hourly rate is 0
+            obj.status = "submitted"
+        else:
+            super().save_model(request, obj, form, change)
 
     def get_fieldsets(self, request, obj=None, **kwargs):
         if request.user.is_superuser:
