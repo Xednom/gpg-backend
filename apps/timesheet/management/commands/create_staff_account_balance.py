@@ -310,7 +310,7 @@ class Command(BaseCommand):
                                 payment_made=0.00,
                                 amount_due=0.00,
                                 account_balance=0.00
-                                - staff_payment_1st_and_15th["total_payment"],
+                                - Decimal(staff_payment_1st_and_15th["total_payment"]),
                                 notes="this is system generated",
                             )
                     elif (
