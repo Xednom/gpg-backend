@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from apps.authentication.resources import ClientResource, UserResource
+from apps.authentication.resources import ClientResource, UserResource, StaffResource
 
 from import_export.admin import ImportExportModelAdmin
 
@@ -139,8 +139,9 @@ class ClientProfileAdmin(ImportExportModelAdmin):
     get_email.short_description = "User email"
 
 
-class StaffProfileAdmin(admin.ModelAdmin):
+class StaffProfileAdmin(ImportExportModelAdmin):
     model = Staff
+    resource_class = StaffResource
     list_display = (
         "get_user",
         "get_email",
