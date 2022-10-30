@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 
 from post_office.models import EmailTemplate
@@ -155,6 +157,21 @@ class JobOrderByCategoryViewSet(viewsets.ModelViewSet):
                 .all()
             )
             return queryset
+
+    def perform_create(self, serializer):
+        now = datetime.date.today()
+        instance = serializer.save()
+        print("Now: ", now)
+        job_order = get_object_or_404(JobOrderCategory, id=instance.id)
+        print("Create at: ", job_order.created_at)
+        days_before_posted = job_order.due_date - job_order.created_at
+        # days_after_posted = job_order.due_date + now
+        # days_after_posted = (job_order.created_at - now).days
+        print("Days before posted:", days_before_posted.days)
+        # print(days_after_posted)
+        JobOrderCategory.objects.filter(id=instance.id).update(
+            days_before_due_date=days_before_posted.days
+        )
 
     def perform_update(self, serializer):
         instance = self.get_object()

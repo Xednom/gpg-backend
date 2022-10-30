@@ -150,6 +150,8 @@ class JobOrderGeneralSerializer(serializers.ModelSerializer):
             "job_general_ratings",
             "job_order_general_scorings",
             "job_rating",
+            "days_before_due_date",
+            "days_after_due_date",
         )
 
     def get_client_code(self, instance):

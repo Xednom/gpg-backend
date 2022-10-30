@@ -126,6 +126,8 @@ class JobOrderGeneral(TimeStamped):
         max_digits=10, decimal_places=2, blank=True, null=True
     )
     url_of_the_completed_jo = models.TextField(blank=True)
+    days_before_due_date = models.IntegerField(blank=True, null=True)
+    days_after_due_date = models.IntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = "General Order Request"

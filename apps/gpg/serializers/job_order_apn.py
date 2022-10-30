@@ -55,6 +55,8 @@ class JobOrderCategoryAgentScoringSerializer(serializers.ModelSerializer):
             "job_completed",
             "job_completed_note",
             "satisfied",
+            "days_before_due_date",
+            "days_after_due_date",
         )
 
 
@@ -185,10 +187,13 @@ class ApnCommentSerializer(serializers.ModelSerializer):
     def get_user_type(self, instance):
         staff_user = "staff"
         client_user = "client"
+        admin_user = "admin"
         if instance.user.designation_category == "staff":
             return staff_user
         elif instance.user.designation_category != "staff":
             return client_user
+        else:
+            return admin_user
 
     def get_commenter(self, instance):
         get_staff_code = Staff.objects.select_related("user").filter(user=instance.user)
@@ -285,6 +290,7 @@ class JobOrderCategorySerializer(serializers.ModelSerializer):
             "job_order_category_scorings",
             "job_rating",
             "deadline",
+            "days_before_due_date",
         )
 
     def get_category_(self, instance):
