@@ -56,6 +56,7 @@ LOCAL_APPS = [
     "apps.email_template",
     "apps.gpg_notifications",
     "apps.forum",
+    "apps.archive",
 ]
 
 THIRD_PARTY_APPS = [
