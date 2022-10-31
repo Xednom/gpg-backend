@@ -262,6 +262,8 @@ class JobOrderCategory(TimeStamped):
     total_time_consumed = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
+    days_before_due_date = models.IntegerField(blank=True, null=True)
+    days_after_due_date = models.IntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = "Job Order Request by APN"
