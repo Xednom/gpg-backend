@@ -217,6 +217,10 @@ class JobOrderGeneralAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_filter = ("client", "va_assigned", "job_title", "status")
     inlines = [JobOrderComment, AccountFileInline]
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.exclude(status="closed")
+
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
         for obj in formset.deleted_objects:
@@ -309,6 +313,10 @@ class JobOrderByCategoryAdmin(ModelAdminMixin, admin.ModelAdmin):
             instance.user = request.user
             instance.save()
         formset.save_m2m()
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.exclude(status="closed")
 
     def get_staffs(self, obj):
         return ", ".join([staff.staff_name for staff in obj.staff.all()])
