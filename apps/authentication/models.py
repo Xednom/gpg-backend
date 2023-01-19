@@ -22,6 +22,7 @@ class DesignationCategory(models.TextChoices):
     new_client = "new_client", ("New Client")
     current_client = "current_client", ("Current Client")
     affiliate_partner = "affiliate_partner", ("Affiliate Partner")
+    inactive_client = "inactive_client", ("Inactive Client")
 
 
 class CompanyCategory(models.TextChoices):
