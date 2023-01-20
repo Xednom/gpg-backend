@@ -91,6 +91,7 @@ class JobOrderStatus(models.TextChoices):
     for_quality_review_multiple_task = "for_quality_review_multiple_task", (
         "For Quality Review Multiple Task"
     )
+    urgent = "urgent", ("Urgent")
 
 
 class JobOrderGeneral(TimeStamped):
