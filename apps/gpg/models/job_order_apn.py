@@ -92,6 +92,7 @@ class PropertyDetail(TimeStamped):
     notes_client_side = models.TextField(blank=True)
     notes_va_side = models.TextField(blank=True)
     notes_management_side = models.TextField(blank=True)
+    property_complete_address = models.TextField(blank=True)
 
     class Meta:
         verbose_name = "APN Inventory list"
