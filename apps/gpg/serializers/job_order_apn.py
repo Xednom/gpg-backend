@@ -142,6 +142,7 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "notes_management_side",
             "property_price_statuses",
             "property_detail_files",
+            "property_complete_address",
         )
 
     def get_client_(self, instance):
