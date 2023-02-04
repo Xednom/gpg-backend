@@ -103,6 +103,7 @@ router.register(
     views.JobOrderCategoryAgentScoringViewSet,
     basename="job-order-category-scoring",
 )
+router.register(r"seller-list", views.SellerListViewSet)
 
 
 app_name = "gpg"

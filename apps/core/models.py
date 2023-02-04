@@ -1,6 +1,18 @@
 from django.db import models
 
 
+class LeadType(models.TextChoices):
+    sellers = "sellers", ("Sellers")
+    buyers = "buyers", ("Buyers")
+
+
+class LeadStatus(models.TextChoices):
+    interested = "interested", ("Interested")
+    not_interested = "not_interested", ("Not Interested")
+    dead_lead = "dead_lead", ("Dead Lead")
+    do_not_call_list = "do_not_call_list", ("Do Not Call List")
+
+
 class TimeStamped(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

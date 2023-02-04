@@ -8,3 +8,4 @@ from .agent_scoring import (
     JobOrderCategoryAgentScoringViewSet,
     JobOrderGeneralAgentScoringViewSet,
 )  # noqa
+from .seller_list import SellerListViewSet  # noqa

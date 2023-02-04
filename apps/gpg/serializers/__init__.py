@@ -8,3 +8,5 @@ from .agent_scoring import (
     JobOrderGeneralAgentScoringSerializer,
     JobOrderCategoryAgentScoringSerializer,
 )  # noqa
+
+from .seller_list import SellerListSerializer  # noqa
