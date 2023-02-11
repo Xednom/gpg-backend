@@ -47,3 +47,9 @@ class DealStatus(models.TextChoices):
     on_hold = "on_hold", ("On Hold")
     on_going_negotiation = "on_going_negotiation", ("On going negotiation")
     drop_deal = "drop_deal", ("Drop Deal")
+
+
+class YesOrNoOrNotApplicable(models.TextChoices):
+    yes = "yes", ("Yes")
+    no = "no", ("No")
+    not_applicable = "not_applicable", ("Not Applicable")
