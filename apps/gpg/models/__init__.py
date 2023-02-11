@@ -10,3 +10,4 @@ from .agent_scoring import (
 from .seller_list import SellerList, CounterOffer  # noqa
 from .buyer_list import BuyerList  # noqa
 from .acquisition import Acquisition  # noqa
+from .disposition import Disposition  # noqa
