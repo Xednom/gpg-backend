@@ -10,3 +10,4 @@ from .agent_scoring import (
 )  # noqa
 from .seller_list import SellerListViewSet  # noqa
 from .buyer_list import BuyerListViewSet  # noqa
+from .acquisition import AcquisitionViewSet  # noqa

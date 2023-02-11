@@ -39,3 +39,11 @@ class Vendor(TimeStamped):
 
     def __str__(self):
         return self.name
+
+
+class DealStatus(models.TextChoices):
+    pending = "pending", ("Pending")
+    sold = "sold", ("Sold")
+    on_hold = "on_hold", ("On Hold")
+    on_going_negotiation = "on_going_negotiation", ("On going negotiation")
+    drop_deal = "drop_deal", ("Drop Deal")

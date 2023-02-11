@@ -11,3 +11,4 @@ from .agent_scoring import (
 
 from .seller_list import SellerListSerializer  # noqa
 from .buyer_list import BuyerListSerializer  # noqa
+from .acquisition import AcquisitionSerializer  # noqa
