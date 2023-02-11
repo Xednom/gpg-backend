@@ -104,6 +104,7 @@ router.register(
     basename="job-order-category-scoring",
 )
 router.register(r"seller-list", views.SellerListViewSet)
+router.register(r"buyer-list", views.BuyerListViewSet)
 
 
 app_name = "gpg"

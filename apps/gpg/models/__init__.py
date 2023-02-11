@@ -7,4 +7,5 @@ from .agent_scoring import (
     JobOrderGeneralAgentScoring,
 )  # noqa
 
-from .seller_list import SellerList, CounterOffer # noqa
+from .seller_list import SellerList, CounterOffer  # noqa
+from .buyer_list import BuyerList  # noqa
