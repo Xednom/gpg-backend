@@ -31,6 +31,7 @@ class AcquisitionSerializer(WritableNestedModelSerializer):
         fields = (
             "property_detail",
             "apn",
+            "client_code",
             "possible_offer",
             "approved_amount_from_client",
             "minimum_amount",
