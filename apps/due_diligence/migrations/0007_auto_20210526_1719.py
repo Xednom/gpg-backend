@@ -6,18 +6,46 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('due_diligence', '0006_auto_20210524_1628'),
+        ("due_diligence", "0006_auto_20210524_1628"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='duediligencecallout',
-            name='call_out_dd_quality_review_status',
-            field=models.CharField(blank=True, choices=[('assigned', 'Assigned'), ('complete', 'Complete'), ('in_progress', 'In Progress'), ('for_verification', 'For Verification'), ('pending', 'Pending'), ('on_hold', 'On Hold'), ('cancelled', 'Cancelled'), ('for_qa_review', 'For QA review')], default='assigned', max_length=250),
+            model_name="duediligencecallout",
+            name="call_out_dd_quality_review_status",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("assigned", "Assigned"),
+                    ("complete", "Complete"),
+                    ("in_progress", "In Progress"),
+                    ("for_verification", "For Verification"),
+                    ("pending", "Pending"),
+                    ("on_hold", "On Hold"),
+                    ("cancelled", "Cancelled"),
+                    ("for_qa_review", "For QA review"),
+                ],
+                default="assigned",
+                max_length=250,
+            ),
         ),
         migrations.AddField(
-            model_name='duediligencecallout',
-            name='initial_dd_quality_review_status',
-            field=models.CharField(blank=True, choices=[('assigned', 'Assigned'), ('complete', 'Complete'), ('in_progress', 'In Progress'), ('for_verification', 'For Verification'), ('pending', 'Pending'), ('on_hold', 'On Hold'), ('cancelled', 'Cancelled'), ('for_qa_review', 'For QA review')], default='assigned', max_length=250),
+            model_name="duediligencecallout",
+            name="initial_dd_quality_review_status",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("assigned", "Assigned"),
+                    ("complete", "Complete"),
+                    ("in_progress", "In Progress"),
+                    ("for_verification", "For Verification"),
+                    ("pending", "Pending"),
+                    ("on_hold", "On Hold"),
+                    ("cancelled", "Cancelled"),
+                    ("for_qa_review", "For QA review"),
+                ],
+                default="assigned",
+                max_length=250,
+            ),
         ),
     ]

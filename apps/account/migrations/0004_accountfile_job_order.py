@@ -7,14 +7,20 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0011_auto_20210827_2001'),
-        ('account', '0003_accountfile'),
+        ("authentication", "0011_auto_20210827_2001"),
+        ("account", "0003_accountfile"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='accountfile',
-            name='job_order',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='job_order_account_files', to='authentication.client'),
+            model_name="accountfile",
+            name="job_order",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="job_order_account_files",
+                to="authentication.client",
+            ),
         ),
     ]

@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0005_auto_20210422_0842'),
+        ("authentication", "0005_auto_20210422_0842"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='client',
-            options={'ordering': ['user__first_name']},
+            name="client",
+            options={"ordering": ["user__first_name"]},
         ),
     ]

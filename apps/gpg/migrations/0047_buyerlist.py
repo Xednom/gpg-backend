@@ -7,34 +7,91 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0015_alter_user_designation_category'),
-        ('gpg', '0046_auto_20230204_2008'),
+        ("authentication", "0015_alter_user_designation_category"),
+        ("gpg", "0046_auto_20230204_2008"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BuyerList',
+            name="BuyerList",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('apn', models.CharField(max_length=250)),
-                ('client_code', models.CharField(max_length=250)),
-                ('date_lead_added', models.DateField(auto_now_add=True)),
-                ('lead_type', models.CharField(blank=True, choices=[('sellers', 'Sellers'), ('buyers', 'Buyers')], max_length=25)),
-                ('buyer_lead_name', models.CharField(blank=True, max_length=250)),
-                ('phone_number', models.CharField(max_length=250)),
-                ('email', models.CharField(blank=True, max_length=250)),
-                ('lead_status', models.CharField(blank=True, choices=[('interested', 'Interested'), ('not_interested', 'Not Interested'), ('dead_lead', 'Dead Lead'), ('do_not_call_list', 'Do Not Call List')], max_length=50)),
-                ('buyer_offer', models.CharField(blank=True, max_length=250)),
-                ('total_minutes_consumed', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
-                ('notes', models.TextField(blank=True)),
-                ('counter_offer_amount', models.ManyToManyField(blank=True, related_name='buyer_counter_offers', to='gpg.CounterOffer')),
-                ('lead_assigned_to', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='buyer_lead_assigned_to', to='authentication.staff')),
-                ('property_detail', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='property_detail_buyer_lists', to='gpg.propertydetail')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("apn", models.CharField(max_length=250)),
+                ("client_code", models.CharField(max_length=250)),
+                ("date_lead_added", models.DateField(auto_now_add=True)),
+                (
+                    "lead_type",
+                    models.CharField(
+                        blank=True,
+                        choices=[("sellers", "Sellers"), ("buyers", "Buyers")],
+                        max_length=25,
+                    ),
+                ),
+                ("buyer_lead_name", models.CharField(blank=True, max_length=250)),
+                ("phone_number", models.CharField(max_length=250)),
+                ("email", models.CharField(blank=True, max_length=250)),
+                (
+                    "lead_status",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("interested", "Interested"),
+                            ("not_interested", "Not Interested"),
+                            ("dead_lead", "Dead Lead"),
+                            ("do_not_call_list", "Do Not Call List"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
+                ("buyer_offer", models.CharField(blank=True, max_length=250)),
+                (
+                    "total_minutes_consumed",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=10, null=True
+                    ),
+                ),
+                ("notes", models.TextField(blank=True)),
+                (
+                    "counter_offer_amount",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="buyer_counter_offers",
+                        to="gpg.CounterOffer",
+                    ),
+                ),
+                (
+                    "lead_assigned_to",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="buyer_lead_assigned_to",
+                        to="authentication.staff",
+                    ),
+                ),
+                (
+                    "property_detail",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="property_detail_buyer_lists",
+                        to="gpg.propertydetail",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

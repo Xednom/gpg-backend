@@ -8,13 +8,17 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0013_auto_20211111_2146'),
+        ("authentication", "0013_auto_20211111_2146"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='client',
-            name='user',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='user_clients', to=settings.AUTH_USER_MODEL),
+            model_name="client",
+            name="user",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_clients",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

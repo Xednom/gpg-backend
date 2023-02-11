@@ -7,14 +7,20 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gpg', '0025_auto_20210910_1141'),
-        ('account', '0005_auto_20210910_1318'),
+        ("gpg", "0025_auto_20210910_1141"),
+        ("account", "0005_auto_20210910_1318"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='accountfile',
-            name='job_order_category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='job_order_category_account_files', to='gpg.jobordercategory'),
+            model_name="accountfile",
+            name="job_order_category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="job_order_category_account_files",
+                to="gpg.jobordercategory",
+            ),
         ),
     ]

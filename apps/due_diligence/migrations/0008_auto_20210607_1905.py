@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('due_diligence', '0007_auto_20210526_1719'),
+        ("due_diligence", "0007_auto_20210526_1719"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='phonelineextension',
-            name='did',
+            model_name="phonelineextension",
+            name="did",
             field=models.CharField(blank=True, max_length=250),
         ),
         migrations.AddField(
-            model_name='phonelineextension',
-            name='login_details',
+            model_name="phonelineextension",
+            name="login_details",
             field=models.TextField(blank=True),
         ),
         migrations.AddField(
-            model_name='phonelineextension',
-            name='notes',
+            model_name="phonelineextension",
+            name="notes",
             field=models.TextField(blank=True),
         ),
     ]

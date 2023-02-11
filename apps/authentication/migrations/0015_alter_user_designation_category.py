@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0014_alter_client_user'),
+        ("authentication", "0014_alter_client_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='designation_category',
-            field=models.CharField(blank=True, choices=[('staff', 'Staff'), ('new_client', 'New Client'), ('current_client', 'Current Client'), ('affiliate_partner', 'Affiliate Partner'), ('inactive_client', 'Inactive Client')], max_length=30),
+            model_name="user",
+            name="designation_category",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("staff", "Staff"),
+                    ("new_client", "New Client"),
+                    ("current_client", "Current Client"),
+                    ("affiliate_partner", "Affiliate Partner"),
+                    ("inactive_client", "Inactive Client"),
+                ],
+                max_length=30,
+            ),
         ),
     ]

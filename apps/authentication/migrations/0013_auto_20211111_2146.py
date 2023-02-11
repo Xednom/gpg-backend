@@ -6,13 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0012_auto_20211021_2214'),
+        ("authentication", "0012_auto_20211021_2214"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='company_category',
-            field=models.CharField(blank=True, choices=[('gpg_corporation', 'GPG Corporation'), ('land_master', 'Landmaster.us'), ('call_me_ph', 'CallMe.com.ph'), ('psalms_global', 'Psalmsglobal.com'), ('english_academy', 'English Academy'), ('affiliate_partner', 'Affiliate Partner'), ('litangs', 'Litangs')], max_length=40),
+            model_name="user",
+            name="company_category",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("gpg_corporation", "GPG Corporation"),
+                    ("land_master", "Landmaster.us"),
+                    ("call_me_ph", "CallMe.com.ph"),
+                    ("psalms_global", "Psalmsglobal.com"),
+                    ("english_academy", "English Academy"),
+                    ("affiliate_partner", "Affiliate Partner"),
+                    ("litangs", "Litangs"),
+                ],
+                max_length=40,
+            ),
         ),
     ]

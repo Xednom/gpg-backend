@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('due_diligence', '0009_auto_20211005_1354'),
+        ("due_diligence", "0009_auto_20211005_1354"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='duediligencecallout',
-            name='created_at',
+            model_name="duediligencecallout",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='phonelineextension',
-            name='created_at',
+            model_name="phonelineextension",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
     ]

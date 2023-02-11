@@ -11,63 +11,125 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('authentication', '0014_alter_client_user'),
+        ("authentication", "0014_alter_client_user"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('comment', models.TextField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comment_authors', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("comment", models.TextField()),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comment_authors",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Comment',
-                'verbose_name_plural': 'Comments',
-                'ordering': ['-created_at'],
+                "verbose_name": "Comment",
+                "verbose_name_plural": "Comments",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='Thread',
+            name="Thread",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('title', models.CharField(max_length=250)),
-                ('content', models.TextField()),
-                ('is_active', models.BooleanField(default=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='threads', to=settings.AUTH_USER_MODEL)),
-                ('client_carbon_copy', models.ManyToManyField(blank=True, to='authentication.Client')),
-                ('staff_carbon_copy', models.ManyToManyField(blank=True, to='authentication.Staff')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("title", models.CharField(max_length=250)),
+                ("content", models.TextField()),
+                ("is_active", models.BooleanField(default=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="threads",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "client_carbon_copy",
+                    models.ManyToManyField(blank=True, to="authentication.Client"),
+                ),
+                (
+                    "staff_carbon_copy",
+                    models.ManyToManyField(blank=True, to="authentication.Staff"),
+                ),
             ],
             options={
-                'verbose_name': 'Thread',
-                'verbose_name_plural': 'Threads',
-                'ordering': ['-created_at'],
+                "verbose_name": "Thread",
+                "verbose_name_plural": "Threads",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='Reply',
+            name="Reply",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('content', models.TextField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reply_authors', to=settings.AUTH_USER_MODEL)),
-                ('comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comment_replies', to='forum.comment')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("content", models.TextField()),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reply_authors",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "comment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comment_replies",
+                        to="forum.comment",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Reply',
-                'verbose_name_plural': 'Replies',
-                'ordering': ['-created_at'],
+                "verbose_name": "Reply",
+                "verbose_name_plural": "Replies",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.AddField(
-            model_name='comment',
-            name='thread',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='thread_comments', to='forum.thread'),
+            model_name="comment",
+            name="thread",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="thread_comments",
+                to="forum.thread",
+            ),
         ),
     ]

@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0001_initial'),
+        ("authentication", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='internalfiles',
-            options={'verbose_name': 'Internal file'},
+            name="internalfiles",
+            options={"verbose_name": "Internal file"},
         ),
     ]
