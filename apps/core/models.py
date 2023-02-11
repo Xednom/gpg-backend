@@ -13,6 +13,13 @@ class LeadStatus(models.TextChoices):
     do_not_call_list = "do_not_call_list", ("Do Not Call List")
 
 
+class Status(models.TextChoices):
+    active = "active", ("Active")
+    closed = "closed", ("Closed")
+    on_hold = "on_hold", ("On Hold")
+    canceled = "canceled", ("Canceled")
+
+
 class TimeStamped(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,3 +60,17 @@ class YesOrNoOrNotApplicable(models.TextChoices):
     yes = "yes", ("Yes")
     no = "no", ("No")
     not_applicable = "not_applicable", ("Not Applicable")
+
+
+class FileModel(TimeStamped):
+    apn = models.CharField(max_length=250)
+    client_code = models.CharField(max_length=250, blank=True)
+    description = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
+    description_of_request = models.TextField(blank=True)
+    completed_job_order_file = models.TextField(blank=True)
+    date_completed = models.DateField(blank=True, null=True)
+    status_of_job = models.CharField(max_length=25, choices=Status.choices, blank=True)
+
+    class Meta:
+        abstract = True
