@@ -20,6 +20,7 @@ class Acquisition(TimeStamped):
         null=True,
     )
     apn = models.CharField(max_length=250)
+    client_code = models.CharField(max_length=250, blank=True)
     possible_offer = models.CharField(max_length=250, blank=True)
     approved_amount_from_client = models.CharField(
         max_length=25, choices=PossibleOffer.choices, blank=True
