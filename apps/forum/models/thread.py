@@ -4,7 +4,7 @@ from django.db import models
 from apps.core.models import TimeStamped
 
 
-__all__ = ("Thread", "Comment", "Reply")
+__all__ = ("Thread", "Comment", "Reply", "Status")
 
 
 class Status(models.TextChoices):
