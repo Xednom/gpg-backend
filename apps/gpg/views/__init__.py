@@ -12,3 +12,4 @@ from .seller_list import SellerListViewSet  # noqa
 from .buyer_list import BuyerListViewSet  # noqa
 from .acquisition import AcquisitionViewSet  # noqa
 from .disposition import DispositionViewSet  # noqa
+from .assessment_files import AssessmentFileViewSet  # noqa
