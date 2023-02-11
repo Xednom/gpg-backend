@@ -14,3 +14,4 @@ from .acquisition import AcquisitionViewSet  # noqa
 from .disposition import DispositionViewSet  # noqa
 from .assessment_files import AssessmentFileViewSet  # noqa
 from .marketing_file import MarketingFileViewSet  # noqa
+from .listing_file import ListingFileViewSet  # noqa

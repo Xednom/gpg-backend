@@ -15,3 +15,4 @@ from .acquisition import AcquisitionSerializer  # noqa
 from .disposition import DispositionSerializer  # noqa
 from .assessment_files import AssessmentFileSerializer  # noqa
 from .marketing_file import MarketingFileSerializer  # noqa
+from .listing_file import ListingFileSerializer  # noqa
