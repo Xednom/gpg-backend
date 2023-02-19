@@ -20,6 +20,15 @@ from apps.gpg.models import (
     JobOrderCategoryRating,
     JobOrderCategoryAgentScoring,
     JobOrderGeneralAgentScoring,
+    SellerList,
+    CounterOffer,
+    BuyerList,
+    Acquisition,
+    Disposition,
+    AssessmentFile,
+    MarketingFile,
+    ListingFile,
+    ListingStatus,
 )
 
 
@@ -73,6 +82,41 @@ class PropertyDetailFileAdmin(admin.TabularInline):
     extra = 1
 
 
+class SellerListAdmin(admin.TabularInline):
+    model = SellerList
+    extra = 1
+
+
+class BuyerListAdmin(admin.TabularInline):
+    model = BuyerList
+    extra = 1
+
+
+class AcquisitionAdmin(admin.TabularInline):
+    model = Acquisition
+    extra = 1
+
+
+class DispositionAdmin(admin.TabularInline):
+    model = Disposition
+    extra = 1
+
+
+class AssessmentFileAdmin(admin.TabularInline):
+    model = AssessmentFile
+    extra = 1
+
+
+class MarketingFileAdmin(admin.TabularInline):
+    model = MarketingFile
+    extra = 1
+
+
+class ListingFileAdmin(admin.TabularInline):
+    model = ListingFile
+    extra = 1
+
+
 class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
     model = PropertyDetail
     list_display = (
@@ -123,7 +167,17 @@ class PropertyDetailsAdmin(ModelAdminMixin, admin.ModelAdmin):
         ),
     )
     filter_horizontal = ("staff",)
-    inlines = [PropertyPriceAdmin, PropertyDetailFileAdmin]
+    inlines = [
+        PropertyPriceAdmin,
+        PropertyDetailFileAdmin,
+        SellerListAdmin,
+        BuyerListAdmin,
+        AcquisitionAdmin,
+        DispositionAdmin,
+        AssessmentFileAdmin,
+        MarketingFileAdmin,
+        ListingFileAdmin,
+    ]
 
     def get_client(self, obj):
         if self.request.user.is_superuser:
@@ -180,6 +234,25 @@ class PropertyDetailFileAdmin(admin.ModelAdmin):
     model = PropertyDetailFile
     list_display = ("property_detail", "details")
     search_fields = ("property_detail__apn", "details")
+
+
+class SellerListAdmin(admin.ModelAdmin):
+    model = SellerList
+    list_display = (
+        "apn",
+        "client_code",
+    )
+    fieldsets = (
+        (
+            "Seller List Information",
+            {
+                "fields": (
+                    "apn",
+                    "client_code",
+                )
+            },
+        ),
+    )
 
 
 def status_complete(JobOrderGeneralAdmin, request, queryset):
@@ -525,3 +598,4 @@ admin.site.register(JobOrderGeneralRating, JobOrderGeneralRatingAdmin)
 admin.site.register(JobOrderCategoryRating, JobOrderCategoryRatingAdmin)
 admin.site.register(JobOrderGeneralAgentScoring, JobOrderGeneralAgentScoringAdmin)
 admin.site.register(JobOrderCategoryAgentScoring, JobOrderCategoryAgentScoringAdmin)
+admin.site.register(SellerList, SellerListAdmin)
