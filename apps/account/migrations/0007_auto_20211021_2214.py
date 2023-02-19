@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0006_accountfile_job_order_category'),
+        ("account", "0006_accountfile_job_order_category"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='accountfile',
-            name='created_at',
+            model_name="accountfile",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='logincredential',
-            name='created_at',
+            model_name="logincredential",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
     ]

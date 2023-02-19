@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('timesheet', '0003_staffaccountbalance_staffpaymenthistory'),
+        ("timesheet", "0003_staffaccountbalance_staffpaymenthistory"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='staffpaymenthistory',
-            options={'verbose_name_plural': 'Staff payment histories'},
+            name="staffpaymenthistory",
+            options={"verbose_name_plural": "Staff payment histories"},
         ),
     ]

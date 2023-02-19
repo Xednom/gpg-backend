@@ -6,21 +6,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('timesheet', '0005_auto_20210505_1158'),
+        ("timesheet", "0005_auto_20210505_1158"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PaymentPortal',
+            name="PaymentPortal",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=250)),
-                ('url', models.CharField(max_length=500)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=250)),
+                ("url", models.CharField(max_length=500)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

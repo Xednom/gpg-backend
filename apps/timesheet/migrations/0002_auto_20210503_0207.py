@@ -6,22 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('timesheet', '0001_initial'),
+        ("timesheet", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='accountcharge',
-            options={'ordering': ['-id']},
+            name="accountcharge",
+            options={"ordering": ["-id"]},
         ),
         migrations.RenameField(
-            model_name='accountbalance',
-            old_name='amount_due',
-            new_name='account_charges',
+            model_name="accountbalance",
+            old_name="amount_due",
+            new_name="account_charges",
         ),
         migrations.RenameField(
-            model_name='accountbalance',
-            old_name='amount_due_currency',
-            new_name='account_charges_currency',
+            model_name="accountbalance",
+            old_name="amount_due_currency",
+            new_name="account_charges_currency",
         ),
     ]

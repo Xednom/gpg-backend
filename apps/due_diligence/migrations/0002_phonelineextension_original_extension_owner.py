@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('due_diligence', '0001_initial'),
+        ("due_diligence", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='phonelineextension',
-            name='original_extension_owner',
+            model_name="phonelineextension",
+            name="original_extension_owner",
             field=models.CharField(blank=True, max_length=250),
         ),
     ]

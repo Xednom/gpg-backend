@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('due_diligence', '0003_duediligencecallout'),
+        ("due_diligence", "0003_duediligencecallout"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='phonelineextension',
-            name='allocation_office',
-            field=models.CharField(choices=[('home_based', 'Homebased'), ('office_based', 'Office based')], default='office_based', max_length=250),
+            model_name="phonelineextension",
+            name="allocation_office",
+            field=models.CharField(
+                choices=[("home_based", "Homebased"), ("office_based", "Office based")],
+                default="office_based",
+                max_length=250,
+            ),
         ),
     ]

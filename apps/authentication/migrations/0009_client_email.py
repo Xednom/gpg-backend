@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0008_auto_20210510_1210'),
+        ("authentication", "0008_auto_20210510_1210"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='client',
-            name='email',
-            field=models.CharField(blank=True, default=apps.authentication.models.email_randomizer, max_length=250),
+            model_name="client",
+            name="email",
+            field=models.CharField(
+                blank=True,
+                default=apps.authentication.models.email_randomizer,
+                max_length=250,
+            ),
         ),
     ]
