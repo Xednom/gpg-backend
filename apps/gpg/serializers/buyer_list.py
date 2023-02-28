@@ -29,6 +29,7 @@ class BuyerListSerializer(WritableNestedModelSerializer):
     class Meta:
         model = BuyerList
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
