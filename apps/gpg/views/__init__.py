@@ -9,7 +9,7 @@ from .agent_scoring import (
     JobOrderGeneralAgentScoringViewSet,
 )  # noqa
 from .seller_list import SellerListViewSet, SaveSellerLists  # noqa
-from .buyer_list import BuyerListViewSet  # noqa
+from .buyer_list import BuyerListViewSet, SaveBuyerLists  # noqa
 from .acquisition import AcquisitionViewSet  # noqa
 from .disposition import DispositionViewSet  # noqa
 from .assessment_files import AssessmentFileViewSet  # noqa
