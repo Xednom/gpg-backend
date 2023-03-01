@@ -3,7 +3,7 @@ from drf_writable_nested.serializers import WritableNestedModelSerializer
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from apps.gpg.models import SellerList, PropertyDetail
+from apps.gpg.models import SellerList, PropertyDetail, CounterOffer
 from apps.authentication.models import Staff
 
 __all__ = ("SellerListSerializer",)
@@ -29,6 +29,7 @@ class SellerListSerializer(WritableNestedModelSerializer):
     class Meta:
         model = SellerList
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
@@ -44,3 +45,9 @@ class SellerListSerializer(WritableNestedModelSerializer):
             "total_minutes_consumed",
             "notes",
         )
+
+
+class CounterOfferSerializer(serializers.Serializer):
+    class Meta:
+        model = CounterOffer
+        fields = ("amount",)

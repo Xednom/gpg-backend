@@ -103,7 +103,7 @@ router.register(
     views.JobOrderCategoryAgentScoringViewSet,
     basename="job-order-category-scoring",
 )
-router.register(r"seller-list", views.SellerListViewSet)
+router.register(r"seller-list", views.SellerListViewSet, basename="property-seller")
 router.register(r"buyer-list", views.BuyerListViewSet)
 router.register(r"acquisition", views.AcquisitionViewSet)
 router.register(r"disposition", views.DispositionViewSet)
@@ -147,4 +147,8 @@ urlpatterns = [
     ),
     path("category/", CategoryListView.as_view(), name="category-list"),
     path("staff-info/", StaffCodeList.as_view(), name="staff-info"),
+    path(
+        "save-seller-lists/", views.SaveSellerLists.as_view(), name="save-seller-lists"
+    ),
+    path("save-buyer-lists/", views.SaveBuyerLists.as_view(), name="save-buyer-lists"),
 ]

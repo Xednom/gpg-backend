@@ -16,6 +16,23 @@ from apps.gpg.models import (
     JobOrderCategoryAnalytics,
     JobOrderCategoryRating,
     JobOrderCategoryAgentScoring,
+    SellerList,
+    BuyerList,
+    Acquisition,
+    Disposition,
+    AssessmentFile,
+    MarketingFile,
+    ListingFile,
+)
+
+from apps.gpg.serializers import (
+    seller_list,
+    buyer_list,
+    acquisition,
+    disposition,
+    assessment_files,
+    marketing_file,
+    listing_file,
 )
 
 __all__ = (
@@ -112,6 +129,27 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
     property_detail_files = PropertyDetailFileSerializer(
         many=True, allow_null=True, required=False
     )
+    property_detail_seller_lists = seller_list.SellerListSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_buyer_lists = buyer_list.BuyerListSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_acquisition = acquisition.AcquisitionSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_disposition = disposition.DispositionSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_assessment_files = assessment_files.AssessmentFileSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_marketing_file = marketing_file.MarketingFileSerializer(
+        many=True, allow_null=True, required=False
+    )
+    property_detail_listing_file = listing_file.ListingFileSerializer(
+        many=True, allow_null=True, required=False
+    )
 
     class Meta:
         model = PropertyDetail
@@ -143,6 +181,13 @@ class PropertyDetailSerializer(WritableNestedModelSerializer):
             "property_price_statuses",
             "property_detail_files",
             "property_complete_address",
+            "property_detail_seller_lists",
+            "property_detail_buyer_lists",
+            "property_detail_acquisition",
+            "property_detail_disposition",
+            "property_detail_assessment_files",
+            "property_detail_marketing_file",
+            "property_detail_listing_file",
         )
 
     def get_client_(self, instance):
