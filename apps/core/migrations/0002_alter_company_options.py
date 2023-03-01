@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name='company',
-            options={'ordering': ['-created_at'], 'verbose_name': 'Company', 'verbose_name_plural': 'Companies'},
             name="company",
             options={
                 "ordering": ["-created_at"],
