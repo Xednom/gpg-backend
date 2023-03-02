@@ -151,4 +151,9 @@ urlpatterns = [
         "save-seller-lists/", views.SaveSellerLists.as_view(), name="save-seller-lists"
     ),
     path("save-buyer-lists/", views.SaveBuyerLists.as_view(), name="save-buyer-lists"),
+    path(
+        "save-acquisitions/",
+        views.SaveAcquisitions.as_view(),
+        name="save-acquisition-lists",
+    ),
 ]
