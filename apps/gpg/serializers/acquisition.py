@@ -29,6 +29,7 @@ class AcquisitionSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Acquisition
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
