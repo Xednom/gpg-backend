@@ -35,5 +35,7 @@ class Acquisition(TimeStamped):
         "authentication.Staff",
         related_name="assigned_sales_team_acquistion",
         on_delete=models.PROTECT,
+        blank=True,
+        null=True,
     )
     notes = models.TextField(blank=True)
