@@ -29,6 +29,7 @@ class DispositionSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Disposition
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
