@@ -11,7 +11,7 @@ from .agent_scoring import (
 from .seller_list import SellerListViewSet, SaveSellerLists  # noqa
 from .buyer_list import BuyerListViewSet, SaveBuyerLists  # noqa
 from .acquisition import AcquisitionViewSet, SaveAcquisitions  # noqa
-from .disposition import DispositionViewSet, SaveDispotions  # noqa
+from .disposition import DispositionViewSet, SaveDispositions  # noqa
 from .assessment_files import AssessmentFileViewSet  # noqa
 from .marketing_file import MarketingFileViewSet  # noqa
 from .listing_file import ListingFileViewSet  # noqa

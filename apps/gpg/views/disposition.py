@@ -6,7 +6,7 @@ from apps.gpg.models import Disposition
 
 from apps.gpg.serializers import DispositionSerializer
 
-__all__ = ["DispositionViewSet", "SaveDispotions"]
+__all__ = ["DispositionViewSet", "SaveDispositions"]
 
 
 class DispositionViewSet(viewsets.ModelViewSet):
@@ -15,7 +15,7 @@ class DispositionViewSet(viewsets.ModelViewSet):
     queryset = Disposition.objects.all()
 
 
-class SaveDispotions(APIView):
+class SaveDispositions(APIView):
     def post(self, request, format=None):
         data = request.data
         for item in data:

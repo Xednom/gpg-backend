@@ -157,8 +157,8 @@ urlpatterns = [
         name="save-acquisition-lists",
     ),
     path(
-        "save-dispotions/",
-        views.SaveDispotions.as_view(),
+        "save-dispositions/",
+        views.SaveDispositions.as_view(),
         name="save-disposition-lists",
     ),
 ]
