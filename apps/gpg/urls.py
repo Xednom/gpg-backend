@@ -161,4 +161,9 @@ urlpatterns = [
         views.SaveDispositions.as_view(),
         name="save-disposition-lists",
     ),
+    path(
+        "save-assessments/",
+        views.SaveAssessments.as_view(),
+        name="save-assessment-files",
+    ),
 ]
