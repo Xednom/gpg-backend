@@ -12,6 +12,8 @@ __all__ = ["DispositionViewSet", "SaveDispositions"]
 class DispositionViewSet(viewsets.ModelViewSet):
     serializer_class = DispositionSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["property_detail__id"]
     queryset = Disposition.objects.all()
 
 
