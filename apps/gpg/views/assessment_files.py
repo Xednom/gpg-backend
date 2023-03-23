@@ -12,6 +12,8 @@ __all__ = ["AssessmentFileViewSet", "SaveAssessments"]
 class AssessmentFileViewSet(viewsets.ModelViewSet):
     serializer_class = AssessmentFileSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["property_detail__id"]
     queryset = AssessmentFile.objects.all()
 
 
