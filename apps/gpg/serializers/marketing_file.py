@@ -29,6 +29,7 @@ class MarketingFileSerializer(WritableNestedModelSerializer):
     class Meta:
         model = MarketingFile
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
