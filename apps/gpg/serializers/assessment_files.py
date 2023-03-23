@@ -29,6 +29,7 @@ class AssessmentFileSerializer(WritableNestedModelSerializer):
     class Meta:
         model = AssessmentFile
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
