@@ -110,6 +110,7 @@ router.register(r"disposition", views.DispositionViewSet)
 router.register(r"assessment", views.AssessmentFileViewSet)
 router.register(r"marketing", views.MarketingFileViewSet)
 router.register(r"listing", views.ListingFileViewSet)
+router.register(r"listing-status", views.ListingStatusViewSet)
 
 
 app_name = "gpg"

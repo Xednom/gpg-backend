@@ -6,7 +6,16 @@ from rest_framework.relations import PrimaryKeyRelatedField
 from apps.gpg.models import ListingFile, PropertyDetail, ListingStatus
 from apps.authentication.models import Staff
 
-__all__ = ("ListingFileSerializer",)
+__all__ = ("ListingFileSerializer", "ListingStatusSerializer")
+
+
+class ListingStatusSerializer(WritableNestedModelSerializer):
+    class Meta:
+        model = ListingStatus
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class ListingFileSerializer(WritableNestedModelSerializer):

@@ -14,4 +14,4 @@ from .acquisition import AcquisitionViewSet, SaveAcquisitions  # noqa
 from .disposition import DispositionViewSet, SaveDispositions  # noqa
 from .assessment_files import AssessmentFileViewSet, SaveAssessments  # noqa
 from .marketing_file import MarketingFileViewSet, SaveMarketings  # noqa
-from .listing_file import ListingFileViewSet, SaveListings  # noqa
+from .listing_file import ListingFileViewSet, SaveListings, ListingStatusViewSet  # noqa
