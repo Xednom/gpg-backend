@@ -109,7 +109,7 @@ router.register(r"acquisition", views.AcquisitionViewSet)
 router.register(r"disposition", views.DispositionViewSet)
 router.register(r"assessment", views.AssessmentFileViewSet)
 router.register(r"marketing", views.MarketingFileViewSet)
-router.register(r"listing-file", views.ListingFileViewSet)
+router.register(r"listing", views.ListingFileViewSet)
 
 
 app_name = "gpg"
@@ -170,5 +170,10 @@ urlpatterns = [
         "save-marketings/",
         views.SaveMarketings.as_view(),
         name="save-marketing-files",
+    ),
+    path(
+        "save-listings/",
+        views.SaveListings.as_view(),
+        name="save-listings",
     ),
 ]
