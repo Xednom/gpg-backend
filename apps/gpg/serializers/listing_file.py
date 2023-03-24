@@ -41,10 +41,12 @@ class ListingFileSerializer(WritableNestedModelSerializer):
         required=False,
         queryset=ListingStatus.objects.all(),
     )
+    listing_status__name = serializers.SerializerMethodField()
 
     class Meta:
         model = ListingFile
         fields = (
+            "id",
             "property_detail",
             "apn",
             "client_code",
@@ -58,4 +60,10 @@ class ListingFileSerializer(WritableNestedModelSerializer):
             "date_completed",
             "status_of_job",
             "listing_status",
+            "listing_status__name",
         )
+
+    def get_listing_status__name(self, instance):
+        if instance.listing_status:
+            print("Listing status name: ", instance.listing_status.name)
+            return instance.listing_status.name
