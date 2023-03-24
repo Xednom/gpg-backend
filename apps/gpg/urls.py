@@ -108,7 +108,7 @@ router.register(r"buyer-list", views.BuyerListViewSet)
 router.register(r"acquisition", views.AcquisitionViewSet)
 router.register(r"disposition", views.DispositionViewSet)
 router.register(r"assessment", views.AssessmentFileViewSet)
-router.register(r"marketing-file", views.MarketingFileViewSet)
+router.register(r"marketing", views.MarketingFileViewSet)
 router.register(r"listing-file", views.ListingFileViewSet)
 
 
@@ -165,5 +165,10 @@ urlpatterns = [
         "save-assessments/",
         views.SaveAssessments.as_view(),
         name="save-assessment-files",
+    ),
+    path(
+        "save-marketings/",
+        views.SaveMarketings.as_view(),
+        name="save-marketing-files",
     ),
 ]
