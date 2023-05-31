@@ -89,6 +89,7 @@ class ClientProfileAdmin(ImportExportModelAdmin):
         "affiliate_partner_code",
         "hourly_rate",
         "customer_id",
+        "lead_information",
     )
     list_filter = (
         "affiliate_partner_code",
