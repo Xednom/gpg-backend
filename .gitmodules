@@ -1,0 +1,3 @@
+[submodule "django-bvgels"]
+	path = bvgels
+	url = git@github.com:Xednom/django-bvgels.git
