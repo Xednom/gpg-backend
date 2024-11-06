@@ -57,7 +57,6 @@ LOCAL_APPS = [
     "apps.gpg_notifications",
     "apps.forum",
     "apps.archive",
-    "bvgels",
 ]
 
 THIRD_PARTY_APPS = [
